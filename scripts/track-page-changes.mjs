@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-const DOMAIN = "https://gallery.selfboot.cn";
+const DOMAIN = "https://games.programnotes.cn";
 const LANGUAGES = ["en", "zh"];
 
 async function getRecentPageUrls() {

@@ -11,7 +11,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.trie.title,
     description: dict.seo.trie.description,
     keywords: dict.seo.trie.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/algorithms/trie`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/algorithms/trie`,
     publishedDate: "2024-07-22T02:00:00.000Z",
     updatedDate: "2024-11-05T12:00:00.000Z",
   });

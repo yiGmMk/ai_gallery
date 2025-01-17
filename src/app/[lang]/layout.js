@@ -7,6 +7,7 @@ import { I18nProvider } from "@/app/i18n/client";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { WebVitals } from "@/app/components/WebVitals";
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
 
 const SUPPORTED_LANGUAGES = ['en', 'zh'];
 const CATEGORIES = ["games", "algorithms", "tools", "blog"];
@@ -28,7 +29,7 @@ export default async function Layout({ children, params: { lang, slug = [] } }) 
           rel="alternate"
           type="application/rss+xml"
           title={`RSS Feed for AI Gallery`}
-          href={`https://gallery.selfboot.cn/${rssFileName}`}
+          href={`https://games.programnotes.cn/${rssFileName}`}
         />
         <Script id="check-device-and-load-ads" strategy="beforeInteractive">
           {`
@@ -69,13 +70,14 @@ export default async function Layout({ children, params: { lang, slug = [] } }) 
           </I18nProvider>
         </div>
       </body>
-      <GoogleAnalytics gaId="G-Y4WD2DT404" />
+      <GoogleAnalytics gaId="G-LXMD3Q0W08" />
+      <Analytics mode="production" />;
       {/* <WebVitals /> */}
       <Script
         src="https://cloud.umami.is/script.js"
         data-website-id="d765a8dd-62fd-4096-8429-85beb1242091"
         strategy="afterInteractive"
-        data-domains="gallery.selfboot.cn"
+        data-domains="games.programnotes.cn"
       />
       <Script
         src="https://static.cloudflareinsights.com/beacon.min.js"

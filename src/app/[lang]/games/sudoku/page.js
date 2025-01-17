@@ -16,11 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-12-07T12:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/sudoku`,
+      canonical: `https://games.programnotes.cn/${lang}/games/sudoku`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/sudoku",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/sudoku",
-        "x-default": "https://gallery.selfboot.cn/en/games/sudoku",
+        "en": "https://games.programnotes.cn/en/games/sudoku",
+        "zh-CN": "https://games.programnotes.cn/zh/games/sudoku",
+        "x-default": "https://games.programnotes.cn/en/games/sudoku",
       },
     },
   };

@@ -16,11 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2025-01-10T09:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/sliding`,
+      canonical: `https://games.programnotes.cn/${lang}/games/sliding`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/sliding",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/sliding",
-        "x-default": "https://gallery.selfboot.cn/en/games/sliding",
+        "en": "https://games.programnotes.cn/en/games/sliding",
+        "zh-CN": "https://games.programnotes.cn/zh/games/sliding",
+        "x-default": "https://games.programnotes.cn/en/games/sliding",
       },
     },
   };

@@ -12,7 +12,7 @@ Would it be challenging to implement forbidden moves using Claude3.5? For comple
 
 ![Single-player Gomoku, supporting various forbidden move rules](https://slefboot-1251736664.file.myqcloud.com/20241016_ai_gallery_gomoku_blogcover.png)
 
-You can experience the [Online Gomoku](https://gallery.selfboot.cn/en/games/gomoku) game here. Currently, only the single-player version is available, but network multiplayer and human vs. AI modes will be supported in the future. The code is fully open-source on [Github](https://github.com/selfboot/ai_gallery).
+You can experience the [Online Gomoku](https://games.programnotes.cn/en/games/gomoku) game here. Currently, only the single-player version is available, but network multiplayer and human vs. AI modes will be supported in the future. The code is fully open-source on [Github](https://github.com/selfboot/ai_gallery).
 
 ## Quick UI Implementation
 

@@ -16,11 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-11-21T04:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/algorithms/dpcoin`,
+      canonical: `https://games.programnotes.cn/${lang}/algorithms/dpcoin`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/algorithms/dpcoin",
-        "zh-CN": "https://gallery.selfboot.cn/zh/algorithms/dpcoin",
-        "x-default": "https://gallery.selfboot.cn/en/algorithms/dpcoin",
+        "en": "https://games.programnotes.cn/en/algorithms/dpcoin",
+        "zh-CN": "https://games.programnotes.cn/zh/algorithms/dpcoin",
+        "x-default": "https://games.programnotes.cn/en/algorithms/dpcoin",
       },
     },
   };

@@ -16,11 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-11-19T09:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/snake`,
+      canonical: `https://games.programnotes.cn/${lang}/games/snake`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/snake",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/snake",
-        "x-default": "https://gallery.selfboot.cn/en/games/snake",
+        "en": "https://games.programnotes.cn/en/games/snake",
+        "zh-CN": "https://games.programnotes.cn/zh/games/snake",
+        "x-default": "https://games.programnotes.cn/en/games/snake",
       },
     },
   };

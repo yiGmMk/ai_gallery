@@ -153,7 +153,7 @@ for (const post of blogPosts) {
     const url = `${DOMAIN}/${lang}/blog/${slug}`;
 ```
 
-This way, the generated [sitemap](https://gallery.selfboot.cn/sitemap.xml) and [RSS](https://gallery.selfboot.cn/rss.xml) will include the content of the blog part. There are two versions of RSS here, the default rss.xml is the Chinese version, and you can use [rss-en.xml](https://gallery.selfboot.cn/rss-en.xml) to access the English version.
+This way, the generated [sitemap](https://games.programnotes.cn/sitemap.xml) and [RSS](https://games.programnotes.cn/rss.xml) will include the content of the blog part. There are two versions of RSS here, the default rss.xml is the Chinese version, and you can use [rss-en.xml](https://games.programnotes.cn/rss-en.xml) to access the English version.
 
 ## The Silly Claude
 

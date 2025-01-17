@@ -6,7 +6,7 @@ keywords: ['Claude3.5 Cursor Programming Assistant', 'Online Free Maze Generatio
 description: Using Cursor and Claude3.5, I built a complete maze game based on an existing maze library. It supports various online maze generation and allows playing maze games with mouse control.
 ---
 
-Over the weekend, I used Cursor and Claude3.5 to create a complete maze game based on an existing maze generation library. You can try it at [Maze Game, Online Maze Generation](https://gallery.selfboot.cn/zh/games/maze). It has comprehensive features, supporting various types of maze map generation and online maze gameplay using mouse controls.
+Over the weekend, I used Cursor and Claude3.5 to create a complete maze game based on an existing maze generation library. You can try it at [Maze Game, Online Maze Generation](https://games.programnotes.cn/zh/games/maze). It has comprehensive features, supporting various types of maze map generation and online maze gameplay using mouse controls.
 
 ![Online Maze Game, Generate Various Maze Maps](https://slefboot-1251736664.file.myqcloud.com/20241209_ai_gallery_maze_blog.png)
 
@@ -126,4 +126,4 @@ As a developer unfamiliar with frontend development, with AI's help, I quickly b
 
 Of course, throughout the implementation process, there were many aspects requiring personal thinking and debugging. These debugging approaches are core programming concepts and universal programming abilities. Although most code was written by Claude3.5, the entire process still exercised programming skills.
 
-Finally, welcome to try the [Online Maze Game, Online Maze Generation](https://gallery.selfboot.cn/en/games/maze).
+Finally, welcome to try the [Online Maze Game, Online Maze Generation](https://games.programnotes.cn/en/games/maze).

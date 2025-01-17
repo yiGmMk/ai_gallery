@@ -8,12 +8,12 @@ description: Learn how to enhance a Minesweeper game with theme switching functi
 
 This is the third article in the series about building a Minesweeper game from scratch using Claude3.5. The previous two articles are:
 
-1. [Building Minesweeper Game from Scratch with Claude3.5 - Basic Features](https://gallery.selfboot.cn/en/blog/minesweeper)
-2. [Building Minesweeper Game from Scratch with Claude3.5 - Hexagonal Mode](https://gallery.selfboot.cn/en/blog/minesweeper2)
+1. [Building Minesweeper Game from Scratch with Claude3.5 - Basic Features](https://games.programnotes.cn/en/blog/minesweeper)
+2. [Building Minesweeper Game from Scratch with Claude3.5 - Hexagonal Mode](https://games.programnotes.cn/en/blog/minesweeper2)
 
 Our Minesweeper game now has comprehensive features and supports hexagonal grid layout, attracting quite a few players. However, one drawback is that the game's appearance is rather monotonous, only mimicking the classic Minesweeper style. I wanted to add various color themes and create a vibrant Minesweeper interface - could Claude3.5 help me achieve this?
 
-Of course it could, and both the implementation speed and results exceeded my expectations. Let's first look at the different theme effects, which you can try out on the [Minesweeper page](https://gallery.selfboot.cn/en/games/minesweeper):
+Of course it could, and both the implementation speed and results exceeded my expectations. Let's first look at the different theme effects, which you can try out on the [Minesweeper page](https://games.programnotes.cn/en/games/minesweeper):
 
 ![Various Minesweeper themes by Claude3.5](https://slefboot-1251736664.file.myqcloud.com/20241219_ai_gallery_minesweeper_themes.png)
 

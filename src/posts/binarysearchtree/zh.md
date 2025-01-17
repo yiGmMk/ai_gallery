@@ -8,7 +8,7 @@ description: 二叉搜索树是一种特殊的二叉树，每个节点的左子�
 
 在看 [LevelDB 源码](https://selfboot.cn/tags/leveldb/) 的时候，里面有跳表实现，然后跳表的论文中有提到二叉搜索树，于是想着来实现一个二叉搜索树的可视化。于是开始压榨 Claude3.5，让它和我一起实现。
 
-这里是最终效果，大家[可以来体验](https://gallery.selfboot.cn/zh/algorithms/binarysearchtree)：
+这里是最终效果，大家[可以来体验](https://games.programnotes.cn/zh/algorithms/binarysearchtree)：
 
 ![二叉搜索树可视化](https://slefboot-1251736664.file.myqcloud.com/20240908_ai_gallery_binarysearchtree.webp)
 
@@ -36,7 +36,7 @@ Claude3.5 承认这个是一个严重的 bug，还真是敢于认错呢，哈哈
 
 不过这个版本的树布局还是有点问题，插入多几个节点，**树的高度稍微深一些，就会变得特别宽，导致在屏幕上需要滚动才能看到整个树**。我想要的树布局，能够紧凑一些，在屏幕中显示更多的节点，这样体验会更好些。这里经过了好多轮的对话，不断调整一些细节，整体比较曲折。
 
-其实开始的时候自己的思路也不太对，想着用之前[堆的可视化中](https://gallery.selfboot.cn/zh/algorithms/heap)节点的布局算法。提示词如下：
+其实开始的时候自己的思路也不太对，想着用之前[堆的可视化中](https://games.programnotes.cn/zh/algorithms/heap)节点的布局算法。提示词如下：
 
 > 插入后树的宽度很宽，不适合阅读了。
 > 这里提供你一个思路，来合适画树的结构。

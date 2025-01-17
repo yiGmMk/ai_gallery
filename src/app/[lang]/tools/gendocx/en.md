@@ -1,4 +1,4 @@
-To facilitate batch generation of Word documents, I created an [Online Word Document Batch Generator](https://gallery.selfboot.cn/en/tools/gendocx) that can **batch generate personalized Word documents based on Excel data and Word templates**. It's suitable for scenarios where you need to generate multiple documents with the same format but different content, such as:
+To facilitate batch generation of Word documents, I created an [Online Word Document Batch Generator](https://games.programnotes.cn/en/tools/gendocx) that can **batch generate personalized Word documents based on Excel data and Word templates**. It's suitable for scenarios where you need to generate multiple documents with the same format but different content, such as:
 
 - Batch generate certificates and awards
 - Batch generate contracts and agreements

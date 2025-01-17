@@ -9,7 +9,7 @@ const { dynamicChartConfigs } = dynamicChartConfigsModule;
 import documentTemplatesModule from '../src/app/[lang]/tools/gendocx/templates.js';
 const { documentTemplates } = documentTemplatesModule;
 
-const DOMAIN = "https://gallery.selfboot.cn";
+const DOMAIN = "https://games.programnotes.cn";
 const LANGUAGES = ["en", "zh"];
 
 // 读取字典文件
@@ -58,7 +58,7 @@ async function generateSitemapAndRss() {
 
       try {
         const content = fs.readFileSync(page, "utf8");
-        
+
         if (route.includes("[chartId]")) {
           // Handle dynamic chart routes
           for (const config of dynamicChartConfigs) {
@@ -134,7 +134,7 @@ async function generateSitemapAndRss() {
     for (const post of blogPosts) {
       const content = fs.readFileSync(post, "utf8");
       const { data, content: postContent } = matter(content);
-      
+
       const slug = path.basename(path.dirname(post));
       const url = `${DOMAIN}/${lang}/blog/${slug}`;
 

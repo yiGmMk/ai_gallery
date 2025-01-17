@@ -16,11 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2025-01-15T09:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/tools/subtitles`,
+      canonical: `https://games.programnotes.cn/${lang}/tools/subtitles`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/tools/subtitles",
-        "zh-CN": "https://gallery.selfboot.cn/zh/tools/subtitles",
-        "x-default": "https://gallery.selfboot.cn/en/tools/subtitles",
+        "en": "https://games.programnotes.cn/en/tools/subtitles",
+        "zh-CN": "https://games.programnotes.cn/zh/tools/subtitles",
+        "x-default": "https://games.programnotes.cn/en/tools/subtitles",
       },
     },
   };

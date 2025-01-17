@@ -11,7 +11,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.hanoitower.title,
     description: dict.seo.hanoitower.description,
     keywords: dict.seo.hanoitower.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/algorithms/hanoitower`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/algorithms/hanoitower`,
     publishedDate: "2024-08-12T04:00:00.000Z",
     updatedDate: "2024-12-25T10:00:00.000Z",
   });

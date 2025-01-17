@@ -12,7 +12,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.blog.title,
     description: dict.seo.blog.description,
     keywords: dict.seo.blog.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/blog`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/blog`,
     publishedDate: "2024-08-01T00:00:00.000Z",
     updatedDate: "2024-11-05T10:00:00.000Z",
   });

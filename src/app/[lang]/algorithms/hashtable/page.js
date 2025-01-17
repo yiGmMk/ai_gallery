@@ -11,7 +11,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.hashtable.title,
     description: dict.seo.hashtable.description,
     keywords: dict.seo.hashtable.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/algorithms/hashtable`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/algorithms/hashtable`,
     publishedDate: "2024-07-27T05:30:00.000Z",
     updatedDate: "2024-11-05T07:00:00.000Z",
   });

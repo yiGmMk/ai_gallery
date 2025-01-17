@@ -8,7 +8,7 @@ description: A binary search tree is a special type of binary tree where the val
 
 While reviewing the [LevelDB source code](https://selfboot.cn/en/tags/leveldb/), I came across the skip list implementation. The skip list paper mentioned binary search trees, which inspired me to create a visualization for binary search trees. So, I started to leverage Claude 3.5 to help me implement it.
 
-Here's the [final result that you can experience](https://gallery.selfboot.cn/en/algorithms/binarysearchtree):
+Here's the [final result that you can experience](https://games.programnotes.cn/en/algorithms/binarysearchtree):
 
 ![Binary Search Tree Visualization](https://slefboot-1251736664.file.myqcloud.com/20240908_ai_gallery_binarysearchtree.webp)
 
@@ -36,7 +36,7 @@ After these few rounds of dialogue, we had an initial version. It now supports i
 
 However, the tree layout in this version still had some issues. After inserting several nodes, **as the tree depth increased slightly, it became extremely wide, requiring scrolling to see the entire tree on the screen**. I wanted a tree layout that could be more compact, displaying more nodes on the screen for a better experience. This involved many rounds of dialogue, constantly adjusting various details, and was quite a winding process.
 
-Initially, my own thinking was not quite right. I considered using the node layout algorithm from the [heap visualization](https://gallery.selfboot.cn/zh/algorithms/heap). The prompt was as follows:
+Initially, my own thinking was not quite right. I considered using the node layout algorithm from the [heap visualization](https://games.programnotes.cn/zh/algorithms/heap). The prompt was as follows:
 
 > After insertion, the tree width is very wide, making it difficult to read.
 > Here's an idea for you to appropriately draw the tree structure.

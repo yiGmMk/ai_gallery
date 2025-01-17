@@ -10,7 +10,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.ratelimit.title,
     description: dict.seo.ratelimit.description,
     keywords: dict.seo.ratelimit.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/algorithms/ratelimit/`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/algorithms/ratelimit/`,
     publishedDate: "2024-07-14T02:00:00.000Z",
     updatedDate: "2024-07-15T02:00:00.000Z",
   });

@@ -12,7 +12,7 @@ description: 用 Claude3.5 实现一个完整的单机五子棋游戏，支持�
 
 ![单机版五子棋，支持各种禁手规则](https://slefboot-1251736664.file.myqcloud.com/20241016_ai_gallery_gomoku_blogcover.png)
 
-可以在这里体验：[在线五子棋](https://gallery.selfboot.cn/zh/games/gomoku) 游戏，目前只有单机版，后续会支持联网对战和 人、AI 对战。代码全部开源，在 [Github](https://github.com/selfboot/ai_gallery) 上。
+可以在这里体验：[在线五子棋](https://games.programnotes.cn/zh/games/gomoku) 游戏，目前只有单机版，后续会支持联网对战和 人、AI 对战。代码全部开源，在 [Github](https://github.com/selfboot/ai_gallery) 上。
 
 ## 快速实现 UI
 

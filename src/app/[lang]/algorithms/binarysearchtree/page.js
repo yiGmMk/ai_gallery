@@ -11,7 +11,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.binarysearchtree.title,
     description: dict.seo.binarysearchtree.description,
     keywords: dict.seo.binarysearchtree.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/algorithms/binarysearchtree`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/algorithms/binarysearchtree`,
     publishedDate: "2024-08-22T02:00:00.000Z",
     updatedDate: "2024-11-08T02:00:00.000Z",
   });

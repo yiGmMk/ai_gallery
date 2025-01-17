@@ -11,7 +11,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.gendocx.title,
     description: dict.seo.gendocx.description,
     keywords: dict.seo.gendocx.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/tools/awards`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/tools/awards`,
     publishedDate: "2024-10-30T10:00:00.000Z",
     updatedDate: "2024-10-30T18:00:00.000Z",
   });

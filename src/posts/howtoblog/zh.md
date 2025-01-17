@@ -153,7 +153,7 @@ for (const post of blogPosts) {
     const url = `${DOMAIN}/${lang}/blog/${slug}`;
 ```
 
-这样生成的 [sitemap]([https://gal](https://gallery.selfboot.cn/sitemap.xml)) 和 [rss](https://gallery.selfboot.cn/rss.xml) 就会包含 blog 部分的内容了。这里 rss 有两个版本，默认的 rss.xml 是中文版本，可以用 [rss-en.xml](https://gallery.selfboot.cn/rss-en.xml) 来访问英文版本。
+这样生成的 [sitemap]([https://gal](https://games.programnotes.cn/sitemap.xml)) 和 [rss](https://games.programnotes.cn/rss.xml) 就会包含 blog 部分的内容了。这里 rss 有两个版本，默认的 rss.xml 是中文版本，可以用 [rss-en.xml](https://games.programnotes.cn/rss-en.xml) 来访问英文版本。
 
 ## 笨笨的 Claude
 

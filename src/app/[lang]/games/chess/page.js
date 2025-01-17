@@ -15,11 +15,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-11-19T09:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/chess`,
+      canonical: `https://games.programnotes.cn/${lang}/games/chess`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/chess",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/chess",
-        "x-default": "https://gallery.selfboot.cn/en/games/chess",
+        "en": "https://games.programnotes.cn/en/games/chess",
+        "zh-CN": "https://games.programnotes.cn/zh/games/chess",
+        "x-default": "https://games.programnotes.cn/en/games/chess",
       },
     },
   };

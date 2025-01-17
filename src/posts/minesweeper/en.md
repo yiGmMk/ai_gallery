@@ -8,7 +8,7 @@ description: Building a classic Minesweeper game with Claude3.5, supporting mult
 
 Minesweeper is such a classic game that I used to play on Windows computers. Now that I've switched to Mac, I haven't played it for a while. Recently, I've been heavily experimenting with Cursor and Claude3.5, writing quite a bit of code with them. So I decided to build a Minesweeper game from scratch using Claude3.5 to see how it would turn out.
 
-Let me first show you the final result [Online Minesweeper Game](https://gallery.selfboot.cn/en/games/minesweeper):
+Let me first show you the final result [Online Minesweeper Game](https://games.programnotes.cn/en/games/minesweeper):
 
 ![Complete Minesweeper Game Implemented with Claude](https://slefboot-1251736664.file.myqcloud.com/20241216_ai_gallery_blog_cover.png)
 
@@ -89,7 +89,7 @@ So far, we've implemented a toy Minesweeper game, but the interface still looks 
 
 Additionally, I specifically mentioned the technology for rendering the board, directly asking **it to use canvas to implement each cell**. Here I'll add some personal observations - **developers should still have some background knowledge when using AI**. This allows for more precise prompts and helps avoid detours.
 
-Previously, when implementing [Bloom Filter visualization](https://gallery.selfboot.cn/en/algorithms/bloomfilter), Claude implemented numerous cells directly using grid components, resulting in very poor performance. Only after multiple questions did I finally learn that canvas could be used. Without knowing about canvas and not prompting the AI, we might waste a lot of time on an incorrect approach.
+Previously, when implementing [Bloom Filter visualization](https://games.programnotes.cn/en/algorithms/bloomfilter), Claude implemented numerous cells directly using grid components, resulting in very poor performance. Only after multiple questions did I finally learn that canvas could be used. Without knowing about canvas and not prompting the AI, we might waste a lot of time on an incorrect approach.
 
 Finally, the simple prompt was:
 

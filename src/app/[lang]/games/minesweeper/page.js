@@ -16,11 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-11-24T12:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/minesweeper`,
+      canonical: `https://games.programnotes.cn/${lang}/games/minesweeper`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/minesweeper",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/minesweeper",
-        "x-default": "https://gallery.selfboot.cn/en/games/minesweeper",
+        "en": "https://games.programnotes.cn/en/games/minesweeper",
+        "zh-CN": "https://games.programnotes.cn/zh/games/minesweeper",
+        "x-default": "https://games.programnotes.cn/en/games/minesweeper",
       },
     },
   };

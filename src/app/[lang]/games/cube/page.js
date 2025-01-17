@@ -16,11 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-11-19T09:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/cube`,
+      canonical: `https://games.programnotes.cn/${lang}/games/cube`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/cube",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/cube",
-        "x-default": "https://gallery.selfboot.cn/en/games/cube",
+        "en": "https://games.programnotes.cn/en/games/cube",
+        "zh-CN": "https://games.programnotes.cn/zh/games/cube",
+        "x-default": "https://games.programnotes.cn/en/games/cube",
       },
     },
   };

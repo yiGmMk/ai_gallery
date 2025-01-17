@@ -16,6 +16,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'games.programnotes.cn',
+        port: '',
+        pathname: '/**',
+      },
     ]
   },
 };

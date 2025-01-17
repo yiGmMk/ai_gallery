@@ -6,7 +6,7 @@ keywords: ['Claude3.5 Frontend Development', 'Canvas SVG Optimization', 'Free On
 description: A case study of optimizing Sokoban level thumbnails demonstrates Claude3.5's effectiveness in frontend development. From initial canvas implementation to device pixel ratio optimization, and finally to SVG solution, showcasing different stages of AI-assisted technical iterations.
 ---
 
-My online Sokoban game has [numerous levels](https://gallery.selfboot.cn/en/games/sokoban/more), where the level thumbnails were initially generated using canvas. Since Claude3.5 generated most of the code, I didn't pay much attention to the thumbnail quality at first.
+My online Sokoban game has [numerous levels](https://games.programnotes.cn/en/games/sokoban/more), where the level thumbnails were initially generated using canvas. Since Claude3.5 generated most of the code, I didn't pay much attention to the thumbnail quality at first.
 
 However, users later reported that the thumbnails appeared blurry. Upon closer inspection, they were indeed fuzzy, as shown below:
 

@@ -16,11 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-11-22T04:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/algorithms/dijkstra`,
+      canonical: `https://games.programnotes.cn/${lang}/algorithms/dijkstra`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/algorithms/dijkstra",
-        "zh-CN": "https://gallery.selfboot.cn/zh/algorithms/dijkstra",
-        "x-default": "https://gallery.selfboot.cn/en/algorithms/dijkstra",
+        "en": "https://games.programnotes.cn/en/algorithms/dijkstra",
+        "zh-CN": "https://games.programnotes.cn/zh/algorithms/dijkstra",
+        "x-default": "https://games.programnotes.cn/en/algorithms/dijkstra",
       },
     },
   };

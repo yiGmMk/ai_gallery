@@ -14,11 +14,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2025-01-08T09:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/tools/gendocx/temp`,
+      canonical: `https://games.programnotes.cn/${lang}/tools/gendocx/temp`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/tools/gendocx/temp",
-        "zh-CN": "https://gallery.selfboot.cn/zh/tools/gendocx/temp",
-        "x-default": "https://gallery.selfboot.cn/en/tools/gendocx/temp",
+        "en": "https://games.programnotes.cn/en/tools/gendocx/temp",
+        "zh-CN": "https://games.programnotes.cn/zh/tools/gendocx/temp",
+        "x-default": "https://games.programnotes.cn/en/tools/gendocx/temp",
       },
     },
   };

@@ -10,7 +10,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.jumphash.title,
     description: dict.seo.jumphash.description,
     keywords: dict.seo.jumphash.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/algorithms/jumphash`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/algorithms/jumphash`,
     publishedDate: "2024-08-09T12:50:00.000Z",
     updatedDate: "2024-08-09T12:50:00.000Z",
   });

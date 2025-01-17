@@ -6,9 +6,9 @@ keywords: ['Claude3.5 辅助前端', '扫雷游戏开发', '在线扫雷游戏']
 description: 在完整方格扫雷的基础上，用 Claude3.5 和 Cursor 实现了一个蜂窝版本的扫雷。只要自己想清楚具体实现思路，然后把问题合理拆分，一步步提示，Claude3.5 生成的代码大部分时候还是符合预期的。遇到复杂问题，可以先让 Claude3.5 描述下大致的思路，不要急于写代码，不然容易被错误的代码带偏，浪费不少时间。
 ---
 
-上一篇 [用 Claude3.5 从零写扫雷游戏-基本功能篇](https://gallery.selfboot.cn/zh/blog/minesweeper)中，在 Claude3.5 的帮助下，我这前端小白也基本完成了一个完整的扫雷游戏。不过只是传统的方格扫雷，如果换成**蜂窝扫雷游戏**，Claude3.5 能实现吗？
+上一篇 [用 Claude3.5 从零写扫雷游戏-基本功能篇](https://games.programnotes.cn/zh/blog/minesweeper)中，在 Claude3.5 的帮助下，我这前端小白也基本完成了一个完整的扫雷游戏。不过只是传统的方格扫雷，如果换成**蜂窝扫雷游戏**，Claude3.5 能实现吗？
 
-先来看成果吧，可以在 [在线扫雷游戏](https://gallery.selfboot.cn/zh/games/minesweeper) 中体验：
+先来看成果吧，可以在 [在线扫雷游戏](https://games.programnotes.cn/zh/games/minesweeper) 中体验：
 
 ![用 Claude3.5 实现的蜂窝状的扫雷地图](https://slefboot-1251736664.file.myqcloud.com/20241217_ai_gallery_minesweeper2_cover.png)
 

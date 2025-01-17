@@ -54,11 +54,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-11-20T04:10:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/sokoban/more`,
+      canonical: `https://games.programnotes.cn/${lang}/games/sokoban/more`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/sokoban/more",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/sokoban/more",
-        "x-default": "https://gallery.selfboot.cn/en/games/sokoban/more",
+        "en": "https://games.programnotes.cn/en/games/sokoban/more",
+        "zh-CN": "https://games.programnotes.cn/zh/games/sokoban/more",
+        "x-default": "https://games.programnotes.cn/en/games/sokoban/more",
       },
     },
   };

@@ -6,7 +6,7 @@ keywords: ['Claude3.5 Cursor 辅助编程', '在线免费迷宫生成', '在线�
 description: 用 Cursor 和 Claude3.5 基于已有的一个迷宫库，写了一个完整的迷宫游戏。支持各种迷宫在线生成，并支持用鼠标来在线玩迷宫游戏。
 ---
 
-周末花时间用 Cursor 和 Claude3.5 基于已有的一个迷宫生成库，写了一个完整的迷宫游戏。可以在 [迷宫游戏，在线迷宫生成](https://gallery.selfboot.cn/zh/games/maze) 体验，整体功能还是比较齐全的，支持生成各种类型的迷宫地图，支持滑动鼠标来在线玩迷宫游戏。
+周末花时间用 Cursor 和 Claude3.5 基于已有的一个迷宫生成库，写了一个完整的迷宫游戏。可以在 [迷宫游戏，在线迷宫生成](https://games.programnotes.cn/zh/games/maze) 体验，整体功能还是比较齐全的，支持生成各种类型的迷宫地图，支持滑动鼠标来在线玩迷宫游戏。
 
 ![在线迷宫游戏，生成各种迷宫地图](https://slefboot-1251736664.file.myqcloud.com/20241209_ai_gallery_maze_blog.png)
 
@@ -125,4 +125,4 @@ defaultDrawingSurface.on(EVENT_CLICK, event => {
 
 当然整个实现过程中，还是有不少需要自己思考以及调试的地方。这里的调试思路是编程的核心思想，也是通用的编程能力。虽然大部分代码是 Claude3.5 写的，但整个过程还是有锻炼到编程能力。
 
-最后，欢迎来体验[在线迷宫游戏，在线迷宫生成](https://gallery.selfboot.cn/zh/games/maze)。
+最后，欢迎来体验[在线迷宫游戏，在线迷宫生成](https://games.programnotes.cn/zh/games/maze)。

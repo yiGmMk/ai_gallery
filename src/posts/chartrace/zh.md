@@ -8,7 +8,7 @@ description: 本文用 Claude3.5 实现一个竞速图工具，支持上传数�
 
 时不时在网上看到一些漂亮的竞速图页面，展示数据随时间的变化情况，看着很酷。然后查了下有现成的 js 库可以生成这种图表，不过没找到一个合适的工具，可以将数据上传后，自动生成竞速图。
 
-于是想着用 Claude3.5 实现一个，不过这个过程并不顺利，中间踩了不少坑。从 7 月份都开始着手，中间断断续续尝试了多次，直到最近才算实现了一个简单的版本。本文记录下用 Calude3.5 实现这个工具的过程，记录其中踩过的坑。最终的效果可以在[这里](https://gallery.selfboot.cn/zh/tools/chartrace/)体验，欢迎大家留言讨论。
+于是想着用 Claude3.5 实现一个，不过这个过程并不顺利，中间踩了不少坑。从 7 月份都开始着手，中间断断续续尝试了多次，直到最近才算实现了一个简单的版本。本文记录下用 Calude3.5 实现这个工具的过程，记录其中踩过的坑。最终的效果可以在[这里](https://games.programnotes.cn/zh/tools/chartrace/)体验，欢迎大家留言讨论。
 
 ## 失败尝试
 
@@ -169,7 +169,7 @@ const gif = new GIF({
 > 2. 检查浏览器控制台错误  
 > 打开浏览器的开发者工具，查看是否有关于 gif.worker.js 加载的错误。如果有 404 错误，说明路径不正确；如果有跨域问题，可能需要调整服务器配置。
 
-试了下，发现访问的时候路径被重定向了。忽然想起来，当时为了支持旧的没有带语言版本的链接时，在 middleware.js 中加了自动重定向，会在链接中增加语言。比如访问 https://gallery.selfboot.cn/tools/chartrace 会自动重定向到 https://gallery.selfboot.cn/en/tools/chartrace/ 。这里修复比较简单，去掉 gif.worker.js 的自动重定向，再次尝试导出就可以了。
+试了下，发现访问的时候路径被重定向了。忽然想起来，当时为了支持旧的没有带语言版本的链接时，在 middleware.js 中加了自动重定向，会在链接中增加语言。比如访问 https://games.programnotes.cn/tools/chartrace 会自动重定向到 https://games.programnotes.cn/en/tools/chartrace/ 。这里修复比较简单，去掉 gif.worker.js 的自动重定向，再次尝试导出就可以了。
 
 ## 其他细节优化
 

@@ -10,7 +10,7 @@ The previous snake game implementation was a bit too simple, with just basic mov
 
 ![Snake Game Power-up System](https://slefboot-1251736664.file.myqcloud.com/20241104_ai_gallery_snake_blog.png)
 
-Play Here: [Online Creative Snake Game](https://gallery.selfboot.cn/en/games/snake)
+Play Here: [Online Creative Snake Game](https://games.programnotes.cn/en/games/snake)
 
 If you have better gameplay ideas, welcome to leave a comment in the comment section.
 

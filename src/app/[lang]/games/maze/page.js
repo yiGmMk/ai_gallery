@@ -16,11 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-12-04T12:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/maze`,
+      canonical: `https://games.programnotes.cn/${lang}/games/maze`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/maze",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/maze",
-        "x-default": "https://gallery.selfboot.cn/en/games/maze",
+        "en": "https://games.programnotes.cn/en/games/maze",
+        "zh-CN": "https://games.programnotes.cn/zh/games/maze",
+        "x-default": "https://games.programnotes.cn/en/games/maze",
       },
     },
   };

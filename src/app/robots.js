@@ -5,6 +5,6 @@ export default function robots() {
       allow: "/",
       disallow: "/private/",
     },
-    sitemap: "https://gallery.selfboot.cn/sitemap.xml",
+    sitemap: "https://games.programnotes.cn/sitemap.xml",
   };
 }

@@ -9,12 +9,12 @@ description: 借助 Claude3.5 为扫雷游戏增加主题切换功能，包括�
 
 这是用 Claude3.5 从零写扫雷游戏的第三篇，前两篇分别是：
 
-1. [用 Claude3.5 从零写扫雷游戏-基本功能篇](https://gallery.selfboot.cn/zh/blog/minesweeper)
-2. [用 Claude3.5 从零写扫雷游戏-实现蜂窝地图](https://gallery.selfboot.cn/zh/blog/minesweeper2)
+1. [用 Claude3.5 从零写扫雷游戏-基本功能篇](https://games.programnotes.cn/zh/blog/minesweeper)
+2. [用 Claude3.5 从零写扫雷游戏-实现蜂窝地图](https://games.programnotes.cn/zh/blog/minesweeper2)
 
 我们的扫雷游戏目前功能比较齐全，并且也支持了蜂窝地图，也陆续有不少朋友开始玩。不过美中不足的是，目前扫雷样式太单调，只是模拟经典扫雷的样式。我想要各种扫雷颜色主题，想要七彩斑斓的扫雷界面，Claude3.5 能帮我实现吗？
 
-当然可以，实现速度和效果也还是超我预期的，先来看这里不同主题效果，可以在[扫雷页面](https://gallery.selfboot.cn/zh/games/minesweeper)实际体验：
+当然可以，实现速度和效果也还是超我预期的，先来看这里不同主题效果，可以在[扫雷页面](https://games.programnotes.cn/zh/games/minesweeper)实际体验：
 
 ![Claude3.5 扫雷各种主题图](https://slefboot-1251736664.file.myqcloud.com/20241219_ai_gallery_minesweeper_themes.png)
 

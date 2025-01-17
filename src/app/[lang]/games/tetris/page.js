@@ -15,11 +15,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-11-19T02:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/tetris`,
+      canonical: `https://games.programnotes.cn/${lang}/games/tetris`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/tetris",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/tetris",
-        "x-default": "https://gallery.selfboot.cn/en/games/tetris",
+        "en": "https://games.programnotes.cn/en/games/tetris",
+        "zh-CN": "https://games.programnotes.cn/zh/games/tetris",
+        "x-default": "https://games.programnotes.cn/en/games/tetris",
       },
     },
   };

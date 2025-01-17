@@ -1,4 +1,4 @@
-为了方便的批量生成 Word 文档，写了个[在线 Word 文档批量生成工具](https://gallery.selfboot.cn/zh/tools/gendocx)，可以**根据 Excel 数据和 Word 模板批量生成大量个性化的 Word 文档**。适用于需要批量生成格式统一但内容不同的文档场景。比如：
+为了方便的批量生成 Word 文档，写了个[在线 Word 文档批量生成工具](https://games.programnotes.cn/zh/tools/gendocx)，可以**根据 Excel 数据和 Word 模板批量生成大量个性化的 Word 文档**。适用于需要批量生成格式统一但内容不同的文档场景。比如：
 
 - 批量生成证书、奖状
 - 批量生成合同、协议

@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
-const DOMAIN = 'gallery.selfboot.cn';
-const BING_KEY = '90d513c720ec40e3a57f488239db260c';
+const DOMAIN = 'games.programnotes.cn';
+const BING_KEY = 'f52c135c4b574d48bbb2df19187bdbc0';
 const KEY_LOCATION = `https://${DOMAIN}/${BING_KEY}.txt`;
 
 async function submitToBing(urls) {
@@ -21,7 +21,7 @@ async function submitToBing(urls) {
 
   try {
     console.log('提交payload:', payload);
-    
+
     const response = await fetch('https://api.indexnow.org/IndexNow', {
       method: 'POST',
       headers: {
@@ -59,10 +59,10 @@ async function submitToBing(urls) {
 
 async function submitNewUrlsToBing() {
   console.log('开始获取今天更新的页面URL...');
-  
+
   const { getRecentPageUrls } = await import('./track-page-changes.mjs');
   const urls = await getRecentPageUrls();
-  
+
   if (urls.length > 0) {
     await submitToBing(urls);
   } else {

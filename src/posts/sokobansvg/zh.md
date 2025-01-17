@@ -6,7 +6,7 @@ keywords: ['Claude3.5 辅助前端', 'canvas svg 优化', '在线免费推箱子
 description: 以推箱子游戏关卡缩略图优化为例，展示了 Claude3.5 在前端开发中的最佳应用场景。从最初使用 canvas 实现的模糊效果，到通过设备像素比优化，再到最终采用 svg 方案，展示了不同阶段 Claude3.5 的强带代码能力。
 ---
 
-我的在线推箱子游戏有[超多关卡](https://gallery.selfboot.cn/zh/games/sokoban/more)，这里面的关卡缩略图，开始的时候是用 canvas 生成的。毕竟这里的代码都是 Claude3.5 生成的，我也没太注意缩略图这部分。
+我的在线推箱子游戏有[超多关卡](https://games.programnotes.cn/zh/games/sokoban/more)，这里面的关卡缩略图，开始的时候是用 canvas 生成的。毕竟这里的代码都是 Claude3.5 生成的，我也没太注意缩略图这部分。
 
 但是后面有用户反馈说缩略图看着很模糊，仔细看了下确实如此，如下图：
 

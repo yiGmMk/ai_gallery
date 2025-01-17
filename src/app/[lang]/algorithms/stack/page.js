@@ -11,7 +11,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.stack.title,
     description: dict.seo.stack.description,
     keywords: dict.seo.stack.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/algorithms/stack`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/algorithms/stack`,
     publishedDate: "2024-07-21T02:00:00.000Z",
     updatedDate: "2024-11-02T09:00:00.000Z",
   });

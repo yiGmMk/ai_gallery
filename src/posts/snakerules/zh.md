@@ -10,7 +10,7 @@ description: 用 Claude3.5 实现一个好玩的贪吃蛇游戏，加入了道�
 
 ![贪吃蛇道具系统](https://slefboot-1251736664.file.myqcloud.com/20241104_ai_gallery_snake_blog.png)
 
-游戏体验地址：[在线创意贪吃蛇](https://gallery.selfboot.cn/zh/games/snake)
+游戏体验地址：[在线创意贪吃蛇](https://games.programnotes.cn/zh/games/snake)
 
 如果你有更好的玩法创意，欢迎在评论区留言。
 

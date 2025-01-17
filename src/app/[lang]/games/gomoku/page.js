@@ -16,11 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-11-19T09:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/gomoku`,
+      canonical: `https://games.programnotes.cn/${lang}/games/gomoku`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/gomoku",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/gomoku",
-        "x-default": "https://gallery.selfboot.cn/en/games/gomoku",
+        "en": "https://games.programnotes.cn/en/games/gomoku",
+        "zh-CN": "https://games.programnotes.cn/zh/games/gomoku",
+        "x-default": "https://games.programnotes.cn/en/games/gomoku",
       },
     },
   };

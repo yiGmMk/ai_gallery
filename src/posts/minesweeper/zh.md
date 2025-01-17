@@ -8,7 +8,7 @@ description: 用 Claude3.5 写一个经典的扫雷游戏，支持多种难度�
 
 扫雷是个太经典的游戏了，以前在 Windows 电脑上玩过，现在换了 Mac，好久没玩了。刚好最近在重度体验 Cursor 和 Claude3.5，也用它们写了不少代码。于是想着用 Claude3.5 从零写个扫雷游戏，看看效果如何。
 
-先展示下最后的成果吧 [在线扫雷游戏](https://gallery.selfboot.cn/zh/games/minesweeper)：
+先展示下最后的成果吧 [在线扫雷游戏](https://games.programnotes.cn/zh/games/minesweeper)：
 
 ![Claude 实现的完整扫雷游戏](https://slefboot-1251736664.file.myqcloud.com/20241216_ai_gallery_blog_cover.png)
 
@@ -83,7 +83,7 @@ class MinesweeperGame {
 
 此外，我直接对渲染棋盘用的技术也做了说明，直接让**它用 canvas 实现每个方格**。这里补充一些自己的观点，其实**在使用 AI 的过程中，开发者还是要有一定的背景知识**。这样能更精确的给出一些提示，少走弯路。
 
-之前在实现[布隆过滤器的可视化](https://gallery.selfboot.cn/zh/algorithms/bloomfilter)的时候，Claude 绘制大量格子直接用 grid 组件实现，导致性能十分低下。后来多次提问，才最终学到可以用 canvas 来实现。如果不知道 canvas，不提示 AI 的话，可能在一个错误的方案上浪费很多时间。
+之前在实现[布隆过滤器的可视化](https://games.programnotes.cn/zh/algorithms/bloomfilter)的时候，Claude 绘制大量格子直接用 grid 组件实现，导致性能十分低下。后来多次提问，才最终学到可以用 canvas 来实现。如果不知道 canvas，不提示 AI 的话，可能在一个错误的方案上浪费很多时间。
 
 最后，简单的提示词如下：
 

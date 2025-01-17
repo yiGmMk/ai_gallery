@@ -15,11 +15,11 @@ export async function generateMetadata({ params: { lang } }) {
       updatedDate: "2024-11-19T09:00:00.000Z",
     }),
     alternates: {
-      canonical: `https://gallery.selfboot.cn/${lang}/games/2048`,
+      canonical: `https://games.programnotes.cn/${lang}/games/2048`,
       languages: {
-        "en": "https://gallery.selfboot.cn/en/games/2048",
-        "zh-CN": "https://gallery.selfboot.cn/zh/games/2048",
-        "x-default": "https://gallery.selfboot.cn/en/games/2048",
+        "en": "https://games.programnotes.cn/en/games/2048",
+        "zh-CN": "https://games.programnotes.cn/zh/games/2048",
+        "x-default": "https://games.programnotes.cn/en/games/2048",
       },
     },
   };
@@ -30,7 +30,7 @@ export default function Game2048Page({ params: { lang } }) {
     <>
       <PageHeader lang={lang} pathname={`/${lang}/games/2048`} />
       <Game2048 lang={lang} />
-      <CommonComments lang={lang} />  
+      <CommonComments lang={lang} />
     </>
   );
 }

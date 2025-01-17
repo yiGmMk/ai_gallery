@@ -11,7 +11,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.chartrace.title,
     description: dict.seo.chartrace.description,
     keywords: dict.seo.chartrace.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/tools/chartrace`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/tools/chartrace`,
     publishedDate: "2024-07-08T02:00:00.000Z",
     updatedDate: "2024-07-08T09:00:00.000Z",
   });

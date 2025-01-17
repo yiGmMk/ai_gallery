@@ -9,7 +9,7 @@ import { PageMeta } from "@/app/components/Meta";
 import Papa from 'papaparse';
 
 export async function generateStaticParams() {
-  return dynamicChartConfigs.flatMap((config) => 
+  return dynamicChartConfigs.flatMap((config) =>
     ['en', 'zh'].map((lang) => ({
       lang,
       chartId: config.id,
@@ -31,7 +31,7 @@ async function fetchChartData(dataFile, config) {
       throw new Error("Unsupported file format");
     }
 
-    
+
     if (Array.isArray(parsedData) && parsedData.length > 1) {
       if (dataFile.endsWith('.json')) {
         return parsedData;
@@ -72,7 +72,7 @@ export async function generateMetadata({ params: { chartId, lang } }) {
       title: dict.seo.chartrace[chartId]?.title || chartConfig.title,
       description: dict.seo.chartrace[chartId]?.description || chartConfig.description,
       keywords: dict.seo.chartrace[chartId]?.keywords || chartConfig.keywords,
-      canonicalUrl: `https://gallery.selfboot.cn/${lang}/tools/chartrace/dynamic/${chartId}`,
+      canonicalUrl: `https://games.programnotes.cn/${lang}/tools/chartrace/dynamic/${chartId}`,
       publishedDate: chartConfig.publishedDate || "2024-10-01T02:00:00.000Z",
       updatedDate: chartConfig.updatedDate || "2024-10-03T09:00:00.000Z",
     });

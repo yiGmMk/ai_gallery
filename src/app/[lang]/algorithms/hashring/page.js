@@ -11,7 +11,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.hashring.title,
     description: dict.seo.hashring.description,
     keywords: dict.seo.hashring.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}/algorithms/hashring`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}/algorithms/hashring`,
     publishedDate: "2024-08-01T04:40:00.000Z",
     updatedDate: "2024-11-07T15:00:00.000Z",
   });

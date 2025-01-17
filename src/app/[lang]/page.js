@@ -7,7 +7,7 @@ export async function generateMetadata({ params: { lang } }) {
     title: dict.seo.index.title,
     description: dict.seo.index.description,
     keywords: dict.seo.index.keywords,
-    canonicalUrl: `https://gallery.selfboot.cn/${lang}`,
+    canonicalUrl: `https://games.programnotes.cn/${lang}`,
     publishedDate: "2024-06-15T02:00:00.000Z",
     updatedDate: "2024-06-15T02:00:00.000Z",
   });
