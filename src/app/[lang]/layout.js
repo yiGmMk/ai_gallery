@@ -35,7 +35,7 @@ export default async function Layout({ children, params: { lang, slug = [] } }) 
           {`
             if (window.innerWidth >= 768) {
               const script = document.createElement('script');
-              script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7746897490519544";
+              script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3614504270218797";
               script.async = true;
               script.crossOrigin = "anonymous";
               document.head.appendChild(script);
@@ -75,15 +75,15 @@ export default async function Layout({ children, params: { lang, slug = [] } }) 
       {/* <WebVitals /> */}
       <Script
         src="https://cloud.umami.is/script.js"
-        data-website-id="d765a8dd-62fd-4096-8429-85beb1242091"
+        data-website-id="ba7ae691-fd28-4162-bc89-8976d7488fac"
         strategy="afterInteractive"
         data-domains="games.programnotes.cn"
       />
-      <Script
+      {/* <Script
         src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"token": "29fc062c6fbd41318027e723a3589333"}'
         strategy="afterInteractive"
-      />
+      /> */}
     </html>
   );
 }
