@@ -5,9 +5,9 @@ const getImageUrl = (src, size) => {
   const parsedUrl = url.parse(src);
   const query = parsedUrl.query;
   if (query) {
-    return `${parsedUrl.protocol}://${parsedUrl.host}${parsedUrl.pathname}?${query}&w=${size}`;
+    return `${parsedUrl.pathname}?${query}&w=${size}`;
   } else {
-    return `${parsedUrl.protocol}://${parsedUrl.host}${parsedUrl.pathname}?w=${size}`;
+    return `${parsedUrl.pathname}?w=${size}`;
   }
 };
 
