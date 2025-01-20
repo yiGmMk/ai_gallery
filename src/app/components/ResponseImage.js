@@ -1,9 +1,8 @@
 import Image from 'next/image';
-import url from 'url';
 
 const getImageUrl = (src, size) => {
-  const parsedUrl = url.parse(src);
-  const query = parsedUrl.query;
+  const parsedUrl = new URL(src, 'https://games.programnotes.cn');
+  const query = parsedUrl.search.slice(1);
   if (query) {
     return `${parsedUrl.pathname}?${query}&w=${size}`;
   } else {
