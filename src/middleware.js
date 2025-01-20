@@ -39,6 +39,7 @@ export function middleware(request) {
     pathname.endsWith('.webp') ||
     pathname.endsWith('.jpg') ||
     pathname.endsWith('.gif') ||
+    pathname.endsWith('.css') ||
     pathname.endsWith('.ico')
   ) {
     // 对于静态文件，直接返回，不做任何处理
@@ -84,6 +85,6 @@ export const config = {
      * - _next/image (image optimization files)
      */
     // '/((?!api|_next/static|_next/image|robots.txt).*)',
-    '/((?!api|robots.txt).*)',
+    '/((?!api|_next/static|_next/image|robots.txt).*)',
   ],
 };
