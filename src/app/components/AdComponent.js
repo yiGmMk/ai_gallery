@@ -30,7 +30,7 @@ function BaseAdComponent({ slot, className, format = "rectangle" }) {
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
-        data-ad-client="ca-pub-7746897490519544"
+        data-ad-client="ca-pub-3614504270218797"
         data-ad-slot={slot}
         data-ad-format={format}
         data-full-width-responsive="false"
@@ -40,9 +40,9 @@ function BaseAdComponent({ slot, className, format = "rectangle" }) {
 }
 
 export function SideAdComponent({ className, format }) {
-  return <BaseAdComponent slot="7437487022" format={format} className={`overflow-hidden ${className || ""}`} />;
+  return <BaseAdComponent slot="6458252709" format={format} className={`overflow-hidden ${className || ""}`} />;
 }
 
 export function AdComponent({ format }) {
-  return <BaseAdComponent slot="4833706118" format={format} />;
+  return <BaseAdComponent slot="5882998638" format={format} />;
 }
