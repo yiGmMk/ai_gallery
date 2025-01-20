@@ -35,6 +35,10 @@ export function middleware(request) {
     pathname.endsWith('.xlsx') ||
     pathname.endsWith('.docx') ||
     pathname.endsWith('.txt') ||
+    pathname.endsWith('.png') ||
+    pathname.endsWith('.webp') ||
+    pathname.endsWith('.jpg') ||
+    pathname.endsWith('.gif') ||
     pathname.endsWith('.ico')
   ) {
     // 对于静态文件，直接返回，不做任何处理
