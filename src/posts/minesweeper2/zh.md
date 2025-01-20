@@ -10,7 +10,7 @@ description: 在完整方格扫雷的基础上，用 Claude3.5 和 Cursor 实现
 
 先来看成果吧，可以在 [在线扫雷游戏](https://games.programnotes.cn/zh/games/minesweeper) 中体验：
 
-![用 Claude3.5 实现的蜂窝状的扫雷地图](https://slefboot-1251736664.file.myqcloud.com/20241217_ai_gallery_minesweeper2_cover.png)
+![用 Claude3.5 实现的蜂窝状的扫雷地图](https://games.programnotes.cn/20241217_ai_gallery_minesweeper2_cover.png)
 
 ## Claude3.5 蜂窝扫雷实现
 
@@ -75,7 +75,7 @@ Claude 定位问题还是挺准的，直接告诉我这个是因为渲染器的�
 
 上面修复完各种小错误后，现在点击切换六边形扫雷，地图看起来是蜂窝了。然后点击后也有翻开格子，不过这里有个比较严重的问题，点击的格子和翻开的格子不一致。比如下图，我点击的红色圆圈内的格子，但翻开的是相隔几个位置的格子。
 
-![蜂窝扫雷地图](https://slefboot-1251736664.file.myqcloud.com/20241217_ai_gallery_minesweeper2_hex.png)
+![蜂窝扫雷地图](https://games.programnotes.cn/20241217_ai_gallery_minesweeper2_hex.png)
 
 看起来是扫雷格子定位有问题。这里比方格扫雷定位难了很多，方格的定位，只需要计算坐标位置，然后就能很快知道对应哪个格子。六边形格子的布局和定位相对复杂了不少。
 
@@ -145,7 +145,7 @@ Claude 很努力的给我解释，说是可以使用轴向坐标系统管理六�
 
 不过为了严谨，我又进一步完善了测试用例，对于指定大小的蜂窝地图，遍历每个格子，并且取格子里不同位置的点，然后计算 canvas 中的坐标，最后再根据 canvas 的坐标反向计算格子坐标，验证反向计算的坐标和原坐标是否一致。测试部分如下图：
 
-![测试坐标转换部分的代码](https://slefboot-1251736664.file.myqcloud.com/20241217_ai_gallery_minesweeper2_test.png)
+![测试坐标转换部分的代码](https://games.programnotes.cn/20241217_ai_gallery_minesweeper2_test.png)
 
 这里定位格子的问题解决后，点击格子，翻开格子就正常了。后面又让 Claude 对蜂窝地雷的核心逻辑部分生成了更多测试用例，这样后续改动心里也有底些。
 

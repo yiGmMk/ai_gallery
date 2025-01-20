@@ -8,7 +8,7 @@ description: Using Claude3.5 to implement a fun snake game with a power-up syste
 
 The previous snake game implementation was a bit too simple, with just basic movement and failure detection, which wasn't fun enough. So I thought about adding a power-up system to make the game more entertaining.
 
-![Snake Game Power-up System](https://slefboot-1251736664.file.myqcloud.com/20241104_ai_gallery_snake_blog.png)
+![Snake Game Power-up System](https://games.programnotes.cn/20241104_ai_gallery_snake_blog.png)
 
 Play Here: [Online Creative Snake Game](https://games.programnotes.cn/en/games/snake)
 
@@ -132,7 +132,7 @@ Actually, it didn't get it right the first time, after running, both the snake a
 
 Looks like my understanding of Claude3.5's oversights was accurate, it got it right after the above prompt. Look at my snake during the food abundance state:
 
-![Snake with Invincibility](https://slefboot-1251736664.file.myqcloud.com/20241104_ai_gallery_snake_apples.png)
+![Snake with Invincibility](https://games.programnotes.cn/20241104_ai_gallery_snake_apples.png)
 
 ## Snake Invincibility
 
@@ -148,7 +148,7 @@ So I slightly modified the approach, prompting like this:
 
 If adding a gold border was difficult, at least changing the snake's color should work. Then I found the snake's current color part and gave the code directly to it. This way it provided perfect code in one go, now look at our invincible snake.
 
-![Snake with Invincibility](https://slefboot-1251736664.file.myqcloud.com/20241104_ai_gallery_snake_golden.png)
+![Snake with Invincibility](https://games.programnotes.cn/20241104_ai_gallery_snake_golden.png)
 
 Of course, while Claude3.5 quickly and roughly implemented this creative snake game, it still has some shortcomings. For example, currently I can only play a few rounds to check for bugs. Later I can have Claude3.5 help me write complete test cases to verify if there are any issues with this implementation.
 

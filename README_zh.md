@@ -19,17 +19,17 @@
 算法：探索经典算法的交互式可视化，如 BFS 寻路、A* 搜索、Dijkstra 算法和堆操作。
 
 <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20240706_ai_gallery_bfs_path.gif" alt="BFS 路径搜索" width="32%" height="200">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20240709_ai_gallery_dijkstra_v3.gif" alt="Dijkstra 最短路径" width="32%" height="200">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20240706_ai_gallery_heapv2.gif" alt="堆数据结构" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20240706_ai_gallery_bfs_path.gif" alt="BFS 路径搜索" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20240709_ai_gallery_dijkstra_v3.gif" alt="Dijkstra 最短路径" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20240706_ai_gallery_heapv2.gif" alt="堆数据结构" width="32%" height="200">
 </div>
 
 游戏：实现了一些经典的游戏，如五子棋、中国象棋、俄罗斯方块和 2048。
 
 <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20241022_ai_gallery_gomoku.webp" alt="五子棋" width="32%" height="200">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20240707_ai_gallery_tetris_v2.png/webp" alt="俄罗斯方块" width="32%" height="200">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20240710_ai_gallery_game2048.gif" alt="2024" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20241022_ai_gallery_gomoku.webp" alt="五子棋" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20240707_ai_gallery_tetris_v2.png/webp" alt="俄罗斯方块" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20240710_ai_gallery_game2048.gif" alt="2024" width="32%" height="200">
 </div>
 
 其他：一些有趣的小组件，如动态图表：体验动态条形图和其他数据可视化。

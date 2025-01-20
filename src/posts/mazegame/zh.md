@@ -8,7 +8,7 @@ description: 用 Cursor 和 Claude3.5 基于已有的一个迷宫库，写了一
 
 周末花时间用 Cursor 和 Claude3.5 基于已有的一个迷宫生成库，写了一个完整的迷宫游戏。可以在 [迷宫游戏，在线迷宫生成](https://games.programnotes.cn/zh/games/maze) 体验，整体功能还是比较齐全的，支持生成各种类型的迷宫地图，支持滑动鼠标来在线玩迷宫游戏。
 
-![在线迷宫游戏，生成各种迷宫地图](https://slefboot-1251736664.file.myqcloud.com/20241209_ai_gallery_maze_blog.png)
+![在线迷宫游戏，生成各种迷宫地图](https://games.programnotes.cn/20241209_ai_gallery_maze_blog.png)
 
 之前让 Claude 写代码的时候，用到的都是一些比较有名的库，这些库本身也有详细的文档。AI 训练的时候已经知道这些库的用法，所以在写代码的时候，可以很顺利的写出来。但是这次写迷宫游戏的时候，用的是一个[比较小众的迷宫生成库](https://github.com/codebox/mazes)，这个库本身没有文档，AI 模型中也没有这个库的知识，所以怎么让 AI 用这个库来完成我的任务，是个挑战。
 
@@ -58,7 +58,7 @@ Claude3.5 给出了一个不错的实现，添加按钮，然后实现按钮相�
 
 然后就又得调试了，在 AI 的辅助下，很容易就知道这里**迷宫库生成路径相关的实现在哪里**。接着在生成路径的代码中添加日志，发现**生成的路径没问题，但迷宫中就是没有渲染出来**。
 
-![迷宫中没有显示路径](https://slefboot-1251736664.file.myqcloud.com/20241209_ai_gallery_maze_path.png)
+![迷宫中没有显示路径](https://games.programnotes.cn/20241209_ai_gallery_maze_path.png)
 
 既然路径生成没问题，那问题就出在迷宫的渲染上了。这里看了下迷宫生成的时候，调用 `maze.render()` 来渲染。那生成好的路径，是不是也应该调用 `maze.render()` 来渲染呢？问了下 Claude，给出了肯定的回答，接着又让它解释了下这里整体的渲染实现逻辑。
 
@@ -115,7 +115,7 @@ defaultDrawingSurface.on(EVENT_CLICK, event => {
 
 既然找到了每个形状地图的转换逻辑，只需要将这部分抽离出来，暴露出一个对外接口。就可以在鼠标悬浮移动中用这个逻辑来判断鼠标在迷宫的哪个格子上。
 
-![鼠标悬浮移动优化版本](https://slefboot-1251736664.file.myqcloud.com/20241209_ai_gallery_maze_mouseover.png)
+![鼠标悬浮移动优化版本](https://games.programnotes.cn/20241209_ai_gallery_maze_mouseover.png)
 
 优化后，体验就好了很多，可以流畅的跟随鼠标移动来控制迷宫中的移动。
 

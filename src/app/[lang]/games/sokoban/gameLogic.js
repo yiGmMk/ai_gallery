@@ -12,7 +12,7 @@ export const ELEMENTS = {
 };
 
 export const SPRITE_CONFIG = {
-  SPRITE_SHEET: "https://slefboot-1251736664.file.myqcloud.com/20241114_ai_gallery_sokoban_sprites.png",
+  SPRITE_SHEET: "https://games.programnotes.cn/20241114_ai_gallery_sokoban_sprites.png",
   SPRITE_SIZE: 64,
   ENDPOINT_SIZE: 32,
   SPRITE_POSITIONS: {
@@ -280,16 +280,16 @@ export class SokobanLogic {
       this.map[playerPos.y][playerPos.x] === ELEMENTS.PLAYER_ON_TARGET
         ? ELEMENTS.TARGET
         : this.map[playerPos.y][playerPos.x] === ELEMENTS.PLAYER
-        ? ELEMENTS.FLOOR
-        : ELEMENTS.TARGET;
+          ? ELEMENTS.FLOOR
+          : ELEMENTS.TARGET;
 
     // Process player new position(box old position)
     map[newPos.y][newPos.x] =
       map[newPos.y][newPos.x] === ELEMENTS.TARGET
         ? ELEMENTS.PLAYER_ON_TARGET
         : map[newPos.y][newPos.x] === ELEMENTS.BOX_ON_TARGET
-        ? ELEMENTS.PLAYER_ON_TARGET
-        : ELEMENTS.PLAYER;
+          ? ELEMENTS.PLAYER_ON_TARGET
+          : ELEMENTS.PLAYER;
   }
 
   isGameWon() {

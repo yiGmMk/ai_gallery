@@ -19,17 +19,17 @@ This project is built using React and Nextjs for static site generation (SSG) an
 Algorithms: Explore interactive visualizations of classic algorithms such as BFS pathfinding, A* search, Dijkstra's algorithm, and heap operations.
 
 <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20240706_ai_gallery_bfs_path.gif" alt="BFS Pathfinding" width="32%" height="200">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20240709_ai_gallery_dijkstra_v3.gif" alt="Dijkstra's Shortest Path" width="32%" height="200">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20240706_ai_gallery_heapv2.gif" alt="Heap Data Structure" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20240706_ai_gallery_bfs_path.gif" alt="BFS Pathfinding" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20240709_ai_gallery_dijkstra_v3.gif" alt="Dijkstra's Shortest Path" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20240706_ai_gallery_heapv2.gif" alt="Heap Data Structure" width="32%" height="200">
 </div>
 
 Games: Implementation of classic games like Gomoku (Five in a Row), Chinese Chess, Tetris, and 2048.
 
 <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20241022_ai_gallery_gomoku.webp" alt="Gomoku" width="32%" height="200">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20240707_ai_gallery_tetris_v2.png/webp" alt="Tetris" width="32%" height="200">
-  <img src="https://slefboot-1251736664.file.myqcloud.com/20240710_ai_gallery_game2048.gif" alt="2048" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20241022_ai_gallery_gomoku.webp" alt="Gomoku" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20240707_ai_gallery_tetris_v2.png/webp" alt="Tetris" width="32%" height="200">
+  <img src="https://games.programnotes.cn/20240710_ai_gallery_game2048.gif" alt="2048" width="32%" height="200">
 </div>
 
 Other Components: Various interesting widgets, including dynamic charts for data visualization.

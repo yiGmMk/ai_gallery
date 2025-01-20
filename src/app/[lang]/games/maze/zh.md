@@ -48,7 +48,7 @@
 
 如果你想尝试不同的视觉效果，可以选择六边形迷宫，它的设计灵感来源于蜂巢，路径的连接方式更加多样化，带来全新的解谜体验。最后是圆形迷宫，这种迷宫由同心圆构成，独特的布局让你在探索时需要考虑不同的移动策略。
 
-![迷宫生成器生成的各种迷宫形状](https://slefboot-1251736664.file.myqcloud.com/20241205_ai_gallery_maze_alltype.png)
+![迷宫生成器生成的各种迷宫形状](https://games.programnotes.cn/20241205_ai_gallery_maze_alltype.png)
 
 ### 出口配置
 

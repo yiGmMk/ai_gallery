@@ -10,7 +10,7 @@ description: 用 Claude3.5 写一个经典的扫雷游戏，支持多种难度�
 
 先展示下最后的成果吧 [在线扫雷游戏](https://games.programnotes.cn/zh/games/minesweeper)：
 
-![Claude 实现的完整扫雷游戏](https://slefboot-1251736664.file.myqcloud.com/20241216_ai_gallery_blog_cover.png)
+![Claude 实现的完整扫雷游戏](https://games.programnotes.cn/20241216_ai_gallery_blog_cover.png)
 
 当然，我用 Claude 写的扫雷可不是一个简单的玩具，这次实现的扫雷功能十分齐全：
 
@@ -118,7 +118,7 @@ class CanvasRenderer {
 
 这次 Claude 通过修改 CanvasRenderer 类来增加方格的 3D 效果，使其看起来更像经典的 Windows 扫雷游戏。改动的部分如下：
 
-![3D 效果的扫雷方格](https://slefboot-1251736664.file.myqcloud.com/20241216_ai_gallery_blog_3dcell.png)
+![3D 效果的扫雷方格](https://games.programnotes.cn/20241216_ai_gallery_blog_3dcell.png)
 
 不得不说，这里超出了我的预期。本来我自己也不太知道如何才能实现 3D 效果，也没有很详细的提示词来描述实现过程。好在 Claude3.5 足够聪明，直接给出了完整的 canvas 绘制代码，还简单描述了下改进的方法：**左上方为亮边，右下方为暗边，中间为格子表面，这样看上去就是 3D 效果**了。
 

@@ -31,7 +31,7 @@
 
 你可以在游戏设置中随时切换这两种模式，切换后游戏会立即重新开始。两种模式都支持相同的难度设置和操作方式。
 
-![扫雷蜂窝模式玩法](https://slefboot-1251736664.file.myqcloud.com/20241204_ai_gallery_minesweeper_hexdemo.png)
+![扫雷蜂窝模式玩法](https://games.programnotes.cn/20241204_ai_gallery_minesweeper_hexdemo.png)
 
 同时本扫雷游戏提供了四种难度级别，适合不同水平的玩家。
 

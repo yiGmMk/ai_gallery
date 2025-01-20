@@ -8,7 +8,7 @@ description: 用 Claude3.5 实现一个好玩的贪吃蛇游戏，加入了道�
 
 之前实现的贪吃蛇过于简单了些，只有简单的移动和失败判定，不够好玩。于是想着增加一些道具系统，可以给游戏增加更多乐趣。
 
-![贪吃蛇道具系统](https://slefboot-1251736664.file.myqcloud.com/20241104_ai_gallery_snake_blog.png)
+![贪吃蛇道具系统](https://games.programnotes.cn/20241104_ai_gallery_snake_blog.png)
 
 游戏体验地址：[在线创意贪吃蛇](https://games.programnotes.cn/zh/games/snake)
 
@@ -132,7 +132,7 @@ Claude3.5 很快就给出了下面的一些改动：
 
 看来我对 Claude3.5 的丢三落四还是理解到位了，上面提示后就改对了。看看我食物大丰收状态下的贪吃蛇吧：
 
-![贪吃蛇金身不败了](https://slefboot-1251736664.file.myqcloud.com/20241104_ai_gallery_snake_apples.png)
+![贪吃蛇金身不败了](https://games.programnotes.cn/20241104_ai_gallery_snake_apples.png)
 
 ## 贪吃蛇金身不败
 
@@ -148,7 +148,7 @@ Claude3.5 甚至重构了蛇的绘制部分，但是最后也没能很好的实�
 
 金边难搞，我就让蛇变个色总可以吧。然后找到了蛇当前颜色部分，直接把代码也给它。这样一次就给出了完美的代码，现在看我们的金身不败蛇吧。
 
-![贪吃蛇金身不败了](https://slefboot-1251736664.file.myqcloud.com/20241104_ai_gallery_snake_golden.png)
+![贪吃蛇金身不败了](https://games.programnotes.cn/20241104_ai_gallery_snake_golden.png)
 
 当然，Claude3.5 快，猛，糙的实现了这个创意贪吃蛇，不过还是有些缺点的。比如，目前还只能我简单玩几局，看看有没 bug。后面还可以让 Claude3.5 帮我写完整的测试用例，来验证下这里实现有没有问题。
 

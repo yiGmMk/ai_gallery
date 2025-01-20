@@ -14,7 +14,7 @@
 
 如下图所示，在只有 10 个物理节点且没有使用虚拟节点的情况下，我们可以明显观察到数据分布的不均匀性。图中每个环形段代表一个节点负责的数据范围，不同颜色的节点对应的数据占比差异很大。比如绿色节点负责了 176 个键，而橙色节点上没有数据，这种巨大的差异会导致绿色节点负载过重，而橙色节点资源闲置，整个系统的资源利用效率低下。
 
-![hashring分布不均匀的问题](https://slefboot-1251736664.file.myqcloud.com/20241107_ai_gallery_hashring_average.png)
+![hashring分布不均匀的问题](https://games.programnotes.cn/20241107_ai_gallery_hashring_average.png)
 
 这种不均匀分布的根本原因在于，**当节点数量较少时，哈希函数计算出的位置可能会在环上分布得不够均匀，导致某些节点之间的间隔较大，而另一些节点之间的间隔较小**。较大的间隔意味着该节点需要负责更多的数据范围，从而处理更多的请求。这个问题在后面会通过引入虚拟节点的机制来解决。
 
@@ -34,7 +34,7 @@
 
 当你需要移除某个节点时，只需点击该节点，然后在弹出的弹窗上点击删除按钮即可。这个过程会直观地展示数据是如何重新分配的，以及为什么一致性哈希算法能够最小化节点变更带来的数据迁移。
 
-![删除节点后迁移key](https://slefboot-1251736664.file.myqcloud.com/20241107_ai_gallery_hashring_deletenode.png)
+![删除节点后迁移key](https://games.programnotes.cn/20241107_ai_gallery_hashring_deletenode.png)
 
 ### 虚拟节点配置
 
@@ -44,7 +44,7 @@
 
 通过增加虚拟节点，我们可以明显观察到数据分布变得更加均匀。在没有虚拟节点时，可能会出现某些物理节点负载过重的情况，而增加虚拟节点后，每个物理节点的负载会趋于平衡。如下图所示，通过调整虚拟节点的数量，原本不均匀的数据分布（部分节点占比明显偏高）变得更加均衡，各个物理节点的数据占比趋于一致。
 
-![调整虚拟节点数量](https://slefboot-1251736664.file.myqcloud.com/20241107_ai_gallery_hashring_virtualnode.png)
+![调整虚拟节点数量](https://games.programnotes.cn/20241107_ai_gallery_hashring_virtualnode.png)
 
 ### 实时反馈
 

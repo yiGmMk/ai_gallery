@@ -27,7 +27,7 @@ The search operation demonstrates the efficient lookup advantage of BSTs. When s
 
 This approach eliminates approximately half the nodes with each comparison, greatly improving search efficiency. Users can input any value to search, and the system will highlight the complete search path, visually demonstrating the entire lookup process from root to target position.
 
-![BST insert operation](https://slefboot-1251736664.file.myqcloud.com/20241108_ai_gallery_bst_insert.webp)
+![BST insert operation](https://games.programnotes.cn/20241108_ai_gallery_bst_insert.webp)
 
 The insertion operation allows users to add new nodes to the BST. The system automatically finds the appropriate position while maintaining BST properties. The insertion process follows these steps:
 
@@ -54,7 +54,7 @@ The deletion operation in BSTs is the most complex of the three basic operations
 
 The following figure demonstrates the animation process of deleting a node with 1 child.
 
-![BST delete operation](https://slefboot-1251736664.file.myqcloud.com/20241108_ai_gallery_bst_delete.webp)
+![BST delete operation](https://games.programnotes.cn/20241108_ai_gallery_bst_delete.webp)
 
 ## Time Complexity Analysis
 
@@ -64,7 +64,7 @@ On average, basic BST operations achieve logarithmic time complexity. Search ope
 
 However, in the worst case, when a BST degrades into a linked list, its performance significantly deteriorates. This typically occurs when inserting nodes in sorted sequence, such as inserting 1,2,3,4,5 in order. In this case, each new node is inserted at the bottom of the right subtree, causing the tree to completely lose balance and become a single linked list structure. In such degraded cases, all basic operations degrade to O(n) time complexity, as each operation requires traversing the entire list.
 
-![BST scenario with sequential insertion](https://slefboot-1251736664.file.myqcloud.com/20241108_ai_gallery_binarysearch_order.png)
+![BST scenario with sequential insertion](https://games.programnotes.cn/20241108_ai_gallery_binarysearch_order.png)
 
 Furthermore, in scenarios requiring frequent modifications, numerous insertion and deletion operations may cause the tree structure to gradually become unbalanced. While this can be addressed through periodic tree rebuilding, such solutions incur additional performance overhead. **This characteristic makes regular BSTs less suitable for scenarios requiring frequent data updates**.
 

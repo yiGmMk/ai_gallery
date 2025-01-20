@@ -10,7 +10,7 @@ description: 二叉搜索树是一种特殊的二叉树，每个节点的左子�
 
 这里是最终效果，大家[可以来体验](https://games.programnotes.cn/zh/algorithms/binarysearchtree)：
 
-![二叉搜索树可视化](https://slefboot-1251736664.file.myqcloud.com/20240908_ai_gallery_binarysearchtree.webp)
+![二叉搜索树可视化](https://games.programnotes.cn/20240908_ai_gallery_binarysearchtree.webp)
 
 ## 简单版本
 
@@ -30,7 +30,7 @@ Claude3.5 承认这个是一个严重的 bug，还真是敢于认错呢，哈哈
 
 经过前面的几轮对话，已经有一个初步的版本了。目前在二叉搜索树中支持插入，删除和查找操作，并且能给出树节点的可视化展示。下面是这个版本的效果图：
 
-![二叉搜索树可视化初始版本](https://slefboot-1251736664.file.myqcloud.com/20240826_ai_gallery_bst_first.png)
+![二叉搜索树可视化初始版本](https://games.programnotes.cn/20240826_ai_gallery_bst_first.png)
 
 ## 树布局优化
 
@@ -45,11 +45,11 @@ Claude3.5 承认这个是一个严重的 bug，还真是敢于认错呢，哈哈
 
 Claude 照常拍马屁，然后就按照这个思路来实现，效果并不好，因为这里二叉搜索树每层可能比较稀疏，导致中间层节点之间的间隔太大。和最开始的版本有同样的问题，甚至更严重些，如下图：
 
-![二叉搜索树可视化布局间距过大](https://slefboot-1251736664.file.myqcloud.com/20240826_ai_gallery_bst_heap.png)
+![二叉搜索树可视化布局间距过大](https://games.programnotes.cn/20240826_ai_gallery_bst_heap.png)
 
 那么直接提示它，让它每层间距不要太大，布局紧凑些，然后同一层的节点不要有重叠就好。得到了下面的结果：
 
-![二叉搜索树可视化-错误的版本](https://slefboot-1251736664.file.myqcloud.com/20240827_ai_gallery_bst_error.png)
+![二叉搜索树可视化-错误的版本](https://games.programnotes.cn/20240827_ai_gallery_bst_error.png)
 
 这里是紧凑了，不过节点分布都有问题，左右子树节点位置都不对。中间经过几轮尝试，自己的思路也慢慢清晰，我们想要树布局尽量紧凑，同时不能有节点的交叉和重叠，那么只需要满足：
 
@@ -67,7 +67,7 @@ Claude 照常拍马屁，然后就按照这个思路来实现，效果并不好�
 
 下面是布局的效果图，可以看到在有很多节点的情况下，整体布局比较紧凑，并且符合前面的要求。
 
-![二叉搜索树可视化布局优化](https://slefboot-1251736664.file.myqcloud.com/20240826_ai_gallery_bst_layout.png)
+![二叉搜索树可视化布局优化](https://games.programnotes.cn/20240826_ai_gallery_bst_layout.png)
 
 ## 优化界面
 
@@ -86,7 +86,7 @@ Claude 照常拍马屁，然后就按照这个思路来实现，效果并不好�
 
 于是 Claude 重构了界面部分，增加了初始化按钮。不过开始的版本 SVG 树部分不支持滚动，节点可能会超出屏幕，又重新提示一遍，加上了滚动条。最后效果如下，这里是按照顺序初始化 15 个节点：
 
-![二叉搜索树可视化界面效果](https://slefboot-1251736664.file.myqcloud.com/20240827_ai_gallery_bst_improve.png)
+![二叉搜索树可视化界面效果](https://games.programnotes.cn/20240827_ai_gallery_bst_improve.png)
 
 ## 添加动画
 
@@ -100,7 +100,7 @@ Claude 照常拍马屁，然后就按照这个思路来实现，效果并不好�
 
 给出的代码有各种问题，开始的版本一下子就高亮整个路径，并且给出了新插入的节点。删除的时候，还报错。后来经过几轮对话，慢慢修复了各种小问题。然后刚好又看到 cursor 比较火，就尝试了下用 cursor 进行后续的开发。试着让 Cursor 来帮我修小的 bug，比如删除节点的时候，如果节点不存在，目前的版本还是会显示删除成功，于是直接让 AI 来改动，如下图：
 
-![二叉搜索树增加动画](https://slefboot-1251736664.file.myqcloud.com/20240903_ai_gallery_bst_deletenode.png)
+![二叉搜索树增加动画](https://games.programnotes.cn/20240903_ai_gallery_bst_deletenode.png)
 
 AI 给出了所有的改动，我这里先看了下，然后直接 Apply 了。在没用 cursor 的时候，还需要手动从 claude 中找到改动的差异部分，然后自己粘贴过来。相比之下，用 cursor 只需要看代码 diff，然后决定是否采纳。之后自己再测试一遍功能就行了，哈哈，感觉自己现在是一个测试人员了。
 
@@ -112,7 +112,7 @@ AI 给出了所有的改动，我这里先看了下，然后直接 Apply 了。�
 
 AI 生成部分和之前直接用 claude 区别不大，主要是修改代码中写死的文案，然后增加翻译文件。不过 cursor 强大之处在于可以点击 Apply，这样代码变更就直接 patch 到了文件中。我只用一路查看，然后确认即可。
 
-![二叉搜索树增加国际化支持 by cursor](https://slefboot-1251736664.file.myqcloud.com/20240903_ai_gallery_bst_i18n.png)
+![二叉搜索树增加国际化支持 by cursor](https://games.programnotes.cn/20240903_ai_gallery_bst_i18n.png)
 
 不过后面的翻译 json 文件目前还不能按照我之前的风格自动添加到 en.json 和 zh.json ，还需要稍微手工编辑下，算一点美中不足吧。
 

@@ -14,7 +14,7 @@ In practical applications, the basic hash ring has a notable issue: **when there
 
 As shown in the figure below, with only 10 physical nodes and no virtual nodes, we can clearly observe the uneven data distribution. Each ring segment represents a node's data range, and different colored nodes show significantly different data proportions. For example, the green node handles 176 keys while the orange node has no data, creating a huge disparity that leads to overload on the green node while the orange node's resources remain idle, resulting in inefficient system resource utilization.
 
-![Uneven distribution problem in hashring](https://slefboot-1251736664.file.myqcloud.com/20241107_ai_gallery_hashring_average.png)
+![Uneven distribution problem in hashring](https://games.programnotes.cn/20241107_ai_gallery_hashring_average.png)
 
 The root cause of this uneven distribution is that **with fewer nodes, hash function results may not be evenly distributed around the ring, leading to larger gaps between some nodes and smaller gaps between others**. Larger gaps mean that node must handle a larger data range and thus more requests. This problem is solved by introducing virtual nodes.
 
@@ -34,7 +34,7 @@ You can observe how the consistent hashing ring dynamically adjusts data distrib
 
 When you need to remove a node, simply click on that node and then click the delete button in the popup dialog. This process visually demonstrates how data is redistributed and why the consistent hashing algorithm minimizes data migration when nodes change.
 
-![Key migration after node deletion](https://slefboot-1251736664.file.myqcloud.com/20241107_ai_gallery_hashring_deletenode.png)
+![Key migration after node deletion](https://games.programnotes.cn/20241107_ai_gallery_hashring_deletenode.png)
 
 ### Virtual Node Configuration
 
@@ -44,7 +44,7 @@ In the visualization interface, **each virtual node appears as a small dot on th
 
 By adding virtual nodes, we can clearly observe the data distribution becoming more uniform. Without virtual nodes, some physical nodes might be overloaded, but after adding virtual nodes, the load across physical nodes tends to balance. As shown in the figure below, by adjusting the number of virtual nodes, the previously uneven data distribution (where some nodes had significantly higher proportions) becomes more balanced, with data proportions becoming more consistent across physical nodes.
 
-![Adjusting virtual node count](https://slefboot-1251736664.file.myqcloud.com/20241107_ai_gallery_hashring_virtualnode.png)
+![Adjusting virtual node count](https://games.programnotes.cn/20241107_ai_gallery_hashring_virtualnode.png)
 
 ### Real-time Feedback
 

@@ -10,7 +10,7 @@ While reviewing the [LevelDB source code](https://selfboot.cn/en/tags/leveldb/),
 
 Here's the [final result that you can experience](https://games.programnotes.cn/en/algorithms/binarysearchtree):
 
-![Binary Search Tree Visualization](https://slefboot-1251736664.file.myqcloud.com/20240908_ai_gallery_binarysearchtree.webp)
+![Binary Search Tree Visualization](https://games.programnotes.cn/20240908_ai_gallery_binarysearchtree.webp)
 
 ## Simple Version
 
@@ -30,7 +30,7 @@ Claude 3.5 admitted this was a serious bug, showing its willingness to acknowled
 
 After these few rounds of dialogue, we had an initial version. It now supports insert, delete, and search operations in the binary search tree and provides a visual representation of the tree nodes. Here's an image of this version:
 
-![Initial version of Binary Search Tree Visualization](https://slefboot-1251736664.file.myqcloud.com/20240826_ai_gallery_bst_first.png)
+![Initial version of Binary Search Tree Visualization](https://games.programnotes.cn/20240826_ai_gallery_bst_first.png)
 
 ## Tree Layout Optimization
 
@@ -45,11 +45,11 @@ Initially, my own thinking was not quite right. I considered using the node layo
 
 Claude, as usual, flattered me and then implemented based on this idea. The effect was not good because the binary search tree might be sparse at each level, causing the spacing between middle-layer nodes to be too large. It had the same problem as the initial version, even more severe, as shown in the following image:
 
-![Binary Search Tree Visualization with Excessive Layout Spacing](https://slefboot-1251736664.file.myqcloud.com/20240826_ai_gallery_bst_heap.png)
+![Binary Search Tree Visualization with Excessive Layout Spacing](https://games.programnotes.cn/20240826_ai_gallery_bst_heap.png)
 
 So I directly prompted it to make the spacing between each layer not too large, to make the layout more compact, and to ensure that nodes on the same level do not overlap. This resulted in the following:
 
-![Binary Search Tree Visualization - Incorrect Version](https://slefboot-1251736664.file.myqcloud.com/20240827_ai_gallery_bst_error.png)
+![Binary Search Tree Visualization - Incorrect Version](https://games.programnotes.cn/20240827_ai_gallery_bst_error.png)
 
 This was compact, but the node distribution was problematic, with incorrect positions for left and right subtree nodes. After several attempts, my own thinking gradually became clearer. We want the tree layout to be as compact as possible while avoiding node intersections and overlaps. To achieve this, we only need to satisfy:
 
@@ -67,7 +67,7 @@ In other words, on the same level, all smaller nodes must be to the left of larg
 
 Below is an image of the layout effect. You can see that with many nodes, the overall layout is relatively compact and meets the previous requirements.
 
-![Binary Search Tree Visualization Layout Optimization](https://slefboot-1251736664.file.myqcloud.com/20240826_ai_gallery_bst_layout.png)
+![Binary Search Tree Visualization Layout Optimization](https://games.programnotes.cn/20240826_ai_gallery_bst_layout.png)
 
 ## Interface Optimization
 
@@ -86,7 +86,7 @@ I started a new dialogue with Claude, directly copying the complete code from be
 
 Claude then refactored the interface part and added initialization buttons. However, the initial version of the SVG tree part didn't support scrolling, and nodes might exceed the screen. After prompting again, scrollbars were added. The final effect is as follows, with 15 nodes initialized sequentially:
 
-![Binary Search Tree Visualization Interface Effect](https://slefboot-1251736664.file.myqcloud.com/20240827_ai_gallery_bst_improve.png)
+![Binary Search Tree Visualization Interface Effect](https://games.programnotes.cn/20240827_ai_gallery_bst_improve.png)
 
 ## Adding Animation
 
@@ -100,7 +100,7 @@ Next, I wanted to add some animation demonstrations to the entire visualization,
 
 The provided code had various issues. The initial version highlighted the entire path at once and showed the newly inserted node. There were errors during deletion. After several rounds of dialogue, various small issues were gradually fixed. Then, coincidentally seeing that cursor was quite popular, I tried using cursor for subsequent development. I attempted to let Cursor help me fix small bugs, such as when deleting a node, the current version still shows successful deletion even if the node doesn't exist. So I directly asked the AI to make changes, as shown in the following image:
 
-![Adding Animation to Binary Search Tree](https://slefboot-1251736664.file.myqcloud.com/20240903_ai_gallery_bst_deletenode.png)
+![Adding Animation to Binary Search Tree](https://games.programnotes.cn/20240903_ai_gallery_bst_deletenode.png)
 
 The AI provided all the changes, and I first reviewed them and then directly applied them. Before using cursor, I had to manually find the changed parts from Claude and paste them over. In comparison, with cursor, I only need to look at the code diff and decide whether to adopt it. Then I just need to test the functionality myself, haha, I feel like I've become a tester now.
 
@@ -112,7 +112,7 @@ At this point, the basic functionality was mostly complete, and I wanted to add 
 
 The AI-generated part was not much different from directly using Claude, mainly modifying the hardcoded text in the code and adding translation files. However, the power of cursor lies in being able to click Apply, which directly patches the code changes into the file. I only needed to review and confirm along the way.
 
-![Adding Internationalization Support to Binary Search Tree by cursor](https://slefboot-1251736664.file.myqcloud.com/20240903_ai_gallery_bst_i18n.png)
+![Adding Internationalization Support to Binary Search Tree by cursor](https://games.programnotes.cn/20240903_ai_gallery_bst_i18n.png)
 
 However, the translation json files currently can't be automatically added to en.json and zh.json according to my previous style, still requiring some manual editing, which is a slight imperfection.
 

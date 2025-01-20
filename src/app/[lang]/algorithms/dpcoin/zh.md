@@ -60,7 +60,7 @@
 
 让我们看一个具体的例子。当我们设置目标金额为11，使用面值为1、2、5的硬币时，系统会逐步展示计算过程。如下图：
 
-![动态规划硬币找零可视化过程](https://slefboot-1251736664.file.myqcloud.com/20241121_ai_gallery_dpcoin_blog1_zh.png)
+![动态规划硬币找零可视化过程](https://games.programnotes.cn/20241121_ai_gallery_dpcoin_blog1_zh.png)
 
 每个金额的最优解计算过程：
 

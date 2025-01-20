@@ -45,7 +45,7 @@ This page supports multiple maze shapes for generation. First is the square maze
 
 If you want to try different visual effects, you can choose the hexagonal maze, inspired by honeycomb structures, offering more diverse path connections and a fresh puzzle-solving experience. Finally, there's the circular maze, formed by concentric circles, whose unique layout requires different movement strategies during exploration.
 
-![Maze generator: various maze shapes](https://slefboot-1251736664.file.myqcloud.com/20241205_ai_gallery_maze_alltype.png)
+![Maze generator: various maze shapes](https://games.programnotes.cn/20241205_ai_gallery_maze_alltype.png)
 
 ### Exit Configuration
 

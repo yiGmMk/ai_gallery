@@ -12,7 +12,7 @@ Although based on numbers, **Sudoku doesn't require complex mathematical calcula
 
 The Sudoku on this page can be played directly in your browser, without the need to download any application, allowing you to enjoy Sudoku anytime, anywhere. You can choose different difficulty levels, from beginner to expert. This page also provides a hint feature; you can click the hint button to get assistance.
 
-![Sudoku Solving Hint](https://slefboot-1251736664.file.myqcloud.com/20241011_ai_gallery_sudoku_case1.png)
+![Sudoku Solving Hint](https://games.programnotes.cn/20241011_ai_gallery_sudoku_case1.png)
 
 Additionally, there's an undo feature supporting up to 3 steps of undo. Here are some Sudoku playing strategies:
 

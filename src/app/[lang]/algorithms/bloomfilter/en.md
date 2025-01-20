@@ -16,7 +16,7 @@ The tool provides various ways to operate the Bloom filter. You can add individu
 
 For element queries, enter the string you want to query in the input box and click the "Search" button. The system marks query results with different colors: orange indicates the element might exist in the set, while red definitively indicates the element is not in the set.
 
-![Bloom Filter Search Operation](https://slefboot-1251736664.file.myqcloud.com/20241107_ai_gallery_bloomfilter_search.png)
+![Bloom Filter Search Operation](https://games.programnotes.cn/20241107_ai_gallery_bloomfilter_search.png)
 
 For testing convenience, the system also provides batch operations. **You can add 10 or 100 random keys at once, which is helpful for observing how the Bloom filter performs with large amounts of data**. If you want to start fresh, you can use the "Reset" button to restore the filter to its initial state.
 
@@ -28,7 +28,7 @@ The tool also offers rich interactive features. **When you hover your mouse over
 
 Note that **these detailed key information are stored additionally for demonstration purposes in this visualization tool**. In actual Bloom filter implementations, these original key information are not stored, which is one reason why Bloom filters achieve high space efficiency. These interactive features are designed to help you better understand how Bloom filters work and how data is distributed.
 
-![Bloom Filter Visualization Page Extra Storage](https://slefboot-1251736664.file.myqcloud.com/20241107_ai_gallery_bloomfilter_popup.png)
+![Bloom Filter Visualization Page Extra Storage](https://games.programnotes.cn/20241107_ai_gallery_bloomfilter_popup.png)
 
 ## Advantages and Disadvantages of Bloom Filters
 

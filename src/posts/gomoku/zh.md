@@ -10,7 +10,7 @@ description: 用 Claude3.5 实现一个完整的单机五子棋游戏，支持�
 
 如果用 Claude3.5 来实现禁手，会有难度吗？对于复杂的规则，当使用 Claude 辅助开发的时候，如何才能保证实现的正确性？本文记录用 Claude 实现单机五子棋的完整过程，一起来体会和 AI 结对编程的乐趣。
 
-![单机版五子棋，支持各种禁手规则](https://slefboot-1251736664.file.myqcloud.com/20241016_ai_gallery_gomoku_blogcover.png)
+![单机版五子棋，支持各种禁手规则](https://games.programnotes.cn/20241016_ai_gallery_gomoku_blogcover.png)
 
 可以在这里体验：[在线五子棋](https://games.programnotes.cn/zh/games/gomoku) 游戏，目前只有单机版，后续会支持联网对战和 人、AI 对战。代码全部开源，在 [Github](https://github.com/selfboot/ai_gallery) 上。
 
@@ -24,7 +24,7 @@ description: 用 Claude3.5 实现一个完整的单机五子棋游戏，支持�
 
 效果如下：
 
-![AI 实现的五子棋棋盘](https://slefboot-1251736664.file.myqcloud.com/20241016_ai_gallery_gomoku_ui.png)
+![AI 实现的五子棋棋盘](https://games.programnotes.cn/20241016_ai_gallery_gomoku_ui.png)
 
 不过如果仔细观察，这里的棋子在方格里面，**其实正规棋盘，棋子不是放到方格里面，而是放到交叉线地方的**。想实现也很简单，再描述清楚，然后 Claude 就能快速实现。另外在棋盘边界线周围还需要留一点空白，这样边上的棋子也有足够的位置。
 
@@ -170,7 +170,7 @@ AI 能快速给出各种测试用例，不过还是免不了人工干预。毕�
 
 测试运行结果：
 
-![五子棋禁手测试代码](https://slefboot-1251736664.file.myqcloud.com/20241016_ai_gallery_gomoku_test.png)
+![五子棋禁手测试代码](https://games.programnotes.cn/20241016_ai_gallery_gomoku_test.png)
 
 有测试用例做保证，这里禁手的实现基本没啥问题了。不过如果仔细看专业的禁手规则，发现还有太专业的非禁手情况，等后面有时间精力了再来看看怎么实现吧。
 

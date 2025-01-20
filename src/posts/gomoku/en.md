@@ -10,7 +10,7 @@ Gomoku is a relatively simple board game with straightforward rules. If we were 
 
 Would it be challenging to implement forbidden moves using Claude3.5? For complex rules, when using Claude for development assistance, how can we ensure the correctness of the implementation? This article records the complete process of implementing a single-player Gomoku using Claude, allowing us to experience the joy of pair programming with AI.
 
-![Single-player Gomoku, supporting various forbidden move rules](https://slefboot-1251736664.file.myqcloud.com/20241016_ai_gallery_gomoku_blogcover.png)
+![Single-player Gomoku, supporting various forbidden move rules](https://games.programnotes.cn/20241016_ai_gallery_gomoku_blogcover.png)
 
 You can experience the [Online Gomoku](https://games.programnotes.cn/en/games/gomoku) game here. Currently, only the single-player version is available, but network multiplayer and human vs. AI modes will be supported in the future. The code is fully open-source on [Github](https://github.com/selfboot/ai_gallery).
 
@@ -24,7 +24,7 @@ After two or three rounds of prompting, mainly to supplement the implementation 
 
 The result is as follows:
 
-![AI-implemented Gomoku board](https://slefboot-1251736664.file.myqcloud.com/20241016_ai_gallery_gomoku_ui.png)
+![AI-implemented Gomoku board](https://games.programnotes.cn/20241016_ai_gallery_gomoku_ui.png)
 
 However, upon closer inspection, the stones are placed inside the squares. In fact, on a standard board, **stones are not placed inside the squares but at the intersections of the lines**. Implementing this is simple; just describe it clearly, and Claude can quickly realize it. Additionally, some white space needs to be left around the board's boundary lines so that the stones on the edges have enough space.
 
@@ -170,7 +170,7 @@ AI can quickly provide various test cases, but human intervention is still unavo
 
 Test run results:
 
-![Gomoku forbidden move test code](https://slefboot-1251736664.file.myqcloud.com/20241016_ai_gallery_gomoku_test.png)
+![Gomoku forbidden move test code](https://games.programnotes.cn/20241016_ai_gallery_gomoku_test.png)
 
 With test cases as a guarantee, the implementation of forbidden moves here is basically problem-free. However, if we look carefully at professional forbidden move rules, we find there are still some very professional non-forbidden move situations. We'll see how to implement these when we have more time and energy later.
 

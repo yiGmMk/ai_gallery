@@ -31,7 +31,7 @@ This Minesweeper game offers two game modes:
 
 You can switch between these two modes in the game settings at any time. The game will restart immediately after switching. Both modes support the same difficulty settings and control mechanisms.
 
-![Minesweeper Hexagonal Mode](https://slefboot-1251736664.file.myqcloud.com/20241204_ai_gallery_minesweeper_hexdemo.png)
+![Minesweeper Hexagonal Mode](https://games.programnotes.cn/20241204_ai_gallery_minesweeper_hexdemo.png)
 
 This Minesweeper game offers four difficulty levels, suitable for players of different skill levels:
 

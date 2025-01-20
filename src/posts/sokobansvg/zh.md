@@ -10,7 +10,7 @@ description: 以推箱子游戏关卡缩略图优化为例，展示了 Claude3.5
 
 但是后面有用户反馈说缩略图看着很模糊，仔细看了下确实如此，如下图：
 
-![推箱子游戏关卡 canvas 缩略图](https://slefboot-1251736664.file.myqcloud.com/20241218_ai_gallery_sokoban_blog.png)
+![推箱子游戏关卡 canvas 缩略图](https://games.programnotes.cn/20241218_ai_gallery_sokoban_blog.png)
 
 如果看不出模糊的效果，没关系，等看到后面清晰的再回过来看，有对比就有伤害了。
 
@@ -26,7 +26,7 @@ Claude3.5 信心满满，说要提高 canvas 缩略图的清晰度，可以使�
 
 Cursor 中应用变更后，刷新页面，效果好了些，如下图这样：
 
-![推箱子游戏关卡 canvas 缩略图优化后](https://slefboot-1251736664.file.myqcloud.com/20241218_ai_gallery_sokoban_canvas_better.png)
+![推箱子游戏关卡 canvas 缩略图优化后](https://games.programnotes.cn/20241218_ai_gallery_sokoban_canvas_better.png)
 
 和之前的版本对比，确实好不少。拿去给反馈的用户重新体验了下，反馈说还是模糊。并且建议我用 svg 实现，这样效果会更好，并且能无损放大缩小。
 
@@ -44,11 +44,11 @@ Claude3.5 很快给出了 svg 的代码，并解释说使用 SVG 会更清晰,�
 
 一次改好的代码变更很清晰，提交在 [commit 03cc29](https://github.com/selfboot/ai_gallery/commit/01c28d2401561e692a9ee384a16e0ad18703cc29)，如下：
 
-![推箱子游戏关卡 svg 缩略图代码改动](https://slefboot-1251736664.file.myqcloud.com/20241218_ai_gallery_sokoban_svg_commit.png)
+![推箱子游戏关卡 svg 缩略图代码改动](https://games.programnotes.cn/20241218_ai_gallery_sokoban_svg_commit.png)
 
 这个方案相比 canvas 的方案，不需要处理设备像素比(DPR)，更容易调试和修改样式。并且由于 svg 是矢量图形，在任何分辨率下都能保持清晰。最后效果图如下：
 
-![推箱子游戏关卡使用 svg 缩略图](https://slefboot-1251736664.file.myqcloud.com/20241218_ai_gallery_sokoban_svg_better.png)
+![推箱子游戏关卡使用 svg 缩略图](https://games.programnotes.cn/20241218_ai_gallery_sokoban_svg_better.png)
 
 ## canvas 和 svg 的对比
 

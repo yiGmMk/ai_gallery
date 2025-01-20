@@ -51,7 +51,7 @@ Lastly, just trace back to rebuild the shortest path. During the search process,
 
 The overall flow of A* search is shown in the following diagram:
 
-![Overall flow of A* search](https://slefboot-1251736664.file.myqcloud.com/20241021_ai_gallery_astar_flowchart.png)
+![Overall flow of A* search](https://games.programnotes.cn/20241021_ai_gallery_astar_flowchart.png)
 
 Source code as follows:
 

@@ -63,7 +63,7 @@ To make the calculation process more intuitive, the system uses different color 
 
 Let's look at a specific example. When we set the target amount to 11 and use coins of values 1, 2, and 5, the system will show the calculation process step by step. As shown below:
 
-![Dynamic Programming Coin Change Visualization Process](https://slefboot-1251736664.file.myqcloud.com/20241121_ai_gallery_dpcoin_blog1_en.png)
+![Dynamic Programming Coin Change Visualization Process](https://games.programnotes.cn/20241121_ai_gallery_dpcoin_blog1_en.png)
 
 The optimal solution calculation process for each amount:
 

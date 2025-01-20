@@ -10,7 +10,7 @@ In my previous article [Building a Minesweeper Game from Scratch with Claude3.5 
 
 Let's first look at the result, which you can try at [Online Minesweeper Game](https://games.programnotes.cn/en/games/minesweeper):
 
-![Hexagonal Minesweeper Map Implemented with Claude3.5](https://slefboot-1251736664.file.myqcloud.com/20241217_ai_gallery_minesweeper2_cover.png)
+![Hexagonal Minesweeper Map Implemented with Claude3.5](https://games.programnotes.cn/20241217_ai_gallery_minesweeper2_cover.png)
 
 ## Implementing Hexagonal Minesweeper with Claude3.5
 
@@ -75,7 +75,7 @@ There were some minor issues later, like some unimplemented methods in HexMinesw
 
 After fixing various small errors, clicking the hexagonal Minesweeper switch now showed a honeycomb pattern. Clicking also revealed cells, but there was a serious issue: the clicked cell and the revealed cell didn't match. As shown in the image, I clicked inside the red circle, but it revealed a cell several positions away.
 
-![Hexagonal Minesweeper Map](https://slefboot-1251736664.file.myqcloud.com/20241217_ai_gallery_minesweeper2_hex.png)
+![Hexagonal Minesweeper Map](https://games.programnotes.cn/20241217_ai_gallery_minesweeper2_hex.png)
 
 It seemed there was an issue with cell positioning. This was much more complex than square grid positioning, where you could quickly determine the corresponding cell just by calculating coordinates. Hexagonal cell layout and positioning were considerably more complicated.
 
@@ -145,7 +145,7 @@ Subsequently, Claude3.5 modified the implementation, and the test cases passed s
 
 However, to be thorough, I further improved the test cases, iterating through each cell in a specified size honeycomb map, taking points at different positions within cells, calculating canvas coordinates, then reverse calculating cell coordinates from the canvas coordinates, verifying that the reverse-calculated coordinates matched the original coordinates. The test part is shown in the image:
 
-![Code for Testing Coordinate Conversion](https://slefboot-1251736664.file.myqcloud.com/20241217_ai_gallery_minesweeper2_test.png)
+![Code for Testing Coordinate Conversion](https://games.programnotes.cn/20241217_ai_gallery_minesweeper2_test.png)
 
 After solving the cell positioning issue, clicking and revealing cells worked normally. Later, I had Claude generate more test cases for the core logic of hexagonal Minesweeper, giving us more confidence in future modifications.
 

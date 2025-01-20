@@ -8,7 +8,7 @@ description: Introducing blog functionality to the site. The site itself is impl
 
 I've finally introduced blog functionality to the site. You can create Markdown articles in the `src/posts` directory, with support for multiple languages, comments, table of contents, and other features. I also experienced the joy of frontend development from scratch, and although some areas are still not perfect, it already meets basic needs.
 
-![Site with blog functionality](https://slefboot-1251736664.file.myqcloud.com/20240814_ai_gallery_blog_cover_2.webp)
+![Site with blog functionality](https://games.programnotes.cn/20240814_ai_gallery_blog_cover_2.webp)
 
 ## Using an Open-Source Blog?
 
@@ -122,7 +122,7 @@ At this point, the entire page looked good, but to make it easier for search eng
 
 In fact, during the daily process of writing articles, I often ask Claude to help me write the description, saving me time from writing it myself. After setting it up, I tested it with Lighthouse, and the SEO score was pretty good.
 
-![Blog SEO Score Test](https://slefboot-1251736664.file.myqcloud.com/20240814_ai_gallery_blog_seo_score.png)
+![Blog SEO Score Test](https://games.programnotes.cn/20240814_ai_gallery_blog_seo_score.png)
 
 To improve Google's indexing speed, we needed to further improve the sitemap. Actually, my demo site already supported RSS and sitemap, so we only needed to add support for the blog part. The generation of sitemap and RSS are together, so I'll talk about it all in the RSS section.
 

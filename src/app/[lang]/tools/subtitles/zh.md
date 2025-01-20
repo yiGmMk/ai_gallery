@@ -14,4 +14,4 @@
 
 使用效果如下：
 
-![在线图片拼接字幕使用效果](https://slefboot-1251736664.file.myqcloud.com/20250115_ai_gallery_subtitles_demo.png)
+![在线图片拼接字幕使用效果](https://games.programnotes.cn/20250115_ai_gallery_subtitles_demo.png)

@@ -8,7 +8,7 @@ description: Using Cursor and Claude3.5, I built a complete maze game based on a
 
 Over the weekend, I used Cursor and Claude3.5 to create a complete maze game based on an existing maze generation library. You can try it at [Maze Game, Online Maze Generation](https://games.programnotes.cn/zh/games/maze). It has comprehensive features, supporting various types of maze map generation and online maze gameplay using mouse controls.
 
-![Online Maze Game, Generate Various Maze Maps](https://slefboot-1251736664.file.myqcloud.com/20241209_ai_gallery_maze_blog.png)
+![Online Maze Game, Generate Various Maze Maps](https://games.programnotes.cn/20241209_ai_gallery_maze_blog.png)
 
 Previously, when having Claude write code, I used well-known libraries with detailed documentation. AI models were already trained on these libraries, making it easy to write code. However, this time, I used a [relatively obscure maze generation library](https://github.com/codebox/mazes) without documentation. Since the AI model had no knowledge of this library, getting AI to use it for my task was challenging.
 
@@ -58,7 +58,7 @@ Claude3.5 provided a decent implementation, adding the button and implementing r
 
 Then it was time to debug again. With AI's assistance, it was easy to find where the path generation implementation was in the maze library. After adding logs to the path generation code, we found **the path was generated correctly but just wasn't rendering in the maze**.
 
-![No Path Displayed in Maze](https://slefboot-1251736664.file.myqcloud.com/20241209_ai_gallery_maze_path.png)
+![No Path Displayed in Maze](https://games.programnotes.cn/20241209_ai_gallery_maze_path.png)
 
 Since path generation worked fine, the problem must be in the maze rendering. Looking at the maze generation code, we saw `maze.render()` being called for rendering. Should we also call `maze.render()` after generating the path? Asked Claude, who gave an affirmative answer and then explained the overall rendering logic.
 
@@ -116,7 +116,7 @@ Other grid shapes have similar conversion logic. Of course, due to the complexit
 
 Having found the conversion logic for each map shape, we just needed to extract this part and expose an external interface. This logic could then be used in mouse hover movement to determine which maze cell the mouse is over.
 
-![Optimized Version of Mouse Hover Movement](https://slefboot-1251736664.file.myqcloud.com/20241209_ai_gallery_maze_mouseover.png)
+![Optimized Version of Mouse Hover Movement](https://games.programnotes.cn/20241209_ai_gallery_maze_mouseover.png)
 
 After optimization, the experience improved significantly, allowing smooth maze movement following the mouse.
 

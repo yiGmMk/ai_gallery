@@ -10,7 +10,7 @@ My online Sokoban game has [numerous levels](https://games.programnotes.cn/en/ga
 
 However, users later reported that the thumbnails appeared blurry. Upon closer inspection, they were indeed fuzzy, as shown below:
 
-![Sokoban Level Canvas Thumbnails](https://slefboot-1251736664.file.myqcloud.com/20241218_ai_gallery_sokoban_blog.png)
+![Sokoban Level Canvas Thumbnails](https://games.programnotes.cn/20241218_ai_gallery_sokoban_blog.png)
 
 If you can't notice the blurriness, don't worry - the contrast will become apparent when you see the clearer version later.
 
@@ -26,7 +26,7 @@ The solution involved getting the device pixel ratio (devicePixelRatio), setting
 
 After applying these changes in Cursor, the refreshed page showed improved results:
 
-![Optimized Sokoban Level Canvas Thumbnails](https://slefboot-1251736664.file.myqcloud.com/20241218_ai_gallery_sokoban_canvas_better.png)
+![Optimized Sokoban Level Canvas Thumbnails](https://games.programnotes.cn/20241218_ai_gallery_sokoban_canvas_better.png)
 
 Compared to the previous version, it was noticeably better. When I shared this with the user who reported the issue, they suggested using SVG instead, saying it would provide better results and allow lossless scaling.
 
@@ -44,11 +44,11 @@ The code changes exceeded expectations. Claude3.5 removed all canvas-related cod
 
 The clean code changes were committed in [commit 03cc29](https://github.com/selfboot/ai_gallery/commit/01c28d2401561e692a9ee384a16e0ad18703cc29), as shown below:
 
-![Sokoban Level SVG Thumbnail Code Changes](https://slefboot-1251736664.file.myqcloud.com/20241218_ai_gallery_sokoban_svg_commit.png)
+![Sokoban Level SVG Thumbnail Code Changes](https://games.programnotes.cn/20241218_ai_gallery_sokoban_svg_commit.png)
 
 This SVG approach, compared to canvas, doesn't require handling device pixel ratio (DPR), is easier to debug and modify styles, and maintains clarity at any resolution since SVG is vector-based. The final result looks like this:
 
-![Sokoban Level SVG Thumbnails](https://slefboot-1251736664.file.myqcloud.com/20241218_ai_gallery_sokoban_svg_better.png)
+![Sokoban Level SVG Thumbnails](https://games.programnotes.cn/20241218_ai_gallery_sokoban_svg_better.png)
 
 ## Canvas vs SVG Comparison
 

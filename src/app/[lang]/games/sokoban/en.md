@@ -34,7 +34,7 @@ Finally, enjoying the puzzle-solving process is most important. Don't worry too 
 
 This Sokoban game features a powerful **game editor** that allows you to create, edit, and share your own puzzles. To start creating your own level, simply click the "**Create Game**" button on the right panel to enter edit mode.
 
-![Sokoban Game Editor: Create Your Own Sokoban Game](https://slefboot-1251736664.file.myqcloud.com/20241117_ai_gallery_sokoban_editmode.png)
+![Sokoban Game Editor: Create Your Own Sokoban Game](https://games.programnotes.cn/20241117_ai_gallery_sokoban_editmode.png)
 
 In the editor, you can freely adjust the map's width and height, supporting sizes from 3x3 to 50x50. The editing interface provides all necessary map elements, which can be placed on the grid with simple clicks. If you're not satisfied with your current design, you can use the clear button to start over. Once you've completed your design, click the save button to immediately experience your creation.
 

@@ -20,7 +20,7 @@ I decided to use... so I directly prompted:
 
 It generated a rough code that required specific data to run. Moreover, the effect was poor, so I temporarily put it aside.
 
-![Rough racing chart](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_ugly_version.png)
+![Rough racing chart](https://games.programnotes.cn/20240926_ai_gallery_chartrace_ugly_version.png)
 
 ## Continued Attempts
 
@@ -59,7 +59,7 @@ To make it support names on the y-axis, I spent a long time and prompted several
 
 Alright, let's stop trying and instead look at how the [official example](https://echarts.apache.org/examples/en/editor.html?c=bar-race-country) does it. **After all, only when you understand how to write it yourself can you guide AI to write it**. The official example code is simple enough and looks good, as shown below:
 
-![Official racing bar chart example](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_demo.png)
+![Official racing bar chart example](https://games.programnotes.cn/20240926_ai_gallery_chartrace_demo.png)
 
 The code doesn't look very complicated. After importing the data, specifying the configuration for the dynamic racing chart, a dynamic racing chart can be generated quite simply. I provided this part to Claude3.5 for interpretation, asking it to use it as reference code, and it should be able to understand.
 
@@ -75,7 +75,7 @@ Let's look at the first part here. Directly have AI generate an upload component
 
 It's a bit difficult to describe directly, so to help Claude3.5 better understand, I directly drew a rough sketch for it, as shown below:
 
-![Upload component sketch](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_upload.png)
+![Upload component sketch](https://games.programnotes.cn/20240926_ai_gallery_chartrace_upload.png)
 
 I asked it to implement based on this reference. However, after thinking about it, I decided to keep the overall page layout consistent with other parts of the site, so I moved the settings-related parts to the far right. The version implemented by Claude was not ideal and had some small issues, but I could continue to fine-tune the prompts:
 
@@ -124,7 +124,7 @@ The first solution provided was to use the html2canvas library to capture each f
 
 Several versions were generated in between, but none could solve the problem. So I tried to have AI analyze the cause here and then provide logs for troubleshooting. Claude then added quite a few logs to the code, and during generation, it looked like this:
 
-![Racing chart generation complete](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_claude_log.png)
+![Racing chart generation complete](https://games.programnotes.cn/20240926_ai_gallery_chartrace_claude_log.png)
 
 It was stuck on GIF rendering here. I showed the logs to Claude3.5 as well, but it still couldn't locate the problem. Here, I asked Claude3.5 to **reflect on what might be causing the problem here**, and it gave a bunch of possibilities:
 
@@ -188,13 +188,13 @@ During use, I found that Cursor still has quite a few issues. After generating c
 
 Additionally, during the writing process, for example, if you casually change one place, **the AI might change it back when generating later**. For instance, in the image below, I had already changed the time here to 500ms, but every time I Applied, it would change back to 2000:
 
-![AI incorrectly modifying changed code](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_Claude_error.png)
+![AI incorrectly modifying changed code](https://games.programnotes.cn/20240926_ai_gallery_chartrace_Claude_error.png)
 
 I guess here it might be that when Cursor selects the code version, it's not using the version in the current editor. Instead, it maintains a code version in the context itself, and then generates new code based on the maintained version. Later, when diffing, it used the old version to overwrite the version changed in the editor.
 
 Another annoying thing is that **Claude3.5 often forgets to delete excess code when making functional changes**. For example, when a feature has changed its implementation, it often just adds code without deleting the unused code. Like in the image below, some states are not used during rendering, but they're still there. You have to prompt it to delete them, but fortunately, with a little prompting, it immediately knows how to delete.
 
-![AI not deleting unused code when generating](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_claude_delete.png)
+![AI not deleting unused code when generating](https://games.programnotes.cn/20240926_ai_gallery_chartrace_claude_delete.png)
 
 ## Reflections on the Usage Process
 

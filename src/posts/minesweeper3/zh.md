@@ -16,7 +16,7 @@ description: 借助 Claude3.5 为扫雷游戏增加主题切换功能，包括�
 
 当然可以，实现速度和效果也还是超我预期的，先来看这里不同主题效果，可以在[扫雷页面](https://games.programnotes.cn/zh/games/minesweeper)实际体验：
 
-![Claude3.5 扫雷各种主题图](https://slefboot-1251736664.file.myqcloud.com/20241219_ai_gallery_minesweeper_themes.png)
+![Claude3.5 扫雷各种主题图](https://games.programnotes.cn/20241219_ai_gallery_minesweeper_themes.png)
 
 ## Claude3.5 支持不同主题
 

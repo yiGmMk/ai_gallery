@@ -10,7 +10,7 @@ Minesweeper is such a classic game that I used to play on Windows computers. Now
 
 Let me first show you the final result [Online Minesweeper Game](https://games.programnotes.cn/en/games/minesweeper):
 
-![Complete Minesweeper Game Implemented with Claude](https://slefboot-1251736664.file.myqcloud.com/20241216_ai_gallery_blog_cover.png)
+![Complete Minesweeper Game Implemented with Claude](https://games.programnotes.cn/20241216_ai_gallery_blog_cover.png)
 
 Of course, the Minesweeper I built with Claude isn't just a simple toy. This implementation comes with comprehensive features:
 
@@ -124,7 +124,7 @@ Currently all unexplored cells are connected, each cell should have boundaries a
 
 This time Claude modified the CanvasRenderer class to add 3D effects to the cells, making them look more like the classic Windows Minesweeper game. The modified part looks like this:
 
-![3D Effect Minesweeper Cells](https://slefboot-1251736664.file.myqcloud.com/20241216_ai_gallery_blog_3dcell.png)
+![3D Effect Minesweeper Cells](https://games.programnotes.cn/20241216_ai_gallery_blog_3dcell.png)
 
 I must say this exceeded my expectations. I didn't really know how to implement the 3D effect myself and didn't provide very detailed prompts describing the implementation process. Fortunately, Claude3.5 was smart enough to provide complete canvas drawing code and briefly described the improvement method: **light edges on the top-left, dark edges on the bottom-right, and the cell surface in the middle, creating a 3D effect**.
 

@@ -7,7 +7,7 @@ To facilitate batch generation of Word documents, I created an [Online Word Docu
 
 You can refer to these two example files for the data and Word template formats: [Template File](/files/template.docx) and [Data File](/files/batchdata.xlsx).
 
-![Word Template File for Online Batch Generation Tool](https://slefboot-1251736664.file.myqcloud.com/20241227_ai_gallery_gendocx.png)
+![Word Template File for Online Batch Generation Tool](https://games.programnotes.cn/20241227_ai_gallery_gendocx.png)
 
 This tool **performs batch generation locally in your browser and doesn't upload any data to servers**. It can even work offline after the page loads, so feel free to use it with confidence.
 
@@ -23,7 +23,7 @@ You can batch generate customized Word documents in just 3 simple steps:
 
 A successful generation looks like this:
 
-![Generation Results of Online Word Batch Generator](https://slefboot-1251736664.file.myqcloud.com/20241227_ai_gallery_gendocx_oper_en.png)
+![Generation Results of Online Word Batch Generator](https://games.programnotes.cn/20241227_ai_gallery_gendocx_oper_en.png)
 
 ## Template File Format Instructions
 

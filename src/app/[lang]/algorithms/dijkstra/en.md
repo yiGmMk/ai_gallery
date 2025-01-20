@@ -36,19 +36,19 @@ For the undirected graph below, let's choose A as the starting node and see how 
 
 Click next step, in the first step with A as the starting point, it records the shortest distances to each point through A.
 
-![Dijkstra Algorithm Step 1](https://slefboot-1251736664.file.myqcloud.com/20241122_ai_gallery_dijkstra_step1_en.png)
+![Dijkstra Algorithm Step 1](https://games.programnotes.cn/20241122_ai_gallery_dijkstra_step1_en.png)
 
 Continue clicking next step, and you'll see that from the unvisited vertices in the previous step, the vertex with the smallest distance is selected, which is vertex D with a distance of 4.
 
 Using D as a transit point, update the distances from A through D to other vertices, as shown below:
 
-![Dijkstra Algorithm Step 2](https://slefboot-1251736664.file.myqcloud.com/20241122_ai_gallery_dijkstra_step2_en.png)
+![Dijkstra Algorithm Step 2](https://games.programnotes.cn/20241122_ai_gallery_dijkstra_step2_en.png)
 
 You can see that the distances to both B and E have been updated. B's distance was updated from 10 to 6, and E's distance from infinity to 4.
 
 You can continue to the next step, observing the search process here, watching how the distance numbers and searched vertices change. The final result is as follows:
 
-![Dijkstra Algorithm Final Result](https://slefboot-1251736664.file.myqcloud.com/20241122_ai_gallery_dijkstra_step_final_en.png)
+![Dijkstra Algorithm Final Result](https://games.programnotes.cn/20241122_ai_gallery_dijkstra_step_final_en.png)
 
 ## Proof of Dijkstra's Algorithm Correctness
 
@@ -93,6 +93,6 @@ Finally, it's worth noting that **Dijkstra's algorithm requires all edge weights
 
 For example, in the graph below, there's a negative weight edge CE with weight -13. The actual shortest path to E is 1 (shown by red arrows), but the algorithm calculates it as 10:
 
-![Dijkstra's Algorithm with Negative Weight](https://slefboot-1251736664.file.myqcloud.com/20241205_ai_gallery_dijkstra_negative_weight.png)
+![Dijkstra's Algorithm with Negative Weight](https://games.programnotes.cn/20241205_ai_gallery_dijkstra_negative_weight.png)
 
 For graphs with negative weight edges, other algorithms (such as the Bellman-Ford algorithm) must be used to solve the shortest path problem.

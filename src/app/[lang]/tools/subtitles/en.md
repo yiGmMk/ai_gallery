@@ -12,4 +12,4 @@ The tool supports a wide variety of fonts, including Microsoft YaHei, SimSun, Si
 
 All edits are previewed in real-time, allowing you to see changes immediately. Once editing is complete, you can download the processed image with a single click. **The tool remembers your preferences in your browser locally**, eliminating the need for readjustment in future sessions.
 
-![Online Image Subtitle Stitching Tool Demo](https://slefboot-1251736664.file.myqcloud.com/20250115_ai_gallery_subtitles_demo_en.png)
+![Online Image Subtitle Stitching Tool Demo](https://games.programnotes.cn/20250115_ai_gallery_subtitles_demo_en.png)

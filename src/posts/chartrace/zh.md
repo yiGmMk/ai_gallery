@@ -22,7 +22,7 @@ description: 本文用 Claude3.5 实现一个竞速图工具，支持上传数�
 
 生成了一个粗糙的代码，需要特定的数据才能跑起来。并且效果也很差，就暂时搁置了。
 
-![粗糙的竞速图](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_ugly_version.png)
+![粗糙的竞速图](https://games.programnotes.cn/20240926_ai_gallery_chartrace_ugly_version.png)
 
 ## 继续尝试
 
@@ -61,7 +61,7 @@ description: 本文用 Claude3.5 实现一个竞速图工具，支持上传数�
 
 算了，不再继续尝试，不如看看[官方示例](https://echarts.apache.org/examples/en/editor.html?c=bar-race-country)是怎么做的。**毕竟只有自己懂怎么写，才能指导 AI 写出来**。官方示例代码足够简单，样式也很好看，如下：
 
-![官方的竞速直方图示例](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_demo.png)
+![官方的竞速直方图示例](https://games.programnotes.cn/20240926_ai_gallery_chartrace_demo.png)
 
 代码看起来也不是很复杂，导入数据后，指定下动态竞速图的配置，然后很简单就可以生成一个动态竞速图。把这部分提供给 Claude3.5 解读，让它作为参考代码，它肯定能理解。
 
@@ -77,7 +77,7 @@ description: 本文用 Claude3.5 实现一个竞速图工具，支持上传数�
 
 直接描述有点费劲，为了让 Claude3.5 更好理解，我直接给它画了个草图，如下：
 
-![上传组件草图](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_upload.png)
+![上传组件草图](https://games.programnotes.cn/20240926_ai_gallery_chartrace_upload.png)
 
 让它参考这个实现。不过后来想了下，还是让页面整体布局和站点其他的保持一直，于是把设置相关的放到最右边去。Claude 实现的版本并不理想，有一些小问题，不过可以接着微调提示：
 
@@ -126,7 +126,7 @@ description: 本文用 Claude3.5 实现一个竞速图工具，支持上传数�
 
 中间反复生成了几个版本，都没能解决。于是尝试让 AI 分析下这里的原因，然后提供日志来排查下。接着 Claude 在代码中添加了不少日志，生成的时候如下：
 
-![竞速图生成完成](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_claude_log.png)
+![竞速图生成完成](https://games.programnotes.cn/20240926_ai_gallery_chartrace_claude_log.png)
 
 这里一直卡在 Gif 渲染了。把日志也给 Claude3.5 看了下，但是还是没定位到问题。这里让 Claude3.5 **反思下有哪些可能导致这里的问题**，给出了一堆：
 
@@ -190,13 +190,13 @@ const gif = new GIF({
 
 此外写的过程中，比如你随手改了一个地方。**后续 AI 生成的时候，可能又给你改回去**。比如下图中，我已经把这里的时间改成了 500ms，后续每次 Apply 的时候，都会改回去 2000：
 
-![AI 错误修改改动的代码](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_Claude_error.png)
+![AI 错误修改改动的代码](https://games.programnotes.cn/20240926_ai_gallery_chartrace_Claude_error.png)
 
 猜测这里可能是 cursor 选择代码版本的时候，并没有用当前编辑器中的版本。而是自己在上下文维护了一个代码版本，然后基于维护的版本生成新的代码。之后在 diff 的时候，用了老的版本来覆盖编辑器改动过的版本。
 
 还有一个很不爽的地方就是，**Claude3.5 在功能改动的时候，经常忘记删掉多余的代码**。比如一个功能已经改变了实现，经常只是增加代码，没有删除掉不用的代码。比如下图，这里渲染的时候没有用到一些状态，但是还在。只能提示它去删掉，好在稍微提示下，它就立马知道怎么删除了。
 
-![AI 生成代码的时候没有删除不用的](https://slefboot-1251736664.file.myqcloud.com/20240926_ai_gallery_chartrace_claude_delete.png)
+![AI 生成代码的时候没有删除不用的](https://games.programnotes.cn/20240926_ai_gallery_chartrace_claude_delete.png)
 
 ## 使用过程反思
 

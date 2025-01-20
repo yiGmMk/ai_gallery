@@ -13,7 +13,7 @@
 
 本页面数独，可以直接在浏览器中玩，无需下载任何应用，随时随地享受数独乐趣。可以选择不同的难度，从入门到专家。本页面还提供了提示功能，可以点击提示按钮获取提示。
 
-![数独解题提示](https://slefboot-1251736664.file.myqcloud.com/20241011_ai_gallery_sudoku_case1.png)
+![数独解题提示](https://games.programnotes.cn/20241011_ai_gallery_sudoku_case1.png)
 
 此外，还有撤销功能，支持最多3步撤销。这里也顺便介绍下数独的玩法思路：
 

@@ -7,7 +7,7 @@
 
 数据和 Word 模板的格式可以参考这里的两个文件示例： [模板文件](/files/template.docx) 和 [数据文件](/files/batchdata.xlsx)。
 
-![在线批量生成 Word 工具的模板文件](https://slefboot-1251736664.file.myqcloud.com/20241227_ai_gallery_gendocx.png)
+![在线批量生成 Word 工具的模板文件](https://games.programnotes.cn/20241227_ai_gallery_gendocx.png)
 
 本工具：**只在浏览器本地进行批量生成，不会上传任何数据到服务器**，甚至可以在页面加载之后离线使用，请放心使用。
 
@@ -23,7 +23,7 @@
 
 正常生成后结果如下：
 
-![在线批量生成 Word 工具的生成结果](https://slefboot-1251736664.file.myqcloud.com/20241227_ai_gallery_gendocx_oper.png)
+![在线批量生成 Word 工具的生成结果](https://games.programnotes.cn/20241227_ai_gallery_gendocx_oper.png)
 
 ## 模板文件格式说明
 

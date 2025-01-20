@@ -8,7 +8,7 @@ description: 为站点引入博客功能。站点本身基于 nextjs 实现，�
 
 终于为站点引入了博客功能。可以在 `src/posts` 目录下创建 Markdown 文章，同时支持多语言，支持评论和目录以及其他功能。也体验了一把前端造轮子的乐趣，虽然有些地方还不够完善，但是已经可以满足基本需求了。
 
-![站点引入博客功能](https://slefboot-1251736664.file.myqcloud.com/20240814_ai_gallery_blog_cover_2.webp)
+![站点引入博客功能](https://games.programnotes.cn/20240814_ai_gallery_blog_cover_2.webp)
 
 ## 用开源博客？
 
@@ -122,7 +122,7 @@ ID 生成的规则通常如下：
 
 其实日常写文章过程中，也会经常让 Claude 帮我写一下 description，免得自己写还需要耗时间。搞好后，用 lightouse 测试了下，SEO 分数还不错。
 
-![博客 SEO 分数评测](https://slefboot-1251736664.file.myqcloud.com/20240814_ai_gallery_blog_seo_score.png)
+![博客 SEO 分数评测](https://games.programnotes.cn/20240814_ai_gallery_blog_seo_score.png)
 
 为了提高 Google 的收录速度，还要接着完善下 sitemap。其实我的演示站点本来就支持 rss 和 sitemap，这里只需要新增对博客部分的支持。sitemap 和 rss 的生成部分在一起，全部在 rss 部分说吧。
 

@@ -51,7 +51,7 @@ A* 寻路算法的核心思想如下：
 
 整个 A* 搜索的流程如下图所示：
 
-![A* 搜索的整体流程](https://slefboot-1251736664.file.myqcloud.com/20241021_ai_gallery_astar_flowchart.png)
+![A* 搜索的整体流程](https://games.programnotes.cn/20241021_ai_gallery_astar_flowchart.png)
 
 源码如下：
 

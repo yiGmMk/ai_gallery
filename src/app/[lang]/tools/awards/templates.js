@@ -2,7 +2,7 @@ export const awardTemplates = {
   certificate: {
     id: 'awards',
     name: '三好学生证书',
-    imageUrl: 'https://slefboot-1251736664.file.myqcloud.com/20241222_ai_gallery_awards_001.jpeg',
+    imageUrl: 'https://games.programnotes.cn/20241222_ai_gallery_awards_001.jpeg',
     width: 1111,
     height: 768,
     textPositions: [
