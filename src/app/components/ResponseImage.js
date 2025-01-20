@@ -1,44 +1,47 @@
-import React, { useMemo } from 'react';
+import Image from 'next/image';
+import url from 'url';
 
-const getImageUrl = (url, size) => {
-  const baseUrl = url.split('/webp')[0]; // 移除任何现有的 /webp 后缀
-  return `${baseUrl}/webp${size}`;
+const getImageUrl = (src, size) => {
+  const parsedUrl = url.parse(src);
+  const query = parsedUrl.query;
+  if (query) {
+    return `${parsedUrl.protocol}://${parsedUrl.host}${parsedUrl.pathname}?${query}&w=${size}`;
+  } else {
+    return `${parsedUrl.protocol}://${parsedUrl.host}${parsedUrl.pathname}?w=${size}`;
+  }
 };
 
-const ResponsiveWebPImage = React.memo(({ src, alt, isGif = false }) => {
-  const imageUrls = useMemo(() => {
-    if (isGif) return { src };
-    return {
-      src: getImageUrl(src, 1600),
-      srcSet: `
-        ${getImageUrl(src, 400)} 400w,
-        ${getImageUrl(src, 800)} 800w,
-        ${getImageUrl(src, 1600)} 1600w
-      `
-    };
-  }, [src, isGif]);
+const ResponsiveWebPImage = ({ src, alt, isGif = false }) => {
+  if (isGif) {
+    return (
+      <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
+        <Image
+          src={src}
+          alt={alt}
+          layout="fill"
+          objectFit="cover"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
-      <img
-        {...imageUrls}
+      <Image
+        src={getImageUrl(src, 1600)}
         alt={alt}
-        loading="lazy"
-        style={{
-          position: 'absolute',
-          height: '100%',
-          width: '100%',
-          left: 0,
-          top: 0,
-          right: 0,
-          bottom: 0,
-          objectFit: "cover",
-        }}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        srcSet={[
+          { src: getImageUrl(src, 400), width: 400 },
+          { src: getImageUrl(src, 800), width: 800 },
+          { src: getImageUrl(src, 1600), width: 1600 },
+        ]}
+        layout="fill"
+        objectFit="cover"
       />
     </div>
   );
-});
+};
 
 ResponsiveWebPImage.displayName = 'ResponsiveWebPImage';
 
