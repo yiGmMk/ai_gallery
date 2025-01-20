@@ -72,10 +72,10 @@ __这个文本也会是加粗的__
 ## 图片
 
 ```markdown
-![图片](https://games.programnotes.cn/20240808_leveldb_source_bloom_filter_visualization.png/webp1600)
+![图片](https://games.programnotes.cn/20240808_leveldb_source_bloom_filter_visualization.png)
 ```
 
-![图片](https://games.programnotes.cn/20240808_leveldb_source_bloom_filter_visualization.png/webp1600)
+![图片](https://games.programnotes.cn/20240808_leveldb_source_bloom_filter_visualization.png)
 
 ## 引用
 
@@ -107,16 +107,16 @@ def hello():
 ## 表格
 
 ```markdown
-| 表头 1 | 表头 2 |
-| ------ | ------ |
+| 表头 1   | 表头 2   |
+| -------- | -------- |
 | 单元格 1 | 单元格 2 |
 | 单元格 3 | 单元格 4 |
 ```
 
 表格: 
 
-| 表头 1 | 表头 2 |
-| ------ | ------ |
+| 表头 1   | 表头 2   |
+| -------- | -------- |
 | 单元格 1 | 单元格 2 |
 | 单元格 3 | 单元格 4 |
 
