@@ -6,10 +6,10 @@ import Giscus from "@giscus/react";
 function GiscusComments({ lang }) {
   return (
     <Giscus
-      repo="selfboot/ai_gallery"
-      repoId="R_kgDOMPPfdQ"
-      category="Q&A"
-      categoryId="DIC_kwDOMPPfdc4Chkvp"
+      repo="yiGmMk/comment_blog"
+      repoId="MDEwOlJlcG9zaXRvcnkxOTcyMTY4NDA="
+      category="Announcements"
+      categoryId="DIC_kwDOC8FKSM4CAcFc"
       mapping="pathname"
       reactionsEnabled="1"
       emitMetadata="0"
