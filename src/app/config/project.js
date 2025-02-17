@@ -198,6 +198,13 @@ const Projects = {
       image: "https://games.programnotes.cn/20240726_ai_gallery_tokenbucket.webp",
       link: "/algorithms/tokenbucket/",
     },
+    {
+      id: "fruit",
+      title: "fruit",
+      description: "fruit",
+      image: "https://games.programnotes.cn/20240726_ai_gallery_tokenbucket.webp",
+      link: "/games/fruit",
+    },
   ],
   tools: [
     {
