@@ -43,6 +43,8 @@
   "player_in_check": "{{player}} is in check!",
   "checkmate_announcement": "Checkmate! {{winner}} wins!",
   "stalemate_announcement": "Stalemate!",
+  "fruit_title": "fruit",
+  "fruit_description": "Fruit cutting game",
   "red": "Red",
   "black": "Black",
   "move_steps": "{{steps}} Steps",
@@ -803,7 +805,7 @@
       "description": "A large number of commonly used Word templates, simply provide an Excel data file, and all documents can be automatically generated. The tool also supports downloading Word templates and Excel files, simple operation, powerful function.",
       "keywords": "Word Document Templates, Online Batch Generation of Word, Batch Generation of Word, Word Document Download"
     },
-    "furit": {
+    "fruit": {
       "title": "在线免费切水果游戏",
       "description": "经典的切水果游戏，免费在线玩",
       "keywords": "切水果,在线玩切水果,免费切水果游戏,在线切水果游戏"

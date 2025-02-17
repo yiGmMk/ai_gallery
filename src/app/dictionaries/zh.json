@@ -42,6 +42,8 @@
   "player_in_check": "{{player}} 被将军",
   "checkmate_announcement": "将死！{{winner}}获胜！",
   "stalemate_announcement": "和棋！游戏平局",
+  "fruit_title": "切水果",
+  "fruit_description": "切水果游戏",
   "red": "红方",
   "black": "黑方",
   "move_steps": "共计 {{steps}} 步",
@@ -804,7 +806,7 @@
       "description": "大量常用的 Word 模板，只需要提供 Excel 数据文件，就能自动生成所有文档。工具还支持下载word 模板和 Excel 文件，操作简单，功能强大。",
       "keywords": "Word 文档模板, 在线批量生成 Word, 批量生成 Word, Word 文档下载"
     },
-    "furit": {
+    "fruit": {
       "title": "在线免费切水果游戏",
       "description": "经典的切水果游戏，免费在线玩",
       "keywords": "切水果,在线玩切水果,免费切水果游戏,在线切水果游戏"
