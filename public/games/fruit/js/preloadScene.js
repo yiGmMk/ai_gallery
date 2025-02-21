@@ -2,8 +2,9 @@
 var PreloadScene = {
   // 加载其他所有资源
   preload: function () {
-    var preloadSprite = game.add.sprite(10, game.height / 2, 'loading');
+    var preloadSprite = game.add.sprite(10, game.height / 2, 'preloader');
     game.load.setPreloadSprite(preloadSprite);
+    game.load.image('preloader', '/games/fruit/assets/preloader.gif');
     game.load.image('apple', '/games/fruit/assets/apple.png');
     game.load.image('apple-1', '/games/fruit/assets/apple-1.png');
     game.load.image('apple-2', '/games/fruit/assets/apple-2.png');
