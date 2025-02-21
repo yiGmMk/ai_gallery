@@ -4,10 +4,7 @@ import { PageMeta } from "@/app/components/Meta";
 import PageHeader from "@/app/components/PageHeader";
 import CommonComments from "@/app/components/GiscusComments";
 import BlogMarkdown from '@/app/components/BlogMarkdown';
-
-const FruitGame = dynamic(() => import('./content'), {
-  ssr: false,
-});
+import FruitGame from "./content";
 
 export async function generateMetadata({ params: { lang } }) {
   const dict = await getDictionary(lang);
@@ -27,7 +24,7 @@ export async function generateMetadata({ params: { lang } }) {
         "x-default": "https://games.programnotes.cn/en/games/fruit",
       },
     },
-  };
+  }
 }
 
 export default function FruitPage({ params: { lang } }) {
