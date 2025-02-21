@@ -1,6 +1,6 @@
-## Fruit
+## Fruit Ninja
 
+### How to Play
 
-### Basic Rules of the Rubik's Cube
-
-
+Slice the fruits to score points. Avoid slicing the bombs, or the game will end.
+The game ends when you miss three fruits.

@@ -1,9 +1,13 @@
+import dynamic from 'next/dynamic';
 import { getDictionary } from "@/app/dictionaries";
 import { PageMeta } from "@/app/components/Meta";
 import PageHeader from "@/app/components/PageHeader";
 import CommonComments from "@/app/components/GiscusComments";
 import BlogMarkdown from '@/app/components/BlogMarkdown';
-import FruitGame from "./content";
+
+const FruitGame = dynamic(() => import('./content'), {
+  ssr: false,
+});
 
 export async function generateMetadata({ params: { lang } }) {
   const dict = await getDictionary(lang);
