@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from 'react';
+import styles from './GameContainer.module.css';
 
 /**
  * FruitGame component that loads and initializes a Phaser 2 game.
@@ -95,7 +96,7 @@ export default function FruitGame() {
   }, []);
 
   return (
-    <div id="game">
+    <div id="game" className={styles.container}>
       {/* Phaser 游戏将在此处渲染 */}
     </div>
   );

@@ -1,0 +1,14 @@
+.container {
+    position: relative;
+    width: 640px;
+    height: 480px;
+    overflow: hidden;
+    background: linear-gradient(#1a1a2e, #16213e);
+    /* 示例背景 */
+}
+
+.container canvas {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+}
