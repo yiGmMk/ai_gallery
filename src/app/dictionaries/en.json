@@ -43,8 +43,8 @@
   "player_in_check": "{{player}} is in check!",
   "checkmate_announcement": "Checkmate! {{winner}} wins!",
   "stalemate_announcement": "Stalemate!",
-  "fruit_title": "fruit",
-  "fruit_description": "Fruit cutting game",
+  "fruit_title": "Fruit Ninja",
+  "fruit_description": "Play the Classic Fruit Slicing Game for Free",
   "red": "Red",
   "black": "Black",
   "move_steps": "{{steps}} Steps",
@@ -806,9 +806,9 @@
       "keywords": "Word Document Templates, Online Batch Generation of Word, Batch Generation of Word, Word Document Download"
     },
     "fruit": {
-      "title": "在线免费切水果游戏",
-      "description": "经典的切水果游戏，免费在线玩",
-      "keywords": "切水果,在线玩切水果,免费切水果游戏,在线切水果游戏"
+      "title": "Fruit Ninja Online - Play the Classic Fruit Slicing Game for Free",
+      "description": "Play Fruit Ninja online for free! Enjoy the classic fruit slicing action without any downloads.",
+      "keywords": "Fruit Ninja, Fruit Cutting, Online Game, Free Game, Casual Game, Fruit Slice"
     }
   }
 }
