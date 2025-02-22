@@ -77,6 +77,13 @@ const Projects = {
       image: "https://games.programnotes.cn/20241031_ai_gallery_2048_chess.png",
       link: "/games/chess",
     },
+    {
+      id: "fruit",
+      title: "fruit_title",
+      description: "fruit_description",
+      image: "https://games.programnotes.cn/games/fruit/assets/fruit-ninja.png",
+      link: "/games/fruit",
+    }
   ],
   algorithms: [
     {
@@ -197,7 +204,7 @@ const Projects = {
       description: "tokenbucket_description",
       image: "https://games.programnotes.cn/20240726_ai_gallery_tokenbucket.webp",
       link: "/algorithms/tokenbucket/",
-    },
+    }
   ],
   tools: [
     {
