@@ -90,7 +90,7 @@ const dynamicChartConfigs = [
   {
     id: 'china_population_more',
     dataFile: 'china_population_more.csv',
-    downloadUrl: 'https://slefboot-1251736664.file.myqcloud.com/china_population_more.csv',
+    downloadUrl: 'https://games.programnotes.cn/china_population_more.csv',
     columns: {
       time: '年份',
       type: '地区',

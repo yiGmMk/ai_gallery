@@ -23,6 +23,7 @@
     "@react-three/fiber": "^8.17.10",
     "@tailwindcss/typography": "^0.5.14",
     "@vercel/analytics": "^1.4.1",
+    "@vercel/speed-insights": "^1.2.0",
     "cookies-next": "^4.3.0",
     "crypto": "^1.0.1",
     "docxtemplater": "^3.51.2",

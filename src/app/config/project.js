@@ -36,6 +36,13 @@ const Projects = {
       link: "/games/maze",
     },
     {
+      id: "tangram",
+      title: "tangram_title",
+      description: "tangram_description",
+      image: "https://games.programnotes.cn/20250516_ai_gallery_tangram.webp",
+      link: "/games/tangram",
+    },
+    {
       id: "gomoku",
       title: "gomoku_title",
       description: "gomoku_description",
@@ -215,6 +222,20 @@ const Projects = {
       link: "/tools/gendocx/",
     },
     {
+      id: "retire",
+      title: "retire_title",
+      description: "retire_description",
+      image: "https://games.programnotes.cn/20250327_ai_gallery_retire.png",
+      link: "/tools/retire/",
+    },
+    {
+      id: "loanrate",
+      title: "loanrate_title",
+      description: "loanrate_description",
+      image: "https://games.programnotes.cn/20250428_ai_gallery_loanrate_en.webp",
+      link: "/tools/loanrate/",
+    },
+    {
       id: "chartrace",
       title: "chartrace_title",
       description: "chartrace_description",
@@ -227,7 +248,7 @@ const Projects = {
       description: "subtitles_description",
       image: "https://games.programnotes.cn/20240728_ai_gallery_subtitles.webp",
       link: "/tools/subtitles/",
-    }
+    },
   ],
 };
 
