@@ -4,49 +4,78 @@
   });
 */
 var Blade = function(envConfig) {
-  var env = {};
-  var game = null;
+  var game = envConfig.game;
   var points = [];
-  var blade = null;
-  var graphics = null;
+  var blade = new Phaser.Polygon();
+  var graphics = game.add.graphics(0, 0);
   var POINTLIFETIME = 200;
   var allowBlade = false;
   var lastPoint = null;
-  var init = function() {
-    env = envConfig;
-    game = env.game;
-    blade = new Phaser.Polygon();
-    graphics = game.add.graphics(0, 0);
+  var pointer = null;
+  var timeDown = 0;
+  var totalTouches = 0;
+  var lastSample = null;
+  var segment = null;
+  var collisionSegment = null;
+  var lastUpdateTime = game.time.time;
+
+  var resetStroke = function() {
+    points = [];
+    lastPoint = null;
+    lastSample = null;
+    segment = null;
+    collisionSegment = null;
+    pointer = null;
+  };
+  var addPoint = function(point, now) {
+    point.time = now;
+    points.push(point);
+    lastPoint = point;
   };
   var update = function() {
-    // 开始有刀光
-    if(allowBlade) {
-      graphics.clear();
-      if (game.input.mousePointer.isDown) {
-        var point = new Phaser.Point(game.input.x, game.input.y);
-        if(!lastPoint) {
-          lastPoint = point;
-          point.time = new Date().getTime();
-          points.push(point);
-        } else {
-          var dis = (lastPoint.x - point.x) * (lastPoint.x - point.x) + 
-                    (lastPoint.y - point.y) * (lastPoint.y - point.y);
-          if(dis > 300) {
-            lastPoint = point;
-            point.time = new Date().getTime();
-            points.push(point);
-          }
+    if(!allowBlade) {
+      return;
+    }
+    var now = game.time.time;
+    graphics.clear();
+    segment = null;
+    collisionSegment = null;
+    if(pointer && (!pointer.isDown || pointer.timeDown != timeDown || pointer.totalTouches != totalTouches)) {
+      resetStroke();
+    }
+    if(!pointer) {
+      var activePointer = game.input.activePointer;
+      if(activePointer && activePointer.isDown) {
+        pointer = activePointer;
+        timeDown = pointer.timeDown;
+        totalTouches = pointer.totalTouches;
+        // 新按下才补齐首帧移动；不能回放进入场景前的手势
+        var start = timeDown >= lastUpdateTime ? pointer.positionDown : pointer;
+        lastSample = new Phaser.Point(start.x, start.y);
+        addPoint(new Phaser.Point(start.x, start.y), now);
+      }
+    }
+    while(points.length > 0 && now - points[0].time > POINTLIFETIME) {
+      points.shift();
+    }
+    if(points.length == 0) {
+      lastPoint = null;
+    }
+    if(pointer) {
+      var point = new Phaser.Point(pointer.x, pointer.y);
+      if(point.x != lastSample.x || point.y != lastSample.y) {
+        // 碰撞使用本帧移动，历史刀光仅用于显示
+        segment = { start: lastSample, end: point };
+        lastSample = point;
+        var dx = lastPoint ? lastPoint.x - point.x : 0;
+        var dy = lastPoint ? lastPoint.y - point.y : 0;
+        if(!lastPoint || dx * dx + dy * dy > 300) {
+          addPoint(point, now);
         }
       }
-      if(points.length < 1) {
-        return;
-      }
-      if(new Date().getTime() - points[0].time > POINTLIFETIME) {
-        points.shift();
-      }
-      if(points.length < 1) {
-        return;
-      }
+    }
+    lastUpdateTime = now;
+    if(points.length > 0) {
       blade.setTo(mathTool.generateBlade(points));
       graphics.beginFill(0xffffff);
       graphics.drawPolygon(blade.points);
@@ -54,33 +83,27 @@ var Blade = function(envConfig) {
     }
   };
   var checkCollide = function(sprite, onCollide) {
-    if (allowBlade && game.input.mousePointer.isDown && points.length > 2) {
-      // this.sandia要是sprite，并且启动物理引擎
-      for(var i=0; i<points.length; i++) {
-        if(Phaser.Rectangle.contains(sprite.body, points[i].x, points[i].y)) {
-          onCollide();
-          break;
-        }
-      }
+    if(allowBlade && segment && pointer && pointer.isDown &&
+      pointer.timeDown == timeDown && pointer.totalTouches == totalTouches &&
+      sprite.alive !== false && sprite.body &&
+      mathTool.segmentIntersectsRect(segment.start, segment.end, sprite.body)) {
+      collisionSegment = segment;
+      onCollide();
     }
   };
   var collideDeg = function() {
-    var deg;
-    var len = points.length;
-    if(points[0].x == points[len-1].x) {
-      deg = 90;
-    } else {
-      var val = (points[0].y - points[len-1].y) / (points[0].x - points[len-1].x);
-      deg = Math.round(Math.atan(val) / Math.PI * 180);
+    if(!collisionSegment) {
+      return 0;
     }
-    if(deg < 0) {
-      deg = deg + 180;
-    }
-    return deg;
+    var dx = collisionSegment.end.x - collisionSegment.start.x;
+    var dy = collisionSegment.end.y - collisionSegment.start.y;
+    var deg = Math.round(Math.atan2(dy, dx) / Math.PI * 180);
+    return (deg + 180) % 180;
   };
-  init(envConfig);
   //导出
   this.allowBlade = function() {
+    resetStroke();
+    lastUpdateTime = game.time.time;
     allowBlade = true;
   };
   this.update = update;

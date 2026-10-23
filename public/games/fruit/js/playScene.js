@@ -46,10 +46,14 @@ var PlayScene = {
           if(fruit.isFruit) {
             this.onKill(fruit);
             this.fruits.splice(i, 1);
+            i--;
           } else {
             this.onBomb(fruit);
           }
         }.bind(this));
+        if(this.bombExplode) {
+          break;
+        }
       }
     }
   },

@@ -14,7 +14,7 @@ export async function generateMetadata({ params: { lang } }) {
       description: dict.seo.fruit.description,
       keywords: dict.seo.fruit.keywords,
       publishedDate: "2024-10-25T02:00:00.000Z",
-      updatedDate: "2024-11-19T09:00:00.000Z",
+      updatedDate: "2026-10-23T09:53:48.000Z",
     }),
     alternates: {
       canonical: `https://games.programnotes.cn/${lang}/games/fruit`,

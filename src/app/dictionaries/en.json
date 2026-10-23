@@ -43,8 +43,8 @@
   "player_in_check": "{{player}} is in check!",
   "checkmate_announcement": "Checkmate! {{winner}} wins!",
   "stalemate_announcement": "Stalemate!",
-  "fruit_title": "Fruit Ninja",
-  "fruit_description": "Play the Classic Fruit Slicing Game for Free",
+  "fruit_title": "Fruit Slicing Game Online",
+  "fruit_description": "Slice fruit and avoid bombs in this free browser game. Swipe on your phone or drag with your mouse—no download needed.",
   "red": "Red",
   "black": "Black",
   "move_steps": "{{steps}} Steps",
@@ -862,9 +862,9 @@
       "keywords": "Word Document Templates, Online Batch Generation of Word, Batch Generation of Word, Word Document Download"
     },
     "fruit": {
-      "title": "Fruit Ninja Online - Play the Classic Fruit Slicing Game for Free",
-      "description": "Play Fruit Ninja online for free! Enjoy the classic fruit slicing action without any downloads.",
-      "keywords": "Fruit Ninja, Fruit Cutting, Online Game, Free Game, Casual Game, Fruit Slice"
+      "title": "Fruit Slicing Game Online - Free, No Download",
+      "description": "Play a free fruit slicing game online with touch or mouse controls. Slice the watermelon to start, cut fruit, and avoid bombs. No download needed.",
+      "keywords": "fruit slicing game,fruit cutting game,free fruit game online,touchscreen fruit game,Fruit Ninja-style game,no download game"
     },
     "retire": {
       "title": "Free Online China Retirement Age Calculator",
