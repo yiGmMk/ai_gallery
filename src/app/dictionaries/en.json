@@ -44,7 +44,7 @@
   "checkmate_announcement": "Checkmate! {{winner}} wins!",
   "stalemate_announcement": "Stalemate!",
   "fruit_title": "Fruit Slicing Game Online",
-  "fruit_description": "Slice fruit and avoid bombs in this free browser game. Swipe on your phone or drag with your mouse—no download needed.",
+  "fruit_description": "Slice fruit with touch or mouse—free, no download. Start with 5 lives and a gentle warm-up; collect hearts, shields, and freeze power-ups to keep going.",
   "red": "Red",
   "black": "Black",
   "move_steps": "{{steps}} Steps",
@@ -863,7 +863,7 @@
     },
     "fruit": {
       "title": "Fruit Slicing Game Online - Free, No Download",
-      "description": "Play a free fruit slicing game online with touch or mouse controls. Slice the watermelon to start, cut fruit, and avoid bombs. No download needed.",
+      "description": "Play a free fruit slicing game with 5 lives, a gentle warm-up, and heart, shield, and freeze power-ups. Touch or mouse controls, no download needed.",
       "keywords": "fruit slicing game,fruit cutting game,free fruit game online,touchscreen fruit game,Fruit Ninja-style game,no download game"
     },
     "retire": {

@@ -1,6 +1,7 @@
 // 主场景
 var MainScene = {
   create: function() {
+    this.resetScene();
     game.physics.startSystem(Phaser.Physics.ARCADE);
     this.bg = game.add.image(0, 0, 'background');
     this.blade = new Blade({
@@ -142,7 +143,6 @@ var MainScene = {
   gotoNextScene: function() {
     if(this.peach && this.peach.sprite() && !this.peach.sprite().inWorld
       && this.bomb && this.bomb.sprite() && !this.bomb.sprite().inWorld) {
-      this.resetScene();
       game.state.start('play');
     }
   },
@@ -152,5 +152,14 @@ var MainScene = {
     this.peach = null;
     this.bomb = null;
     this.start = false;
+    this.dojo = null;
+    this.new_game = null;
+    this.quit = null;
+  },
+  shutdown: function() {
+    if(this.peach) this.peach.destroy();
+    if(this.sandia) this.sandia.destroy();
+    if(this.bomb) this.bomb.destroy();
+    this.resetScene();
   }
 };
