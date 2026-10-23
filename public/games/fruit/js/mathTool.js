@@ -1,4 +1,34 @@
 var mathTool = {
+  // 连续刀迹与矩形相交，包含水平、竖直及擦边的线段
+  segmentIntersectsRect: function(start, end, rect) {
+    var dx = end.x - start.x;
+    var dy = end.y - start.y;
+    if((dx == 0 && dy == 0) || rect.width <= 0 || rect.height <= 0) {
+      return false;
+    }
+    var min = 0;
+    var max = 1;
+    var directions = [dx, dy];
+    var origins = [start.x, start.y];
+    var lower = [rect.x, rect.y];
+    var upper = [rect.x + rect.width, rect.y + rect.height];
+    for(var i=0; i<2; i++) {
+      if(directions[i] == 0) {
+        if(origins[i] < lower[i] || origins[i] > upper[i]) {
+          return false;
+        }
+      } else {
+        var near = (lower[i] - origins[i]) / directions[i];
+        var far = (upper[i] - origins[i]) / directions[i];
+        min = Math.max(min, Math.min(near, far));
+        max = Math.min(max, Math.max(near, far));
+        if(min > max) {
+          return false;
+        }
+      }
+    }
+    return true;
+  },
   // 计算延长线,p2往p1延长(private)
   calcParallel: function(p1, p2, L) {
     var p = {};

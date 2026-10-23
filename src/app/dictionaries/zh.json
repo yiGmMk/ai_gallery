@@ -42,8 +42,8 @@
   "player_in_check": "{{player}} 被将军",
   "checkmate_announcement": "将死！{{winner}}获胜！",
   "stalemate_announcement": "和棋！游戏平局",
-  "fruit_title": "切水果",
-  "fruit_description": "切水果游戏",
+  "fruit_title": "在线切水果游戏",
+  "fruit_description": "免费在线切水果，免下载。用鼠标或单指划开西瓜开始游戏，切水果得分，避开炸弹。",
   "red": "红方",
   "black": "黑方",
   "move_steps": "共计 {{steps}} 步",
@@ -863,9 +863,9 @@
       "keywords": "Word 文档模板, 在线批量生成 Word, 批量生成 Word, Word 文档下载"
     },
     "fruit": {
-      "title": "水果忍者在线免费玩 - 经典休闲切水果游戏",
-      "description": "体验经典水果忍者游戏的乐趣，无需下载，在线免费畅玩！",
-      "keywords": "水果忍者, 切水果, 在线切水果, 免费游戏, 休闲游戏, 水果游戏"
+      "title": "切水果小游戏在线玩 - 免费免下载，支持手机触屏",
+      "description": "免费在线玩切水果小游戏，无需下载，支持手机单指滑动和电脑鼠标操作。划开首页西瓜开始，切水果得分、避开炸弹；漏掉3个水果即结束。附玩法说明和得分技巧。",
+      "keywords": "切水果小游戏,在线切水果,免费切水果游戏,手机切水果,水果忍者风格游戏,fruit slicing game"
     },
     "retire": {
       "title": "在线免费中国退休年龄计算器(最新2025年退休政策)",

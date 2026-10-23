@@ -6,6 +6,8 @@ var BootScene = {
   },
   // 跳转到加载场景
   create: function () {
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.input.maxPointers = 1;
     game.state.start('preload');
   }
 }
