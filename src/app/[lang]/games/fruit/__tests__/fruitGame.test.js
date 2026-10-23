@@ -34,7 +34,7 @@ function createGame() {
   const game = {
     width: 640,
     height: 480,
-    time: { time: 1000 },
+    time: { time: 1000, physicsElapsedMS: 16 },
     input: { mousePointer, activePointer: mousePointer, x: 0, y: 0, maxPointers: -1 },
     add: { graphics: () => graphics },
     scale: { scaleMode: 0 },
@@ -309,26 +309,39 @@ describe('continuous slice geometry', () => {
 
 describe('gameplay slice integration', () => {
   function createScene(fixture, types) {
+    loadScript(fixture.context, 'gameRules.js');
     loadScript(fixture.context, 'playScene.js');
     const scene = fixture.context.PlayScene;
     scene.blade = fixture.blade;
     scene.playing = true;
-    scene.bombExplode = false;
+    scene.rules = fixture.context.FruitGameRules.createState();
+    scene.rules.nextWaveAt = null;
+    scene.healthText = { text: '' };
+    scene.effectText = { text: '' };
+    scene.hintText = { text: '' };
+    scene.noticeText = { text: '' };
+    scene.noticeUntilMs = 0;
+    scene.remnants = [];
+    scene.feedback = [];
+    fixture.game.add.bitmapData = () => ({ context: document.createElement('canvas').getContext('2d') });
+    fixture.game.add.sprite = (x, y) => ({ x, y, anchor: { setTo() {} }, destroy() {} });
     scene.score = 0;
     scene.scoreText = { text: '0' };
     scene.fruits = types.map((isFruit, index) => {
       const sprite = {
         alive: true,
         inWorld: true,
-        body: { x: 40 + index * 30, y: 10, width: 20, height: 20, velocity: { x: 0, y: -1 } },
+        body: { x: 40 + index * 30, y: 10, width: 20, height: 20, velocity: { x: 0, y: -1 }, gravity: { y: 340 } },
+        destroy() { this.alive = false; },
       };
       return {
-        isFruit,
+        type: isFruit ? 'fruit' : 'bomb',
+        baseGravity: 340,
+        motionScale: 1,
         sprite: () => sprite,
         half() { sprite.alive = false; },
       };
     });
-    scene.onBomb = function() { this.bombExplode = true; };
     return scene;
   }
 
@@ -345,7 +358,7 @@ describe('gameplay slice integration', () => {
     expect(scene.fruits).toHaveLength(0);
   });
 
-  test('hitting a bomb stops collision checks for remaining fruit', () => {
+  test('a touch stroke can hit a nonlethal bomb and still slice remaining fruit', () => {
     const fixture = createGame();
     const scene = createScene(fixture, [false, true]);
     fixture.press(fixture.touchPointer, 0, 20);
@@ -353,9 +366,10 @@ describe('gameplay slice integration', () => {
     fixture.move(fixture.touchPointer, 120, 20);
     scene.update();
 
-    expect(scene.bombExplode).toBe(true);
-    expect(scene.score).toBe(0);
-    expect(scene.fruits[1].sprite().alive).toBe(true);
+    expect(scene.rules.lives).toBe(3);
+    expect(scene.playing).toBe(true);
+    expect(scene.score).toBe(1);
+    expect(scene.fruits).toHaveLength(0);
   });
 });
 

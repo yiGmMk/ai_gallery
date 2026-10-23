@@ -23,9 +23,27 @@ The game scales to fit the page width. Swiping inside the game controls the blad
 ### Scoring and Game Over
 
 - **Each sliced fruit is worth 1 point.** Cutting several fruits in one stroke adds one point for each fruit.
-- **Hitting a bomb ends the round.** Check its position before making a wide swipe.
-- **Missing 3 fruits ends the round.** The crosses in the upper-right corner track your misses.
-- This version focuses on slicing fruit, avoiding bombs, and improving your score. It does not include selectable game modes, unlockable achievements, or a blade shop.
+- **Start each round with 5 lives. The round ends only at zero lives.** Check the upper-right corner for your lives, shield, and freeze countdown.
+- **Missing fruit costs 1 life.** After a miss causes damage, other misses within 0.8 seconds do not cost additional lives. This protection does not block bombs.
+- **Hitting a bomb costs 2 lives, or consumes your shield without costing lives.** A bomb no longer always ends the round, but safe strokes still matter.
+- Missing bombs or power-ups does not cost lives. Slicing a power-up activates its effect immediately without adding points.
+- There are no selectable game modes, unlockable achievements, blade shop, or inventory to manage.
+
+### Three Power-Ups: Hearts, Shields, and Freeze
+
+| Power-up | How to recognize it | Effect when sliced |
+| --- | --- | --- |
+| Heart | Pink circle with a white heart | Restores 1 life, up to 5. Picking one up at full health does not raise the limit. |
+| Shield | Blue circle with a white shield | Blocks the next bomb hit, then disappears. You can hold one shield; it does not protect against missed fruit. |
+| Freeze | Teal circle with a white snowflake | Slows whole fruit, bombs, and power-ups for 5 seconds, including newly spawned targets. Another pickup refreshes the duration to 5 seconds without stacking the slowdown. |
+
+Slice power-ups just like fruit—no extra button is needed. They do not appear in every wave: spawns are at least 8 seconds apart, with a guaranteed pickup spawning in the next wave after 20 seconds without one. Hearts are more likely when lives are low. Hearts do not spawn at full health, and shields do not spawn while you already have one.
+
+### A Gentler Start and Mixed Speeds
+
+The first **15 seconds are a warm-up** with no bombs or fast fruit. Missed fruit still costs lives. After warm-up, most fruit remains slow, with normal-speed fruit and occasional fast targets mixed in. Individual speeds vary, and fast fruit is never generated consecutively.
+
+Fruit launches from below the screen along different arcs, with a short break after each cleared wave. Difficulty increases gradually until 90 seconds, then stops increasing. Try catching faster fruit first and slicing slower fruit near the top of its arc.
 
 ### Tips for a Higher Score
 
@@ -55,4 +73,8 @@ Each fruit is worth 1 point. A single stroke can slice several fruits, but this 
 
 #### Why did my round suddenly end?
 
-You either hit a bomb or reached 3 missed fruits. Watch for bombs and check the miss indicators in the upper-right corner before trying another round.
+The round ends when lives reach zero. Missing fruit costs 1 life, and hitting a bomb without a shield costs 2. At low health, one bomb can still end the round. Watch your lives in the upper-right corner and collect hearts or a shield when available.
+
+#### Does freeze pause the game?
+
+No. Freeze reduces target motion to 55% of normal speed for 5 seconds, then restores normal motion. You can keep slicing fruit and collecting power-ups, but bombs are still dangerous.

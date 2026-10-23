@@ -92,4 +92,15 @@ var Fruit = function(envConfig) {
     return sprite;
   };
   this.half = half;
+  var destroyed = false;
+  this.destroy = function() {
+    if(destroyed) return;
+    destroyed = true;
+    if(halfOne) halfOne.destroy();
+    if(halfTwo) halfTwo.destroy();
+    emitter.destroy();
+    sprite.destroy();
+    if(game.cache.getBitmapData('flameParticle') === bitmap) game.cache.removeBitmapData('flameParticle');
+    bitmap.destroy();
+  };
 };

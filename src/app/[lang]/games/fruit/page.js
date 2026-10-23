@@ -14,7 +14,7 @@ export async function generateMetadata({ params: { lang } }) {
       description: dict.seo.fruit.description,
       keywords: dict.seo.fruit.keywords,
       publishedDate: "2024-10-25T02:00:00.000Z",
-      updatedDate: "2026-10-23T09:53:48.000Z",
+      updatedDate: "2026-10-23T12:09:36.000Z",
     }),
     alternates: {
       canonical: `https://games.programnotes.cn/${lang}/games/fruit`,
@@ -32,7 +32,7 @@ export default function FruitPage({ params: { lang } }) {
   return (
     <>
       <PageHeader lang={lang} pathname={`/${lang}/games/fruit`} />
-      <FruitGame />
+      <FruitGame lang={lang} />
       <BlogMarkdown lang={lang} directory="src/app/[lang]/games/fruit" />
       <CommonComments lang={lang} />
     </>

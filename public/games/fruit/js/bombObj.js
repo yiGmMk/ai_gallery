@@ -9,11 +9,12 @@ var Bomb = function(envConfig) {
   var env = {};
   var game = null;
   var sprite = null;
+  var bitmap;
   var init = function() {
     env = envConfig;
     game = env.game;
     // 把数据放入cache
-    var bitmap = game.add.bitmapData(50, 50);
+    bitmap = game.add.bitmapData(50, 50);
     generateFlame(bitmap);
     game.cache.addBitmapData('flameParticle', bitmap);
     // 创建sprite
@@ -114,4 +115,12 @@ var Bomb = function(envConfig) {
     return sprite;
   };
   this.explode = explode;
+  var destroyed = false;
+  this.destroy = function() {
+    if(destroyed) return;
+    destroyed = true;
+    sprite.destroy();
+    if(game.cache.getBitmapData('flameParticle') === bitmap) game.cache.removeBitmapData('flameParticle');
+    bitmap.destroy();
+  };
 };

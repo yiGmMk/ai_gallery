@@ -1,215 +1,236 @@
-// 游戏场景
+// 游戏场景：规则计时和物体运动分离，冰冻不会延长自身倒计时
 var PlayScene = {
   create: function() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     this.bg = game.add.image(0, 0, 'background');
-    this.gravity = 1000;
+    this.rules = FruitGameRules.createState();
     this.fruits = [];
+    this.remnants = [];
+    this.feedback = [];
     this.score = 0;
     this.playing = true;
-    this.bombExplode = false;
-    this.blade = new Blade({
-      game: game
-    });
+    this.restartPointer = null;
+    this.blade = new Blade({ game: game });
     this.blade.allowBlade();
-    // 没切到的水果数
-    this.lostCount = 0;
+    this.zh = game.fruitLang === 'zh';
     this.scoreAnim();
     this.scoreTextAnim();
-    this.bestAnim();
-    this.xxxAnim();
+    var font = { font: 'bold 22px Arial, sans-serif', fill: '#ffffff' };
+    this.healthText = game.add.text(game.width - 16, 12, '', font);
+    this.healthText.anchor.setTo(1, 0);
+    this.healthIcon = new PowerUp({ game: game, kind: 'heart', x: game.width - 152, y: 25, displayOnly: true }).sprite();
+    this.healthIcon.width = 24;
+    this.healthIcon.height = 24;
+    this.effectText = game.add.text(game.width - 16, 43, '', { font: '18px Arial, sans-serif', fill: '#b9efff' });
+    this.effectText.anchor.setTo(1, 0);
+    this.hintText = game.add.text(game.width / 2, 80, '', { font: '18px Arial, sans-serif', fill: '#ffffff' });
+    this.hintText.anchor.setTo(0.5, 0);
+    this.noticeText = game.add.text(game.width / 2, 115, '', { font: 'bold 24px Arial, sans-serif', fill: '#ffffff' });
+    this.noticeText.anchor.setTo(0.5, 0);
+    this.noticeUntilMs = 0;
+    this.updateHud();
   },
   update: function() {
-    // 检查是否有fruit出了边界
-    if(!this.bombExplode) {
-      for(var i=0; i<this.fruits.length; i++) {
-        var fruit = this.fruits[i];
-        if(fruit.sprite().body.velocity.y > 0 && !fruit.sprite().inWorld) {
-          if(fruit.isFruit) {
-            this.onOut(fruit);
-          }
-          fruit.sprite().kill();
-          fruit = null;
-          this.fruits.splice(i, 1);
-        }
+    if(!this.playing) return;
+    this.rules = FruitGameRules.advance(this.rules, game.time.physicsElapsedMS, this.fruits.length > 0);
+    this.syncMotion();
+    this.updateEffects();
+    // 倒序清理，所有漏果都移除，保护期内仅结算一次伤害
+    for(var i=this.fruits.length-1; i>=0; i--) {
+      var object = this.fruits[i];
+      var sprite = object.sprite();
+      if(sprite.body.velocity.y > 0 && !sprite.inWorld) {
+        this.fruits.splice(i, 1);
+        if(object.type === 'fruit') this.onOut(object);
+        this.removeObject(object);
+        if(!this.playing) return;
       }
     }
-    if(this.playing && this.fruits.length == 0 && !this.bombExplode) {
-      this.startFruit();
-    }
-    // 开始有刀光
+    this.rules = FruitGameRules.advance(this.rules, 0, this.fruits.length > 0);
+    if(this.fruits.length === 0) this.startFruit();
     this.blade.update();
-    if(!this.bombExplode) {
-      for(var i=0; i<this.fruits.length; i++) {
-        var fruit = this.fruits[i];
-        this.blade.checkCollide(fruit.sprite(), function() {
-          if(fruit.isFruit) {
-            this.onKill(fruit);
-            this.fruits.splice(i, 1);
-            i--;
-          } else {
-            this.onBomb(fruit);
-          }
-        }.bind(this));
-        if(this.bombExplode) {
-          break;
-        }
-      }
+    for(var i=0; i<this.fruits.length && this.playing; i++) {
+      var object = this.fruits[i];
+      this.blade.checkCollide(object.sprite(), function() {
+        this.fruits.splice(i, 1);
+        i--;
+        if(object.type === 'fruit') this.onKill(object);
+        else if(object.type === 'bomb') this.onBomb(object);
+        else this.onPowerUp(object);
+      }.bind(this));
     }
+    this.updateHud();
   },
   scoreAnim: function() {
     this.scoreImage = game.add.image(8, 8, 'score');
-    this.scoreImage.x = -this.scoreImage.width;
-    game.add.tween(this.scoreImage).to({x: 8}, 300, Phaser.Easing.Sinusoidal.InOut, true);
-  },
-  bestAnim: function() {
-    this.best = game.add.image(8, 52, 'best');
-    this.best.x = -this.best.width;
-    game.add.tween(this.best).to({x: 5}, 300, Phaser.Easing.Sinusoidal.InOut, true);
   },
   scoreTextAnim: function() {
-    this.scoreText = game.add.bitmapText(75, 40, 'number', this.score + '', 32);
-    this.scoreText.x = -this.scoreText.width;
-    game.add.tween(this.scoreText).to({x: 75}, 300, Phaser.Easing.Sinusoidal.InOut, true);
+    this.scoreText = game.add.bitmapText(75, 40, 'number', '0', 32);
   },
-  xxxAnim: function() {
-    this.xxxGroup = game.add.group();
-    this.x = game.add.image(0, 0, 'x');
-    this.xx = game.add.image(22, 0, 'xx');
-    this.xxx = game.add.image(49, 0, 'xxx');
-    this.xxxGroup.addChild(this.x);
-    this.xxxGroup.addChild(this.xx);
-    this.xxxGroup.addChild(this.xxx);
-    this.xxxGroup.x = game.width;
-    this.xxxGroup.y = 5;
-    game.add.tween(this.xxxGroup).to({x: game.width-86}, 300, Phaser.Easing.Sinusoidal.InOut, true);
+  updateHud: function() {
+    this.healthText.text = (this.zh ? '生命 ' : 'Lives ') + this.rules.lives + '/' + FruitGameRules.config.maxLives;
+    var effects = [this.zh ? '护盾 ' : 'Shield '];
+    effects[0] += this.rules.hasShield ? '1' : '0';
+    var remaining = Math.max(0, this.rules.frozenUntilMs - this.rules.elapsedMs);
+    if(remaining > 0) effects.push((this.zh ? '冰冻 ' : 'Freeze ') + Math.ceil(remaining / 1000) + 's');
+    this.effectText.text = effects.join('  ·  ');
+    this.hintText.text = !this.playing ? '' : this.rules.elapsedMs < 15000 ?
+      (this.zh ? '热身中 · 暂无炸弹 · 划中道具自动使用' : 'Warm up · No bombs · Slice items to use') : '';
+    if(this.rules.elapsedMs >= this.noticeUntilMs) this.noticeText.text = '';
+  },
+  notify: function(zh, en) {
+    this.noticeText.text = this.zh ? zh : en;
+    this.noticeUntilMs = this.rules.elapsedMs + 1300;
   },
   startFruit: function() {
-    var number = mathTool.randomMinMax(1, 5);
-    var hasBomb = Math.floor(Math.random() * 2);
-    var bombIndex = -1;
-    if(hasBomb) {
-      bombIndex = Math.floor(Math.random() * number);
+    var wave = FruitGameRules.nextWave(this.rules, Math.random);
+    this.rules = wave.state;
+    for(var i=0; i<wave.spawns.length; i++) this.fruits.push(this.createObject(wave.spawns[i]));
+  },
+  createObject: function(spawn) {
+    var shot = FruitGameRules.launch(spawn.speedTier, this.rules.elapsedMs, game, Math.random);
+    var options = { game: game, x: shot.x, y: shot.y };
+    var object;
+    if(spawn.type === 'fruit') {
+      var keys = ['apple', 'banana', 'basaha', 'peach', 'sandia'];
+      options.key = keys[Math.floor(Math.random() * keys.length)];
+      object = new Fruit(options);
+    } else if(spawn.type === 'bomb') {
+      object = new Bomb(options);
+      // 父sprite本身无纹理，显式设置炸弹实际碰撞范围
+      object.sprite().body.setSize(66, 68, -33, -34);
+    } else {
+      options.kind = spawn.powerUpKind;
+      object = new PowerUp(options);
+      object.powerUpKind = spawn.powerUpKind;
     }
-    for(var i=0; i<number; i++) {
-      if(i == bombIndex) {
-        this.fruits.push(this.randomFruit(false));
-      } else {
-        this.fruits.push(this.randomFruit(true));
+    object.type = spawn.type;
+    object.baseGravity = shot.gravity;
+    object.motionScale = 1;
+    var body = object.sprite().body;
+    body.velocity.x = shot.vx;
+    body.velocity.y = shot.vy;
+    body.gravity.y = shot.gravity;
+    this.applyMotion(object, FruitGameRules.motionScale(this.rules));
+    return object;
+  },
+  applyMotion: function(object, scale) {
+    if(object.motionScale === scale) return;
+    var body = object.sprite().body;
+    var ratio = scale / object.motionScale;
+    body.velocity.x *= ratio;
+    body.velocity.y *= ratio;
+    body.gravity.y = object.baseGravity * scale * scale;
+    object.motionScale = scale;
+  },
+  syncMotion: function() {
+    var scale = FruitGameRules.motionScale(this.rules);
+    for(var i=0; i<this.fruits.length; i++) this.applyMotion(this.fruits[i], scale);
+  },
+  removeObject: function(object) {
+    if(object.destroy) object.destroy();
+    else object.sprite().destroy();
+  },
+  impact: function(object, color) {
+    var bitmap = game.add.bitmapData(96, 96);
+    var ctx = bitmap.context;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.arc(48, 48, 36, 0, Math.PI * 2);
+    ctx.stroke();
+    var sprite = game.add.sprite(object.sprite().x, object.sprite().y, bitmap);
+    sprite.anchor.setTo(0.5, 0.5);
+    this.feedback.push({ sprite: sprite, bitmap: bitmap, until: this.rules.elapsedMs + 500 });
+  },
+  updateEffects: function() {
+    for(var i=this.feedback.length-1; i>=0; i--) {
+      var effect = this.feedback[i];
+      effect.sprite.alpha = Math.max(0, (effect.until - this.rules.elapsedMs) / 500);
+      if(effect.until <= this.rules.elapsedMs) {
+        effect.sprite.destroy();
+        if(effect.bitmap.destroy) effect.bitmap.destroy();
+        this.feedback.splice(i, 1);
+      }
+    }
+    for(var i=this.remnants.length-1; i>=0; i--) {
+      if(this.remnants[i].until <= this.rules.elapsedMs) {
+        this.removeObject(this.remnants[i].object);
+        this.remnants.splice(i, 1);
       }
     }
   },
-  randomFruit: function(isFruit) {
-    var fruitArray = ["apple", "banana", "basaha", "peach", "sandia"];
-    var index = Math.floor(Math.random() * fruitArray.length);
-    var x = mathTool.randomPosX();
-    var y = mathTool.randomPosY();
-    var vx = mathTool.randomVelocityX(x);
-    var vy = mathTool.randomVelocityY();
-    var fruit;
-    if(isFruit) {
-      fruit = new Fruit({
-        game: game,
-        key: fruitArray[index],
-        x: x,
-        y: y
-      });
-    } else {
-      fruit = new Bomb({
-        game: game,
-        x: x,
-        y: y
-      });
+  clearEffects: function() {
+    for(var i=0; i<this.remnants.length; i++) this.removeObject(this.remnants[i].object);
+    this.remnants = [];
+    for(var i=0; i<this.feedback.length; i++) {
+      this.feedback[i].sprite.destroy();
+      if(this.feedback[i].bitmap.destroy) this.feedback[i].bitmap.destroy();
     }
-    fruit.isFruit = isFruit;
-    fruit.sprite().body.velocity.x = vx;
-    fruit.sprite().body.velocity.y = vy;
-    fruit.sprite().body.gravity.y = this.gravity;
-    return fruit;
+    this.feedback = [];
   },
-  onOut: function(fruit) {
-    var x;
-    var y;
-    // 从下面出去
-    if(fruit.sprite().y > game.height) {
-      x = fruit.sprite().x;
-      y = game.height - 30;
-    } else if(fruit.sprite().x < 0) {
-    // 从左边出去
-      x = 30;
-      y = fruit.sprite().y;
-    } else {
-    // 从右边出去
-      x = game.width - 30;
-      y = fruit.sprite().y;
-    }
-    var lose = game.add.sprite(x, y, 'lose');
-    lose.anchor.setTo(0.5, 0.5);
-    lose.scale.setTo(0.0, 0.0);
-    this.loseTweenShow = game.add.tween(lose.scale).to({x: 1.0, y: 1.0}, 300, Phaser.Easing.Sinusoidal.InOut, false);
-    this.loseTweenHide = game.add.tween(lose.scale).to({x: 0.0, y: 0.0}, 300, Phaser.Easing.Sinusoidal.InOut, false, 1000);
-    this.loseTweenHide.owner = lose;
-    this.loseTweenShow.chain(this.loseTweenHide);
-    this.loseTweenShow.start();
-    this.loseTweenHide.onComplete.add(function(target, tween) {
-      tween.owner.kill();
-    }, this);
-    this.lostCount++;
-    this.loseCount();
+  onOut: function() {
+    var result = FruitGameRules.resolve(this.rules, 'miss');
+    this.rules = result.state;
+    if(result.damage) this.notify('漏掉水果 -1', 'Missed fruit -1');
+    if(this.rules.lives === 0) this.gameOver();
   },
   onKill: function(fruit) {
-    // 计算角度
-    var deg = this.blade.collideDeg();
-    fruit.half(deg, true);
-    this.score = this.score + 1;
+    fruit.half(this.blade.collideDeg(), true);
+    this.remnants.push({ object: fruit, until: this.rules.elapsedMs + 4000 });
+    this.score++;
     this.scoreText.text = this.score + '';
   },
   onBomb: function(bomb) {
-    this.bombExplode = true;
-    for(var i=0; i<this.fruits.length; i++) {
-      this.fruits[i].sprite().body.gravity.y = 0;
-      this.fruits[i].sprite().body.velocity.y = 0;
-      this.fruits[i].sprite().body.velocity.x = 0;
-    }
-    bomb.explode(function() {
-      for(var i=0; i<this.fruits.length; i++) {
-        this.fruits[i].sprite().kill();
-      }
-      this.fruits.splice(0, this.fruits.length);
-    }.bind(this), function() {
-      this.gameOver();
-    }.bind(this));
+    var result = FruitGameRules.resolve(this.rules, 'bomb');
+    this.rules = result.state;
+    this.impact(bomb, result.damage ? '#ff795c' : '#77c5ff');
+    this.removeObject(bomb);
+    this.notify(result.damage ? '炸弹 -2' : '护盾抵挡了炸弹', result.damage ? 'Bomb -2' : 'Shield blocked the bomb');
+    if(this.rules.lives === 0) this.gameOver();
   },
-  loseCount: function() {
-    if(this.lostCount == 1) {
-      this.lostAnim(this.x, 'xf');
-    } else if(this.lostCount == 2) {
-      this.lostAnim(this.xx, 'xxf');
-    } else if(this.lostCount == 3) {
-      this.lostAnim(this.xxx, 'xxxf');
-      this.gameOver();
-    }
-  },
-  lostAnim: function(removeObj, addKey) {
-    this.xxxGroup.removeChild(removeObj);
-    removeObj.kill();
-    this[addKey] = game.add.sprite(0, 0, addKey);
-    this[addKey].reset(removeObj.x + this[addKey].width/2, removeObj.y + this[addKey].height/2);
-    this.xxxGroup.addChild(this[addKey]);
-    this[addKey].anchor.setTo(0.5, 0.5);
-    this[addKey].scale.setTo(0, 0);
-    game.add.tween(this[addKey].scale).to({x: 1.0, y: 1.0}, 300, Phaser.Easing.Sinusoidal.InOut, true);
+  onPowerUp: function(object) {
+    var result = FruitGameRules.resolve(this.rules, object.powerUpKind);
+    this.rules = result.state;
+    this.removeObject(object);
+    if(object.powerUpKind === 'heart') this.notify(result.applied ? '生命 +1' : '生命已满', result.applied ? 'Life +1' : 'Lives full');
+    else if(object.powerUpKind === 'shield') this.notify('护盾已就绪', 'Shield ready');
+    else this.notify('冰冻 5 秒', 'Freeze for 5 seconds');
+    this.syncMotion();
   },
   gameOver: function() {
+    if(!this.playing) return;
     this.playing = false;
-    var gameOverSprite = game.add.sprite(0, 0, 'game-over');
-    gameOverSprite.anchor.setTo(0.5, 0.5);
-    gameOverSprite.scale.setTo(0, 0);
-    gameOverSprite.reset(game.width/2, game.height/2);
-    game.add.tween(gameOverSprite.scale).to({x: 1.0, y: 1.0}, 300, Phaser.Easing.Sinusoidal.InOut, true);
+    for(var i=0; i<this.fruits.length; i++) this.removeObject(this.fruits[i]);
+    this.fruits = [];
+    this.clearEffects();
+    this.updateHud();
+    this.gameOverSprite = game.add.sprite(game.width / 2, game.height / 2, 'game-over');
+    this.gameOverSprite.anchor.setTo(0.5, 0.5);
+    this.restartText = game.add.text(game.width / 2, game.height / 2 + 60,
+      this.zh ? '点击或轻触，返回首页' : 'Click or tap to return to the menu',
+      { font: '20px Arial, sans-serif', fill: '#ffffff' });
+    this.restartText.anchor.setTo(0.5, 0.5);
+    game.input.onDown.add(this.armRestart, this);
     game.input.onUp.add(this.restartGame, this);
   },
-  restartGame: function() {
+  armRestart: function(pointer) {
+    this.restartPointer = pointer;
+  },
+  restartGame: function(pointer) {
+    if(pointer !== this.restartPointer || !this.restartPointer) return;
+    this.restartPointer = null;
+    game.input.onDown.remove(this.armRestart, this);
+    game.input.onUp.remove(this.restartGame, this);
     game.state.start('main');
+  },
+  shutdown: function() {
+    this.playing = false;
+    game.input.onDown.remove(this.armRestart, this);
+    game.input.onUp.remove(this.restartGame, this);
+    this.restartPointer = null;
+    for(var i=0; i<this.fruits.length; i++) this.removeObject(this.fruits[i]);
+    this.fruits = [];
+    this.clearEffects();
   }
 };
