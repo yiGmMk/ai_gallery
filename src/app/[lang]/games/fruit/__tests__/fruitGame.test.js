@@ -298,6 +298,24 @@ describe('continuous slice geometry', () => {
     )).toBe(expected);
   });
 
+  test.each([
+    ['horizontal', [0, 50], [100, 50], 0.4],
+    ['vertical', [50, 0], [50, 100], 0.4],
+    ['diagonal', [0, 0], [100, 100], 0.4],
+    ['reversed', [100, 50], [0, 50], 0.4],
+    ['starts inside', [50, 50], [100, 50], 0],
+    ['touches at end', [0, 50], [40, 50], 1],
+  ])('blade reports first entry along the %s segment', (_name, from, to, expected) => {
+    const fixture = createGame();
+    fixture.press(fixture.touchPointer, ...from);
+    fixture.update();
+    fixture.move(fixture.touchPointer, ...to);
+    fixture.update();
+    const hit = jest.fn();
+    fixture.blade.checkCollide({ alive: true, body: rect }, hit);
+    expect(hit).toHaveBeenCalledWith(expected);
+  });
+
   test('ignores an empty fruit body', () => {
     const { context } = createGame();
     expect(typeof context.mathTool.segmentIntersectsRect).toBe('function');
@@ -325,6 +343,9 @@ describe('gameplay slice integration', () => {
     scene.feedback = [];
     fixture.game.add.bitmapData = () => ({ context: document.createElement('canvas').getContext('2d') });
     fixture.game.add.sprite = (x, y) => ({ x, y, anchor: { setTo() {} }, destroy() {} });
+    fixture.game.add.text = fixture.game.add.sprite;
+    fixture.game.input.onDown = { add() {}, remove() {} };
+    fixture.game.input.onUp = { add() {}, remove() {} };
     scene.score = 0;
     scene.scoreText = { text: '0' };
     scene.fruits = types.map((isFruit, index) => {
@@ -344,6 +365,84 @@ describe('gameplay slice integration', () => {
     });
     return scene;
   }
+
+  test.each([
+    ['rightward', [0, 20], [120, 20], [70, 10], [20, 10]],
+    ['leftward', [120, 20], [0, 20], [20, 10], [70, 10]],
+    ['downward', [20, 0], [20, 120], [10, 70], [10, 20]],
+    ['diagonal', [0, 0], [120, 120], [70, 70], [20, 20]],
+  ])('a %s swipe activates a shield before a later bomb regardless of spawn order', (_name, from, to, bombPos, shieldPos) => {
+    const fixture = createGame();
+    const scene = createScene(fixture, [false, false]);
+    const [bomb, shield] = scene.fruits;
+    shield.type = 'powerUp';
+    shield.powerUpKind = 'shield';
+    Object.assign(bomb.sprite().body, { x: bombPos[0], y: bombPos[1] });
+    Object.assign(shield.sprite().body, { x: shieldPos[0], y: shieldPos[1] });
+    scene.rules.lives = 1;
+    fixture.press(fixture.touchPointer, ...from);
+    scene.update();
+    fixture.move(fixture.touchPointer, ...to);
+    scene.update();
+    expect(scene.playing).toBe(true);
+    expect(scene.rules.lives).toBe(1);
+    expect(scene.rules.hasShield).toBe(false);
+    expect(scene.fruits).toHaveLength(0);
+  });
+
+  test('a heart crossed before a bomb can save the last two lives', () => {
+    const fixture = createGame();
+    const scene = createScene(fixture, [false, false]);
+    const [bomb, heart] = scene.fruits;
+    heart.type = 'powerUp';
+    heart.powerUpKind = 'heart';
+    bomb.sprite().body.x = 70;
+    heart.sprite().body.x = 20;
+    scene.rules.lives = 2;
+    fixture.press(fixture.touchPointer, 0, 20);
+    scene.update();
+    fixture.move(fixture.touchPointer, 120, 20);
+    scene.update();
+    expect(scene.rules.lives).toBe(1);
+    expect(scene.playing).toBe(true);
+  });
+
+  test('a lethal bomb crossed first prevents a later shield and fruit despite reversed array order', () => {
+    const fixture = createGame();
+    const scene = createScene(fixture, [false, true, false]);
+    const [shield, fruit, bomb] = scene.fruits;
+    shield.type = 'powerUp';
+    shield.powerUpKind = 'shield';
+    shield.sprite().body.x = 60;
+    fruit.sprite().body.x = 90;
+    bomb.sprite().body.x = 20;
+    scene.rules.lives = 1;
+    fixture.press(fixture.touchPointer, 0, 20);
+    scene.update();
+    fixture.move(fixture.touchPointer, 120, 20);
+    scene.update();
+    expect(scene.rules.lives).toBe(0);
+    expect(scene.playing).toBe(false);
+    expect(scene.rules.hasShield).toBe(false);
+    expect(scene.score).toBe(0);
+    expect(scene.fruits).toHaveLength(0);
+  });
+
+  test('overlapping targets resolve by first boundary contact, not center distance', () => {
+    const fixture = createGame();
+    const scene = createScene(fixture, [false, false]);
+    const [bomb, shield] = scene.fruits;
+    shield.type = 'powerUp';
+    shield.powerUpKind = 'shield';
+    Object.assign(bomb.sprite().body, { x: 40, width: 20 });
+    Object.assign(shield.sprite().body, { x: 20, width: 100 });
+    fixture.press(fixture.touchPointer, 0, 20);
+    scene.update();
+    fixture.move(fixture.touchPointer, 120, 20);
+    scene.update();
+    expect(scene.rules.lives).toBe(5);
+    expect(scene.rules.hasShield).toBe(false);
+  });
 
   test('one segment cuts both adjacent fruits without skipping a spliced entry', () => {
     const fixture = createGame();

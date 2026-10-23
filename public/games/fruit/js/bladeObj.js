@@ -85,10 +85,12 @@ var Blade = function(envConfig) {
   var checkCollide = function(sprite, onCollide) {
     if(allowBlade && segment && pointer && pointer.isDown &&
       pointer.timeDown == timeDown && pointer.totalTouches == totalTouches &&
-      sprite.alive !== false && sprite.body &&
-      mathTool.segmentIntersectsRect(segment.start, segment.end, sprite.body)) {
-      collisionSegment = segment;
-      onCollide();
+      sprite.alive !== false && sprite.body) {
+      var entry = mathTool.segmentRectEntry(segment.start, segment.end, sprite.body);
+      if(entry !== null) {
+        collisionSegment = segment;
+        onCollide(entry);
+      }
     }
   };
   var collideDeg = function() {

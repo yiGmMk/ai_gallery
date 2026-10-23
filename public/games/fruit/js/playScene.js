@@ -49,15 +49,21 @@ var PlayScene = {
     this.rules = FruitGameRules.advance(this.rules, 0, this.fruits.length > 0);
     if(this.fruits.length === 0) this.startFruit();
     this.blade.update();
-    for(var i=0; i<this.fruits.length && this.playing; i++) {
+    var hits = [];
+    for(var i=0; i<this.fruits.length; i++) {
       var object = this.fruits[i];
-      this.blade.checkCollide(object.sprite(), function() {
-        this.fruits.splice(i, 1);
-        i--;
-        if(object.type === 'fruit') this.onKill(object);
-        else if(object.type === 'bomb') this.onBomb(object);
-        else this.onPowerUp(object);
-      }.bind(this));
+      this.blade.checkCollide(object.sprite(), function(entry) {
+        hits.push({ object: object, entry: entry, order: i });
+      });
+    }
+    // 按刀迹首次接触的先后结算，道具可以保护同一刀后续命中的炸弹
+    hits.sort(function(a, b) { return a.entry - b.entry || a.order - b.order; });
+    for(var i=0; i<hits.length && this.playing; i++) {
+      var object = hits[i].object;
+      this.fruits.splice(this.fruits.indexOf(object), 1);
+      if(object.type === 'fruit') this.onKill(object);
+      else if(object.type === 'bomb') this.onBomb(object);
+      else this.onPowerUp(object);
     }
     this.updateHud();
   },

@@ -1,10 +1,14 @@
 var mathTool = {
   // 连续刀迹与矩形相交，包含水平、竖直及擦边的线段
   segmentIntersectsRect: function(start, end, rect) {
+    return this.segmentRectEntry(start, end, rect) !== null;
+  },
+  // 首次进入矩形的位置：0为刀迹起点，1为终点，null为未命中
+  segmentRectEntry: function(start, end, rect) {
     var dx = end.x - start.x;
     var dy = end.y - start.y;
     if((dx == 0 && dy == 0) || rect.width <= 0 || rect.height <= 0) {
-      return false;
+      return null;
     }
     var min = 0;
     var max = 1;
@@ -15,7 +19,7 @@ var mathTool = {
     for(var i=0; i<2; i++) {
       if(directions[i] == 0) {
         if(origins[i] < lower[i] || origins[i] > upper[i]) {
-          return false;
+          return null;
         }
       } else {
         var near = (lower[i] - origins[i]) / directions[i];
@@ -23,11 +27,11 @@ var mathTool = {
         min = Math.max(min, Math.min(near, far));
         max = Math.min(max, Math.max(near, far));
         if(min > max) {
-          return false;
+          return null;
         }
       }
     }
-    return true;
+    return min;
   },
   // 计算延长线,p2往p1延长(private)
   calcParallel: function(p1, p2, L) {

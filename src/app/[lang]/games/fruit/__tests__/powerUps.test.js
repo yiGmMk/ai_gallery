@@ -84,7 +84,7 @@ function fixture(lang = 'en') {
       this.allowBlade = () => {};
       this.update = () => {};
       this.collideDeg = () => 0;
-      this.checkCollide = (object, hit) => { if (object.hit && object.alive) hit(); };
+      this.checkCollide = (object, hit) => { if (object.hit && object.alive) hit(0); };
     },
   });
   const load = name => vm.runInContext(fs.readFileSync(path.join(process.cwd(), 'public/games/fruit/js', name), 'utf8'), context);
