@@ -38,6 +38,7 @@ export function middleware(request) {
     pathname.endsWith('.png') ||
     pathname.endsWith('.webp') ||
     pathname.endsWith('.jpg') ||
+    pathname.endsWith('.jpeg') ||
     pathname.endsWith('.gif') ||
     pathname.endsWith('.css') ||
     pathname.endsWith('.ico')
