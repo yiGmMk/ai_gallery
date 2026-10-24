@@ -133,6 +133,7 @@ export class LiveMatch {
     const index = this.bodyIndex.get(puckId);
     if (index == null) return;
     const body = this.bodies[index];
+    if (!body) return;
     if (frozen) {
       this.frozenVelocity.set(puckId, {
         linvel: body.linvel(),
@@ -172,6 +173,10 @@ export class LiveMatch {
     this.world.free();
     this.world = null;
     this.bodies = [];
+    // Frozen bookkeeping belongs to the disposed bodies; a thaw after free
+    // (component cleanup order is not guaranteed) must be a no-op.
+    this.frozen = new Set();
+    this.frozenVelocity = new Map();
   }
 
   updateWinner() {

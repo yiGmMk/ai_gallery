@@ -245,6 +245,7 @@ export default function SlingPuckGame() {
       rapierRef.current = null;
       engineRef.current = null;
       liveTokenRef.current += 1;
+      liveRef.current?.thawAll();
       liveRef.current?.free();
       liveRef.current = null;
     };
@@ -368,8 +369,8 @@ export default function SlingPuckGame() {
     let timer = null;
     const cadence = FREE_AI.cadenceMs[difficulty] ?? FREE_AI.cadenceMs.normal;
 
-    const arm = () => {
-      timer = setTimeout(tick, cadence);
+    const arm = (delay = cadence) => {
+      timer = setTimeout(tick, delay);
       aiTimerRef.current = timer;
     };
     const tick = () => {
@@ -377,6 +378,7 @@ export default function SlingPuckGame() {
       if (token !== liveTokenRef.current || modeRef.current !== "playing") return;
       const live = liveRef.current;
       if (!live || live.winner) return;
+      const tickStartedAt = Date.now();
       aiTickRef.current += 1;
       const choice = chooseShot({
         rapier: rapierRef.current,
@@ -399,7 +401,10 @@ export default function SlingPuckGame() {
           // The board moved between the snapshot and the shot; retry next tick.
         }
       }
-      if (token === liveTokenRef.current && modeRef.current === "playing") arm();
+      // Cadence is tick-to-tick: the search budget sits inside the interval.
+      if (token === liveTokenRef.current && modeRef.current === "playing") {
+        arm(Math.max(0, cadence - (Date.now() - tickStartedAt)));
+      }
     };
     arm();
 
@@ -412,7 +417,7 @@ export default function SlingPuckGame() {
   const grabLivePuck = useCallback(event => {
     const live = liveRef.current;
     const scene = sceneRef.current;
-    if (!live || !scene) return;
+    if (!live || !scene || dragRef.current) return;
     audioRef.current?.unlock();
     const hit = scene.pickPuck(event.clientX, event.clientY);
     if (!hit) return;
@@ -510,6 +515,7 @@ export default function SlingPuckGame() {
     const drag = dragRef.current;
     const scene = sceneRef.current;
     if (!drag || !scene) return;
+    if (drag.pointerId != null && event.pointerId != null && drag.pointerId !== event.pointerId) return;
     const board = scene.boardPoint(event.clientX, event.clientY);
     if (!board) {
       drag.pending = null;
@@ -530,6 +536,7 @@ export default function SlingPuckGame() {
   const finishDrag = useCallback((event, cancelled = false) => {
     const drag = dragRef.current;
     if (!drag) return;
+    if (drag.pointerId != null && event.pointerId != null && drag.pointerId !== event.pointerId) return;
     if (drag.live) {
       dragRef.current = null;
       dragFrameRef.current?.clear();

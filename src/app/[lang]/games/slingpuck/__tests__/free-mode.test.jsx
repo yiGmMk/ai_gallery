@@ -232,6 +232,76 @@ test('the AI fires on the difficulty cadence and skips ungrabbable boards', asyn
   expect(scene.liveModeCalls).toContain(true);
 });
 
+test('a second pointer cannot steal an active drag and orphan a frozen puck', async () => {
+  render(<SlingPuckGame />);
+  await flushLoad();
+  const scene = startFreeGame();
+  const live = latestLive();
+  scene.pick = () => ({ id: 0 });
+  pointer('pointerdown', { pointerId: 1 });
+  pointer('pointermove', { pointerId: 1 });
+  expect(live.frozenCalls).toEqual([[0, true]]);
+
+  scene.pick = () => ({ id: 1 });
+  pointer('pointerdown', { pointerId: 2 });
+  expect(live.frozenCalls).toEqual([[0, true]]);
+  pointer('pointerup', { pointerId: 2 });
+  expect(live.frozenCalls).toEqual([[0, true]]);
+  expect(live.shoot).not.toHaveBeenCalled();
+
+  pointer('pointerup', { pointerId: 1 });
+  expect(live.shoot).toHaveBeenCalledTimes(1);
+  expect(live.shoot.mock.calls[0][0].puckId).toBe(0);
+  expect(live.frozenCalls).toEqual([[0, true], [0, false]]);
+});
+
+test('unmounting during a live drag thaws the frozen puck before freeing the match', async () => {
+  const { unmount } = render(<SlingPuckGame />);
+  await flushLoad();
+  const scene = startFreeGame();
+  const live = latestLive();
+  scene.pick = () => ({ id: 0 });
+  pointer('pointerdown');
+  expect(live.frozenCalls).toEqual([[0, true]]);
+
+  const order = [];
+  live.thawAll.mockImplementation(() => { order.push('thaw'); live.thawCalls += 1; });
+  live.free.mockImplementation(() => { order.push('free'); live.freeCalls += 1; });
+  unmount();
+
+  const thawed = order.indexOf('thaw');
+  const freed = order.indexOf('free');
+  expect(thawed).toBeGreaterThanOrEqual(0);
+  expect(freed).toBeGreaterThan(thawed);
+});
+
+test('the AI cadence keeps the search budget inside the interval', async () => {
+  render(<SlingPuckGame />);
+  await flushLoad();
+  act(() => {
+    Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('slingpuck_hard')).click();
+  });
+  startFreeGame();
+  const live = latestLive();
+  const clock = { now: Date.now() };
+  const nowSpy = jest.spyOn(Date, 'now').mockImplementation(() => clock.now);
+  chooseShot.mockImplementation(() => {
+    clock.now += 50;
+    return { puckId: 5, dragPoint: { x: 175, y: 385 }, power: 1, direction: { x: 0, y: -1 } };
+  });
+
+  act(() => { jest.advanceTimersByTime(FREE_AI.cadenceMs.hard); });
+  expect(live.shoot).toHaveBeenCalledTimes(1);
+
+  // The 50 ms search sits inside the 700 ms interval, not after it.
+  act(() => { jest.advanceTimersByTime(FREE_AI.cadenceMs.hard - 50 - 1); });
+  expect(live.shoot).toHaveBeenCalledTimes(1);
+  act(() => { jest.advanceTimersByTime(1); });
+  expect(live.shoot).toHaveBeenCalledTimes(2);
+
+  nowSpy.mockRestore();
+});
+
 test('a winner stops the loop, the AI timer and any drag, and shows the result', async () => {
   render(<SlingPuckGame />);
   await flushLoad();

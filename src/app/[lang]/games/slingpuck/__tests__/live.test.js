@@ -80,3 +80,11 @@ test('reset restores a fresh 5/5 board at rest', () => {
   expect(match.winner).toBeNull();
   expect(match.pucks.every(p => p.speed === 0)).toBe(true);
 });
+
+test('free() while a puck is frozen leaves thawAll a safe no-op', () => {
+  const match = new LiveMatch(RAPIER);
+  match.setFrozen(0, true);
+  match.free();
+  expect(() => match.thawAll()).not.toThrow();
+  expect(match.frozen.size).toBe(0);
+});
