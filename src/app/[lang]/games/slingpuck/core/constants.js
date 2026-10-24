@@ -26,6 +26,9 @@ export const PHYSICS = Object.freeze({
   settleAngular: 0.8,
   settleTime: 0.45,
   maxShotTime: 8,
+  // Rapier 0.21 clamps world-space linear velocity at ~400 u/s. The board is
+  // simulated in a 1/50 scale world so full-power shots stay well below it.
+  worldScale: 0.02,
 });
 
 export const TURN_SECONDS = 30;

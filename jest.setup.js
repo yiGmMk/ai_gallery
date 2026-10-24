@@ -1,6 +1,11 @@
 import '@testing-library/jest-dom'
 import 'jest-canvas-mock';
 
+// jsdom does not expose TextDecoder/TextEncoder globals that Rapier's WASM glue needs.
+const { TextDecoder: NodeTextDecoder, TextEncoder: NodeTextEncoder } = require('util');
+global.TextDecoder ??= NodeTextDecoder;
+global.TextEncoder ??= NodeTextEncoder;
+
 class ResizeObserver {
   observe() {}
   unobserve() {}
