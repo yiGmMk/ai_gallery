@@ -15,7 +15,7 @@ function CountPill({ label, count, accent }) {
 
 export function GameHud({
   side,
-  freeMode = false,
+  gameMode = "turns",
   counts,
   timeLeft,
   power,
@@ -25,6 +25,7 @@ export function GameHud({
   onToggleSound,
   t,
 }) {
+  const freeMode = gameMode === "free";
   const warning = timeLeft <= 10;
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0 z-10 p-3 sm:p-4">
@@ -38,7 +39,7 @@ export function GameHud({
                 : "border-amber-200/30 bg-black/45 text-amber-50"
             }`}
           >
-            {freeMode ? t("slingpuck_free_mode") : formatClock(timeLeft)}
+            {freeMode ? t("slingpuck_free_label") : formatClock(timeLeft)}
           </div>
           {!freeMode && (
             <p className="mt-1.5 max-w-[15rem] text-center text-[11px] leading-4 text-amber-100/65 sm:text-xs">{message}</p>

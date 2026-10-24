@@ -687,7 +687,7 @@ export default function SlingPuckGame() {
 
         {mode === "playing" && (
           <GameHud
-            freeMode={gameMode === "free"}
+            gameMode={gameMode}
             side={turnState.side}
             counts={counts}
             timeLeft={timeLeft}
@@ -724,7 +724,7 @@ export default function SlingPuckGame() {
       </div>
 
       <p className="mt-3 text-center text-xs leading-5 text-gray-500 dark:text-gray-400">
-        {t("slingpuck_hint")}
+        {t(gameMode === "free" ? "slingpuck_free_hint" : "slingpuck_hint")}
       </p>
     </section>
   );
