@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { BOARD } from '../core/constants';
+import { BOARD, PHYSICS } from '../core/constants';
 import { isWithinBoard, physicsToScene, sceneToPhysics } from './coordinates';
 import {
   makeBoardTexture,
@@ -422,26 +422,47 @@ export class SlingPuckScene {
     this.puckMeshes.push(body);
   }
 
+  placeView(puck) {
+    let view = this.views.get(puck.id);
+    if (!view) {
+      this.addPuck(puck);
+      view = this.views.get(puck.id);
+    }
+    const scenePoint = physicsToScene(puck.x, puck.y);
+    view.group.position.set(scenePoint.x, 0, scenePoint.z);
+    view.group.rotation.y = -(puck.angle ?? 0);
+    view.angle = puck.angle ?? 0;
+    return view;
+  }
+
   syncPucks(pucks) {
     if (!pucks) return;
     this.lastPucks = pucks.map(puck => ({ ...puck }));
+    pucks.forEach(puck => this.placeView(puck));
+    this.applyGlow();
+  }
+
+  syncLive(pucks, { skipId = null } = {}) {
+    if (!pucks) return;
+    this.lastPucks = pucks.map(puck => ({ ...puck }));
     pucks.forEach(puck => {
-      let view = this.views.get(puck.id);
-      if (!view) {
-        this.addPuck(puck);
-        view = this.views.get(puck.id);
-      }
-      const scenePoint = physicsToScene(puck.x, puck.y);
-      view.group.position.set(scenePoint.x, 0, scenePoint.z);
-      view.group.rotation.y = -(puck.angle ?? 0);
-      view.angle = puck.angle ?? 0;
+      if (puck.id !== skipId) this.placeView(puck);
     });
+    this.applyGlow();
+  }
+
+  setLiveMode(on) {
+    this.liveMode = Boolean(on);
     this.applyGlow();
   }
 
   applyGlow() {
     this.views.forEach((view, id) => {
       const puck = this.lastPucks.find(item => item.id === id);
+      if (this.liveMode) {
+        view.glow.visible = Boolean(puck && puck.y < 0 && (puck.speed ?? 0) < PHYSICS.settleSpeed);
+        return;
+      }
       view.glow.visible = Boolean(this.interactiveSide && puck && (puck.y < 0 ? 'player' : 'opponent') === this.interactiveSide);
     });
   }
