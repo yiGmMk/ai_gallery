@@ -90,7 +90,14 @@ const Projects = {
       description: "fruit_description",
       image: "https://games.programnotes.cn/games/fruit/assets/fruit-ninja.png",
       link: "/games/fruit",
-    }
+    },
+    {
+      id: "slingpuck",
+      title: "slingpuck_title",
+      description: "slingpuck_description",
+      image: "/games/slingpuck/cover.jpeg",
+      link: "/games/slingpuck",
+    },
   ],
   algorithms: [
     {
