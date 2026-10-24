@@ -83,6 +83,16 @@ export const AI_SEARCH = Object.freeze({
   budgetMs: 250,
 });
 
+// Free mode: both sides shoot continuously, so the AI fires on a fixed cadence
+// and searches fewer candidates to keep its pause inside one short frame.
+export const FREE_AI = Object.freeze({
+  cadenceMs: Object.freeze({ easy: 1800, normal: 1200, hard: 700 }),
+  search: Object.freeze({
+    candidates: Object.freeze({ easy: 4, normal: 8, hard: 14 }),
+    budgetMs: 80,
+  }),
+});
+
 export const SCORE = Object.freeze({
   ownDelta: 120,
   oppGain: 25,

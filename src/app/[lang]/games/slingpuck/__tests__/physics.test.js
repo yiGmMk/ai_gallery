@@ -71,3 +71,11 @@ test('an off-centre puck aimed through the divider gap crosses into the opponent
   });
   expect(result.pucks[0].y).toBeGreaterThan(0);
 });
+
+test('snapshots carry each puck\'s live speed in board units', () => {
+  const result = simulateShot(RAPIER, [puck(0, 0, -260)], {
+    puckId: 0, side: 'player', dragPoint: { x: 0, y: -430 },
+  });
+  expect(result.frames[0].pucks[0].speed).toBeGreaterThan(0);
+  expect(result.pucks[0].speed).toBeLessThan(PHYSICS.settleSpeed + 1);
+});

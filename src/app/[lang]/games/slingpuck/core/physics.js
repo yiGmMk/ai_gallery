@@ -93,12 +93,14 @@ export function snapshotPucks(bodies, pucks) {
   const scale = PHYSICS.worldScale;
   return bodies.map((body, index) => {
     const position = body.translation();
+    const velocity = body.linvel();
     return {
       id: pucks[index].id,
       x: position.x / scale,
       y: position.y / scale,
       angle: body.rotation(),
       color: pucks[index].color,
+      speed: Math.hypot(velocity.x, velocity.y) / scale,
     };
   });
 }
