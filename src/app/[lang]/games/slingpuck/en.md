@@ -6,6 +6,10 @@ The first side to clear every puck from its own half wins. Pucks that are knocke
 
 This page is a complete, playable 2.5D version: Three.js renders a fixed oblique view of the board, while a real 2D physics engine (Rapier) simulates every bounce. No account, download or plugin is required.
 
+## Free mode
+
+Free mode is a speed contest on the same board. There are no turns: both sides sling whenever they are ready, and the AI keeps firing on a fixed rhythm while you hammer away. You may only pick up a puck that has come to rest (slower than the settle threshold); a puck still in flight cannot be grabbed. Pull any resting puck in your half back and release it, then immediately grab the next one. Pucks leave your half for good once they cross, and the first side whose half is empty wins. The AI's rhythm depends on difficulty: about every 1.8 seconds on Easy, 1.2 seconds on Normal and 0.7 seconds on Hard. Switch modes on the start screen; difficulty applies to both.
+
 ## Controls
 
 - **Mouse:** press on one of your pucks, drag backward toward your own band, and release.
@@ -60,4 +64,4 @@ In human-vs-AI the camera is fixed from your side of the table, which is the nat
 
 ### Where is the source code?
 
-The game is part of this open-source gallery. The rules, physics adapter, AI policy, rendering and React UI are separate modules under `src/app/[lang]/games/slingpuck/`, with unit tests for the rules, physics, turn engine, AI and UI formatting.
+The game is part of this open-source gallery. The rules, physics adapter, live match, AI policy, rendering and React UI are separate modules under `src/app/[lang]/games/slingpuck/`, with unit tests for the rules, physics, turn engine, live match, AI and UI formatting.

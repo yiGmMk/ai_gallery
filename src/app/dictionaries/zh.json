@@ -12,7 +12,7 @@
   "gomoku_title": "经典五子棋在线对战",
   "gomoku_description": "经典的五子棋游戏，全网特色支持自定义禁手规则，支持悔棋。功能不断完善，后面会支持在线对战，AI对战，支持各种五子棋在线玩法，不容错过",
   "slingpuck_title": "弹射冰球",
-  "slingpuck_description": "拉开皮筋，把冰球从中间的缺口弹到对方半场，先清空自己半场的一方获胜。",
+  "slingpuck_description": "拉开皮筋，把冰球从中间的缺口弹到对方半场，先清空自己半场的一方获胜。回合制之外还有自由模式：双方同时拼手速弹射。",
   "slingpuck_easy": "简单",
   "slingpuck_normal": "普通",
   "slingpuck_hard": "困难",

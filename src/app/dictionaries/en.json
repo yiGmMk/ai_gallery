@@ -12,7 +12,7 @@
   "gomoku_title": "Gomoku",
   "gomoku_description": "Backgammon is a two-player game of pure strategy classic chess game, this game supports custom selection of forbidden hand rules, supports regret chess, welcome to the five-in-a-row battle.",
   "slingpuck_title": "Sling Puck",
-  "slingpuck_description": "Stretch the elastic band, fire your pucks through the centre gap and clear your half before the AI clears its own.",
+  "slingpuck_description": "Stretch the elastic band, fire your pucks through the centre gap and clear your half before the AI clears its own — turn-based, or free mode where both sides sling at speed.",
   "slingpuck_easy": "Easy",
   "slingpuck_normal": "Normal",
   "slingpuck_hard": "Hard",

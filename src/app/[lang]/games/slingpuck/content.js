@@ -578,16 +578,24 @@ export default function SlingPuckGame() {
       sceneSize: () => sceneRef.current?.getSize() ?? null,
       hint: (side = "player") => {
         const engine = engineRef.current;
+        const live = liveRef.current;
         const scene = sceneRef.current;
         const rapier = rapierRef.current;
-        if (!engine || !scene || !rapier) return null;
-        const pucks = engine.pucks;
+        if ((!engine && !live) || !scene || !rapier) return null;
+        const pucks = live ? live.pucks : engine.pucks;
         const choice = chooseShot({
           rapier,
           pucks,
           side,
           difficulty: "hard",
-          rng: seededRng(engine.turn * 37 + 11),
+          rng: seededRng(live ? live.frame + 11 : engine.turn * 37 + 11),
+          ...(live ? {
+            grabbable: puck => puck.speed < PHYSICS.settleSpeed,
+            config: {
+              candidates: FREE_AI.search.candidates.hard,
+              budgetMs: FREE_AI.search.budgetMs,
+            },
+          } : {}),
         });
         if (choice.skip) return { skip: true };
         const puck = pucks.find(item => item.id === choice.puckId);
