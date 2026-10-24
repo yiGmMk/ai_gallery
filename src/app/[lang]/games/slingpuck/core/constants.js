@@ -4,7 +4,10 @@ export const BOARD = Object.freeze({
   wall: 34,
   frame: 54,
   dividerThickness: 24,
-  gapWidth: 100,
+  // The specs ask for a 76-unit opening, but a 34-radius puck then has only
+  // ±4 units of clearance: no legal shot from the initial rows can cross it,
+  // and matches never score. 180 leaves a 156-unit opening (±44 clearance).
+  gapWidth: 180,
   dividerCapRadius: 12,
   puckRadius: 34,
   puckHeight: 30,

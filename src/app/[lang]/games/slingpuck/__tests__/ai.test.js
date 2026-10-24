@@ -1,5 +1,5 @@
-import { loadRapier } from '../core/physics';
-import { chooseShot, seededRng } from '../core/ai';
+import { loadRapier, simulateShot } from '../core/physics';
+import { chooseShot, scoreResult, seededRng } from '../core/ai';
 import { initialPucks, sideOfPuck, clampDragPoint, computeShot } from '../core/rules';
 import { DIFFICULTIES } from '../core/constants';
 
@@ -40,4 +40,52 @@ test('uses the shared legality rules for its generated drag point', () => {
   expect(choice.dragPoint.x).toBeCloseTo(clamped.x);
   expect(choice.dragPoint.y).toBeCloseTo(clamped.y);
   expect(shot.direction.y).toBeGreaterThan(0);
+}, 20000);
+
+test('hard AI commits the scoring shot its search evaluated', () => {
+  const pucks = [
+    { id: 0, x: -175, y: -245, angle: 0, color: 'black' },
+    { id: 1, x: 175, y: 245, angle: 0, color: 'ivory' },
+    { id: 2, x: 0, y: 350, angle: 0, color: 'black' },
+  ];
+  const choice = chooseShot({
+    rapier: RAPIER, pucks, side: 'player', difficulty: 'hard', rng: seededRng(5), now: noBudget,
+  });
+  const result = simulateShot(RAPIER, pucks, {
+    puckId: choice.puckId, side: 'player', dragPoint: choice.dragPoint,
+  });
+  const after = result.pucks.find(p => p.id === choice.puckId);
+  expect(after.y).toBeGreaterThan(0);
+  expect(choice.score).toBeGreaterThan(50);
+}, 20000);
+
+test('scores a shot by how many pucks reach the opponent half', () => {
+  const at = (id, y) => ({ id, x: 0, y, angle: 0, color: 'black' });
+  const before = [0, 1, 2, 3, 4].map(id => at(id, -200 - id * 50))
+    .concat([5, 6, 7, 8, 9].map(id => at(id, 200 + (id - 5) * 50)));
+  // One own puck crosses; nobody comes back: own 4, opponent 6.
+  const clean = before.map(p => (p.id === 0 ? at(0, 100) : p));
+  // One own puck crosses, but two opponent pucks are dragged into own half.
+  const messy = before.map(p => (p.id === 0 ? at(0, 100) : p.id === 5 || p.id === 6 ? at(p.id, -400 - p.id) : p));
+  const noTime = { duration: 0 };
+  expect(scoreResult(before, clean, 'player', noTime))
+    .toBeGreaterThan(scoreResult(before, messy, 'player', noTime));
+});
+
+test('AI keeps shooting when its pucks rest against the end rail', () => {
+  const pucks = [
+    { id: 0, x: -8.8, y: -562.4, angle: 1.7, color: 'black' },
+    { id: 4, x: 218, y: -564.9, angle: 2.6, color: 'black' },
+    { id: 1, x: 175, y: 245, angle: 0, color: 'ivory' },
+    { id: 2, x: 0, y: 350, angle: 0, color: 'ivory' },
+  ];
+  const choice = chooseShot({
+    rapier: RAPIER, pucks, side: 'player', difficulty: 'hard', rng: seededRng(5), now: noBudget,
+  });
+  expect(choice.skip).toBeUndefined();
+  expect(choice.pull).toBeGreaterThanOrEqual(16);
+  const result = simulateShot(RAPIER, pucks, {
+    puckId: choice.puckId, side: 'player', dragPoint: choice.dragPoint,
+  });
+  expect(result.pucks.find(p => p.id === choice.puckId).y).toBeGreaterThan(0);
 }, 20000);

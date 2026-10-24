@@ -50,12 +50,23 @@ function targetPoints(side) {
   return points;
 }
 
-function scoreResult(before, after, side, simulated) {
+/** Distance from the divider gap centre where this aim line crosses y = 0. */
+function gapCrossingDistance(puck, target) {
+  const dy = target.y - puck.y;
+  if (Math.abs(dy) < 1e-6) return Infinity;
+  const t = -puck.y / dy;
+  if (t <= 0 || t >= 1) return Infinity;
+  return Math.abs(puck.x + (target.x - puck.x) * t);
+}
+
+export function scoreResult(before, after, side, simulated) {
   const opponent = nextSide(side);
   const ownAfter = countPucks(after, side);
   const oppAfter = countPucks(after, opponent);
   const ownDelta = countPucks(before, side) - ownAfter;
-  const oppGain = countPucks(before, opponent) - oppAfter;
+  // More pucks on the opponent's half is progress for the shooter, even when
+  // they are the opponent's own pucks that got pushed there.
+  const oppGain = oppAfter - countPucks(before, opponent);
   let score = ownDelta * SCORE.ownDelta + oppGain * SCORE.oppGain - simulated.duration * SCORE.duration;
   if (ownAfter === 0) score += SCORE.win + SCORE.clearOwn;
   if (oppAfter === 0) score -= SCORE.win + SCORE.clearOpp;
@@ -64,9 +75,10 @@ function scoreResult(before, after, side, simulated) {
 
 function candidateShot(puck, target, power, side) {
   const direction = normalize(target.x - puck.x, target.y - puck.y);
-  const back = backwardOf(side);
+  // The drag point must pull against the aim vector, otherwise every candidate
+  // simulates a straight-ahead shot that the AI never actually takes.
   const length = power * PHYSICS.maxPull;
-  const raw = { x: puck.x + back.x * length, y: puck.y + back.y * length };
+  const raw = { x: puck.x - direction.x * length, y: puck.y - direction.y * length };
   const clamped = clampDragPoint(puck, raw, side);
   if (clamped.pull < PHYSICS.minPull) return null;
   return {
@@ -101,7 +113,12 @@ export function chooseShot({
 
   outer:
   for (const puck of own) {
-    for (const target of targets) {
+    // Evaluate the lines that actually run through the opening first, so a
+    // tight candidate budget does not spend itself on blocked angles.
+    const orderedTargets = [...targets].sort(
+      (a, b) => gapCrossingDistance(puck, a) - gapCrossingDistance(puck, b)
+    );
+    for (const target of orderedTargets) {
       for (const power of POWERS) {
         const candidate = candidateShot(puck, target, power, side);
         if (!candidate) continue;
@@ -119,6 +136,10 @@ export function chooseShot({
         }
       }
     }
+  }
+
+  if (checked.length === 0) {
+    return { skip: true, reason: 'no-legal-shot', candidatesChecked };
   }
 
   checked.sort((a, b) => b.score - a.score || a.puckId - b.puckId);
@@ -145,6 +166,9 @@ export function chooseShot({
     x: start.x - rotated.x * pullLength,
     y: start.y - rotated.y * pullLength,
   }, side);
+  if (finalDrag.pull < PHYSICS.minPull) {
+    return { skip: true, reason: 'no-legal-shot', candidatesChecked };
+  }
 
   return {
     puckId: choice.puckId,

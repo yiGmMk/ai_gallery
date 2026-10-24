@@ -22,7 +22,7 @@ This page is a complete, playable 2.5D version: Three.js renders a fixed oblique
 4. After a shot, the board is simulated until the pucks settle, then the turn passes.
 5. A puck that ends in the opponent's half is out of your way. A puck knocked back into your half must be cleared again.
 6. The first side whose half becomes empty wins immediately. If both halves empty on the same shot, the shooter wins.
-7. Pucks pass through the centre gap and bounce off the divider rails, the outer frame and each other.
+7. Pucks pass through the centre gap and bounce off the divider rails, the outer frame and each other. The gap has rounded dividers, so a puck hugging a rail can still glance through.
 
 ## Difficulty
 

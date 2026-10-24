@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { BOARD } from '../core/constants';
-import { physicsToScene, sceneToPhysics } from './coordinates';
+import { isWithinBoard, physicsToScene, sceneToPhysics } from './coordinates';
 import {
   makeBoardTexture,
   makeEnvironmentTexture,
@@ -461,7 +461,13 @@ export class SlingPuckScene {
   updateDrag({ puckId, start, dragPoint, power, side }) {
     const view = this.views.get(puckId);
     if (!view) return;
+    // The pull point may sit past the board edge for a puck on the end rail;
+    // the drawn puck still has to stay on the mat.
+    const matX = HALF_WIDTH - PUCK_RADIUS - 0.02;
+    const matZ = HALF_HEIGHT - PUCK_RADIUS - 0.02;
     const point = physicsToScene(dragPoint.x, dragPoint.y);
+    point.x = clamp(point.x, -matX, matX);
+    point.z = clamp(point.z, -matZ, matZ);
     view.group.position.set(point.x, 0.08, point.z);
 
     const dragScenePoint = new THREE.Vector3(point.x, 0.22, point.z);
@@ -525,9 +531,7 @@ export class SlingPuckScene {
     const hit = this.raycaster.ray.intersectPlane(this.floorPlane, this.hitPoint);
     if (!hit) return null;
     const point = sceneToPhysics(hit.x, hit.z);
-    if (Math.abs(point.x) > HALF_WIDTH * 1.4 || Math.abs(point.y) > HALF_HEIGHT * 1.4) {
-      return null;
-    }
+    if (!isWithinBoard(point.x, point.y)) return null;
     return point;
   }
 

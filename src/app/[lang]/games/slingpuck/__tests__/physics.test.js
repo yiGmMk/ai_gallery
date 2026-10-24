@@ -56,3 +56,18 @@ test('simulation is deterministic and reports collision events', () => {
   expect(a.frames.length).toBeGreaterThan(1);
   expect(a.settled).toBe(true);
 });
+
+test('an off-centre puck aimed through the divider gap crosses into the opponent half', () => {
+  const start = { x: -175, y: -245 };
+  const target = { x: 240, y: 380 };
+  const len = Math.hypot(target.x - start.x, target.y - start.y);
+  const pull = 150;
+  const dragPoint = {
+    x: start.x - ((target.x - start.x) / len) * pull,
+    y: start.y - ((target.y - start.y) / len) * pull,
+  };
+  const result = simulateShot(RAPIER, [puck(0, start.x, start.y)], {
+    puckId: 0, side: 'player', dragPoint,
+  });
+  expect(result.pucks[0].y).toBeGreaterThan(0);
+});

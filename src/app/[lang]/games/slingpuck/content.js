@@ -12,6 +12,7 @@ import { SlingPuckAudio } from "./render/audio";
 import { StartPanel } from "./components/StartPanel";
 import { GameHud } from "./components/GameHud";
 import { ResultPanel } from "./components/ResultPanel";
+import { boardHeightClass } from "./ui/layout";
 
 const INITIAL_COUNTS = { player: 5, opponent: 5 };
 const AI_DELAY_MS = 600;
@@ -379,7 +380,7 @@ export default function SlingPuckGame() {
     <section className="mx-auto w-full max-w-3xl px-3 pb-10 pt-2 sm:px-4">
       <div
         ref={containerRef}
-        className="relative h-[min(78vh,880px)] min-h-[460px] w-full overflow-hidden rounded-[1.75rem] border border-amber-200/20 bg-[#101214] shadow-[0_30px_90px_rgba(0,0,0,0.45)]"
+        className={`relative w-full overflow-hidden rounded-[1.75rem] border border-amber-200/20 bg-[#101214] shadow-[0_30px_90px_rgba(0,0,0,0.45)] ${boardHeightClass()}`}
       >
         <canvas
           ref={canvasRef}

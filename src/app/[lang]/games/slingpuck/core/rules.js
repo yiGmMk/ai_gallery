@@ -85,11 +85,15 @@ export function clampDragPoint(start, point, side) {
     vy *= scale;
   }
 
-  const bounds = halfBounds(side);
-  const x = clamp(start.x + vx, bounds.xMin, bounds.xMax);
-  const y = clamp(start.y + vy, bounds.yMin, bounds.yMax);
-  const pull = length(x - start.x, y - start.y);
-  const direction = normalize(start.x - x, start.y - y, forwardOf(side));
+  // The point itself is not clamped to the board. A puck pressed against its
+  // own end rail has no board behind it, so clamping would shrink a full pull
+  // to almost nothing and leave the puck permanently unshootable. Keeping the
+  // point virtual also makes this function idempotent, which the engine needs
+  // when it re-derives the shot. The renderer keeps the drawn puck on the mat.
+  const x = start.x + vx;
+  const y = start.y + vy;
+  const pull = length(vx, vy);
+  const direction = normalize(-vx, -vy, forwardOf(side));
 
   return {
     x,

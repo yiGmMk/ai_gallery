@@ -29,12 +29,30 @@ test('player drag clamps to a legal backward pull', () => {
   expect(forward.power).toBe(0);
 });
 
-test('drag stays inside the own half and inside walls', () => {
+test('a drag past the board edge stays capped, backward and idempotent', () => {
   const start = { x: 300, y: -300 };
   const edge = clampDragPoint(start, { x: 2000, y: -2000 }, 'player');
-  expect(edge.x).toBeLessThanOrEqual(BOARD.width / 2 - BOARD.puckRadius - 2);
-  expect(edge.y).toBeLessThanOrEqual(-(BOARD.dividerThickness / 2 + BOARD.puckRadius + 2));
-  expect(edge.pull).toBeLessThanOrEqual(PHYSICS.maxPull + 1e-9);
+  expect(edge.pull).toBeCloseTo(PHYSICS.maxPull);
+  expect(edge.direction.y).toBeGreaterThan(0.4);
+  expect(edge.y).toBeLessThan(start.y);
+  // The engine re-clamps the AI's point; it must reproduce the same shot.
+  const again = clampDragPoint(start, edge, 'player');
+  expect(again.x).toBeCloseTo(edge.x, 6);
+  expect(again.y).toBeCloseTo(edge.y, 6);
+  expect(again.pull).toBeCloseTo(edge.pull, 6);
+});
+
+test('a puck pressed against its own end wall can still be shot', () => {
+  // The rim leaves no room inside the board; the virtual pull may run past it.
+  const start = { x: 0, y: -(BOARD.height / 2 - BOARD.puckRadius) };
+  const pulled = clampDragPoint(start, { x: 0, y: start.y - PHYSICS.maxPull }, 'player');
+  expect(pulled.pull).toBeCloseTo(PHYSICS.maxPull);
+  expect(pulled.power).toBeCloseTo(1);
+  expect(pulled.direction.y).toBeGreaterThan(0.99);
+
+  const mirrored = clampDragPoint({ x: 0, y: -start.y }, { x: 0, y: -start.y + PHYSICS.maxPull }, 'opponent');
+  expect(mirrored.pull).toBeCloseTo(PHYSICS.maxPull);
+  expect(mirrored.direction.y).toBeLessThan(-0.99);
 });
 
 test('launch vector is opposite the pull for both sides', () => {
