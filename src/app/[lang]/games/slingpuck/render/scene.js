@@ -572,6 +572,14 @@ export class SlingPuckScene {
     };
   }
 
+  cancelPlayback() {
+    if (this.playback) {
+      this.playback.cancelled = true;
+      this.playback = null;
+    }
+    this.arrow.visible = false;
+  }
+
   playShot({ startPucks, frames, events, shot, onDone }) {
     if (this.playback) {
       this.playback.cancelled = true;

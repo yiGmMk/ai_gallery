@@ -1,0 +1,434 @@
+"use client";
+
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useI18n } from "@/app/i18n/client";
+import { PHYSICS, TURN_SECONDS } from "./core/constants";
+import { MatchEngine } from "./core/engine";
+import { loadRapier } from "./core/physics";
+import { clampDragPoint, countPucks, initialPucks, sideOfPuck } from "./core/rules";
+import { chooseShot, seededRng } from "./core/ai";
+import { SlingPuckScene } from "./render/scene";
+import { SlingPuckAudio } from "./render/audio";
+import { StartPanel } from "./components/StartPanel";
+import { GameHud } from "./components/GameHud";
+import { ResultPanel } from "./components/ResultPanel";
+
+const INITIAL_COUNTS = { player: 5, opponent: 5 };
+const AI_DELAY_MS = 600;
+
+export default function SlingPuckGame() {
+  const { t } = useI18n();
+  const tRef = useRef(t);
+  tRef.current = t;
+
+  const containerRef = useRef(null);
+  const canvasRef = useRef(null);
+  const sceneRef = useRef(null);
+  const audioRef = useRef(null);
+  const rapierRef = useRef(null);
+  const engineRef = useRef(null);
+  const busyRef = useRef(false);
+  const dragRef = useRef(null);
+  const deadlineRef = useRef(0);
+  const turnTokenRef = useRef(0);
+
+  const [mode, setMode] = useState("loading");
+  const [difficulty, setDifficulty] = useState("normal");
+  const [counts, setCounts] = useState(INITIAL_COUNTS);
+  const [timeLeft, setTimeLeft] = useState(TURN_SECONDS);
+  const [power, setPower] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const [message, setMessage] = useState("");
+  const [muted, setMuted] = useState(false);
+  const [winner, setWinner] = useState(null);
+  const [turnState, setTurnState] = useState({ side: "player", number: 1 });
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  const modeRef = useRef(mode);
+  modeRef.current = mode;
+  const winnerRef = useRef(winner);
+  winnerRef.current = winner;
+  const difficultyRef = useRef(difficulty);
+  difficultyRef.current = difficulty;
+
+  const updateCounts = useCallback(pucks => {
+    setCounts({
+      player: countPucks(pucks, "player"),
+      opponent: countPucks(pucks, "opponent"),
+    });
+  }, []);
+
+  const beginTurn = useCallback((side, options = {}) => {
+    const engine = engineRef.current;
+    if (!engine) return;
+    turnTokenRef.current += 1;
+    deadlineRef.current = Date.now() + TURN_SECONDS * 1000;
+    setTimeLeft(TURN_SECONDS);
+    setTurnState({ side, number: engine.turn });
+    setMessage(options.notice || (side === "player"
+      ? tRef.current("slingpuck_your_turn")
+      : tRef.current("slingpuck_thinking")));
+    sceneRef.current?.setInteractiveSide(side);
+  }, []);
+
+  const fire = useCallback((side, puckId, dragPoint) => {
+    const engine = engineRef.current;
+    const scene = sceneRef.current;
+    if (!engine || !scene || busyRef.current) return;
+
+    busyRef.current = true;
+    setBusy(true);
+    dragRef.current = null;
+    setDragging(false);
+    setPower(0);
+    const token = turnTokenRef.current;
+    const before = engine.pucks;
+
+    let result;
+    try {
+      result = engine.shoot({ side, puckId, dragPoint });
+    } catch (shootError) {
+      busyRef.current = false;
+      setBusy(false);
+      scene.cancelDrag();
+      return;
+    }
+
+    audioRef.current?.launch(result.shot.power);
+    scene.setInteractiveSide(null);
+    scene.playShot({
+      startPucks: before,
+      frames: result.frames,
+      events: result.events,
+      shot: result.shot,
+      onDone: () => {
+        if (token !== turnTokenRef.current) return;
+        scene.syncPucks(result.pucks);
+        updateCounts(result.pucks);
+        busyRef.current = false;
+        setBusy(false);
+        if (result.winner) {
+          setWinner(result.winner);
+          setMode("result");
+          audioRef.current?.win();
+        } else {
+          beginTurn(result.nextSide);
+        }
+      },
+    });
+  }, [beginTurn, updateCounts]);
+
+  const startGame = useCallback(() => {
+    const rapier = rapierRef.current;
+    const scene = sceneRef.current;
+    if (!rapier || !scene) return;
+    audioRef.current?.unlock();
+    scene.cancelPlayback();
+    scene.setInteractiveSide(null);
+    scene.cancelDrag();
+    const engine = new MatchEngine(rapier, { side: "player" });
+    engineRef.current = engine;
+    scene.syncPucks(engine.pucks);
+    updateCounts(engine.pucks);
+    setWinner(null);
+    setMode("playing");
+    busyRef.current = false;
+    setBusy(false);
+    setDragging(false);
+    setPower(0);
+    beginTurn("player");
+  }, [beginTurn, updateCounts]);
+
+  const goMenu = useCallback(() => {
+    engineRef.current = null;
+    busyRef.current = false;
+    setBusy(false);
+    dragRef.current = null;
+    setDragging(false);
+    setPower(0);
+    setWinner(null);
+    setCounts(INITIAL_COUNTS);
+    setTimeLeft(TURN_SECONDS);
+    sceneRef.current?.cancelPlayback();
+    sceneRef.current?.setInteractiveSide(null);
+    sceneRef.current?.cancelDrag();
+    sceneRef.current?.syncPucks(initialPucks());
+    setMode("menu");
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const audio = new SlingPuckAudio();
+    audioRef.current = audio;
+    audio.setMuted(false);
+
+    try {
+      if (canvasRef.current && containerRef.current) {
+        sceneRef.current = new SlingPuckScene(canvasRef.current, containerRef.current, { audio });
+      }
+    } catch (sceneError) {
+      setError(sceneError.message || "WebGL unavailable");
+    }
+
+    loadRapier()
+      .then(rapier => {
+        if (cancelled) return;
+        rapierRef.current = rapier;
+        setMode("menu");
+      })
+      .catch(loadError => {
+        if (cancelled) return;
+        setError(loadError.message || "Physics engine failed to load");
+      });
+
+    return () => {
+      cancelled = true;
+      sceneRef.current?.dispose();
+      sceneRef.current = null;
+      audio.dispose();
+      audioRef.current = null;
+      rapierRef.current = null;
+      engineRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    audioRef.current?.setMuted(muted);
+  }, [muted]);
+
+  useEffect(() => {
+    if (mode !== "playing") return undefined;
+    const interval = setInterval(() => {
+      const engine = engineRef.current;
+      if (!engine || engine.winner) return;
+      const left = Math.max(0, (deadlineRef.current - Date.now()) / 1000);
+      setTimeLeft(left);
+      if (left <= 0 && !busyRef.current) {
+        dragRef.current = null;
+        setDragging(false);
+        setPower(0);
+        sceneRef.current?.cancelDrag();
+        const next = engine.passTurn("timeout");
+        beginTurn(next.side, { notice: tRef.current("slingpuck_timeout") });
+      }
+    }, 200);
+    return () => clearInterval(interval);
+  }, [mode, beginTurn]);
+
+  useEffect(() => {
+    if (mode !== "playing" || busy || winner || turnState.side !== "opponent") return undefined;
+    const engine = engineRef.current;
+    if (!engine) return undefined;
+    const token = turnTokenRef.current;
+    const seed = engine.turn * 7919 + 17;
+    const timer = setTimeout(() => {
+      if (token !== turnTokenRef.current || busyRef.current || modeRef.current !== "playing") return;
+      const current = engineRef.current;
+      if (!current || current.currentSide !== "opponent" || current.winner) return;
+      const choice = chooseShot({
+        rapier: rapierRef.current,
+        pucks: current.pucks,
+        side: "opponent",
+        difficulty: difficultyRef.current,
+        rng: seededRng(seed),
+      });
+      if (token !== turnTokenRef.current) return;
+      if (choice.skip) {
+        const next = current.passTurn();
+        beginTurn(next.side);
+        return;
+      }
+      fire("opponent", choice.puckId, choice.dragPoint);
+    }, AI_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, [mode, busy, winner, turnState.side, turnState.number, beginTurn, fire]);
+
+  const handlePointerDown = useCallback(event => {
+    const engine = engineRef.current;
+    const scene = sceneRef.current;
+    if (modeRef.current !== "playing" || busyRef.current || !engine || !scene) return;
+    if (engine.currentSide !== "player" || engine.winner) return;
+
+    audioRef.current?.unlock();
+    const hit = scene.pickPuck(event.clientX, event.clientY);
+    if (!hit) return;
+    const puck = engine.pucks.find(item => item.id === hit.id);
+    if (!puck || sideOfPuck(puck) !== "player") return;
+
+    dragRef.current = {
+      puckId: hit.id,
+      start: { x: puck.x, y: puck.y },
+      point: { x: puck.x, y: puck.y },
+      pointerId: event.pointerId,
+    };
+    scene.beginDrag(hit.id);
+    setDragging(true);
+    setPower(0);
+    try {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    } catch {
+      // Pointer capture is best-effort; touch input still works without it.
+    }
+    event.preventDefault();
+  }, []);
+
+  const handlePointerMove = useCallback(event => {
+    const drag = dragRef.current;
+    const scene = sceneRef.current;
+    if (!drag || !scene) return;
+    const board = scene.boardPoint(event.clientX, event.clientY);
+    if (!board) return;
+    const clamped = clampDragPoint(drag.start, board, "player");
+    drag.point = { x: clamped.x, y: clamped.y };
+    scene.updateDrag({
+      puckId: drag.puckId,
+      start: drag.start,
+      dragPoint: drag.point,
+      power: clamped.power,
+      side: "player",
+    });
+    setPower(clamped.power);
+    event.preventDefault();
+  }, []);
+
+  const finishDrag = useCallback((event, cancelled = false) => {
+    const drag = dragRef.current;
+    if (!drag) return;
+    dragRef.current = null;
+    setDragging(false);
+    setPower(0);
+    try {
+      event.currentTarget.releasePointerCapture?.(drag.pointerId);
+    } catch {
+      // Capture may already be released; nothing to do.
+    }
+    if (cancelled) {
+      sceneRef.current?.cancelDrag();
+      return;
+    }
+    const clamped = clampDragPoint(drag.start, drag.point, "player");
+    if (clamped.pull >= PHYSICS.minPull) {
+      fire("player", drag.puckId, { x: clamped.x, y: clamped.y });
+    } else {
+      sceneRef.current?.cancelDrag();
+    }
+  }, [fire]);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production" || typeof window === "undefined") return undefined;
+    const hook = {
+      getScreenPoint: id => sceneRef.current?.getPuckScreenPoint(id) ?? null,
+      getBoardScreenPoint: (x, y) => sceneRef.current?.getBoardScreenPoint(x, y) ?? null,
+      canvasRect: () => canvasRef.current?.getBoundingClientRect() ?? null,
+      sceneSize: () => sceneRef.current?.getSize() ?? null,
+      hint: (side = "player") => {
+        const engine = engineRef.current;
+        const scene = sceneRef.current;
+        const rapier = rapierRef.current;
+        if (!engine || !scene || !rapier) return null;
+        const pucks = engine.pucks;
+        const choice = chooseShot({
+          rapier,
+          pucks,
+          side,
+          difficulty: "hard",
+          rng: seededRng(engine.turn * 37 + 11),
+        });
+        if (choice.skip) return { skip: true };
+        const puck = pucks.find(item => item.id === choice.puckId);
+        return {
+          puckId: choice.puckId,
+          side,
+          start: { x: puck.x, y: puck.y },
+          dragPoint: { ...choice.dragPoint },
+          power: choice.power,
+          direction: { ...choice.direction },
+          startScreen: scene.getPuckScreenPoint(choice.puckId),
+          dragScreen: scene.getBoardScreenPoint(choice.dragPoint.x, choice.dragPoint.y),
+        };
+      },
+      state: () => {
+        const engine = engineRef.current;
+        const pucks = engine?.pucks ?? [];
+        return {
+          mode: modeRef.current,
+          side: engine?.currentSide ?? null,
+          winner: winnerRef.current,
+          turn: engine?.turn ?? 0,
+          busy: busyRef.current,
+          counts: { player: countPucks(pucks, "player"), opponent: countPucks(pucks, "opponent") },
+          pucks,
+        };
+      },
+      setPlaybackRate: rate => sceneRef.current?.setPlaybackRate(rate),
+      busy: () => busyRef.current,
+    };
+    window.__slingPuck = hook;
+    return () => {
+      if (window.__slingPuck === hook) delete window.__slingPuck;
+    };
+  }, []);
+
+  const toggleSound = useCallback(() => {
+    audioRef.current?.unlock();
+    setMuted(value => !value);
+  }, []);
+
+  return (
+    <section className="mx-auto w-full max-w-3xl px-3 pb-10 pt-2 sm:px-4">
+      <div
+        ref={containerRef}
+        className="relative h-[min(78vh,880px)] min-h-[460px] w-full overflow-hidden rounded-[1.75rem] border border-amber-200/20 bg-[#101214] shadow-[0_30px_90px_rgba(0,0,0,0.45)]"
+      >
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 h-full w-full touch-none select-none"
+          style={{ touchAction: "none" }}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={event => finishDrag(event, false)}
+          onPointerCancel={event => finishDrag(event, true)}
+        />
+
+        {mode === "playing" && (
+          <GameHud
+            side={turnState.side}
+            counts={counts}
+            timeLeft={timeLeft}
+            power={power}
+            dragging={dragging}
+            message={message}
+            muted={muted}
+            onToggleSound={toggleSound}
+            t={t}
+          />
+        )}
+
+        {(mode === "menu" || mode === "loading") && !error && (
+          <StartPanel
+            difficulty={difficulty}
+            onDifficulty={setDifficulty}
+            onStart={startGame}
+            disabled={mode === "loading"}
+            t={t}
+          />
+        )}
+
+        {mode === "result" && (
+          <ResultPanel winner={winner} onRestart={startGame} onMenu={goMenu} t={t} />
+        )}
+
+        {error && (
+          <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/70 p-6 text-center text-sm text-rose-100">
+            {error}
+          </div>
+        )}
+      </div>
+
+      <p className="mt-3 text-center text-xs leading-5 text-gray-500 dark:text-gray-400">
+        {t("slingpuck_hint")}
+      </p>
+    </section>
+  );
+}
