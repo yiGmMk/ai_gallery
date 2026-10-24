@@ -490,8 +490,16 @@ export class SlingPuckScene {
   setBand(side, dragPoint) {
     const band = this.bands[side];
     if (!band) return;
+    const key = dragPoint
+      ? `${dragPoint.x},${dragPoint.y},${dragPoint.z}`
+      : 'rest';
+    if (band.userData.bandKey === key) return;
+    band.userData.bandKey = key;
     band.geometry.dispose();
-    band.geometry = this.track(new THREE.TubeGeometry(this.bandCurve(side, dragPoint), 24, 0.026, 6, false));
+    // Drag geometry is replaced on every pointer move, so it must not be added
+    // to the lifetime disposables list; disposeObject still releases the one
+    // that is mounted when the scene is torn down.
+    band.geometry = new THREE.TubeGeometry(this.bandCurve(side, dragPoint), 24, 0.026, 6, false);
   }
 
   clearDrag() {

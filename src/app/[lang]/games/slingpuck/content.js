@@ -13,6 +13,7 @@ import { StartPanel } from "./components/StartPanel";
 import { GameHud } from "./components/GameHud";
 import { ResultPanel } from "./components/ResultPanel";
 import { boardHeightClass } from "./ui/layout";
+import { createFrameQueue } from "./ui/frame";
 
 const INITIAL_COUNTS = { player: 5, opponent: 5 };
 const AI_DELAY_MS = 600;
@@ -32,6 +33,15 @@ export default function SlingPuckGame() {
   const dragRef = useRef(null);
   const deadlineRef = useRef(0);
   const turnTokenRef = useRef(0);
+  const dragFrameRef = useRef(null);
+  if (!dragFrameRef.current) {
+    // Apply at most one drag visual per animation frame regardless of how many
+    // pointer moves the mouse reports.
+    dragFrameRef.current = createFrameQueue(drag => {
+      sceneRef.current?.updateDrag({ ...drag, side: "player" });
+      setPower(drag.power);
+    });
+  }
 
   const [mode, setMode] = useState("loading");
   const [difficulty, setDifficulty] = useState("normal");
@@ -158,6 +168,9 @@ export default function SlingPuckGame() {
     setMode("menu");
   }, []);
 
+  const goMenuRef = useRef(goMenu);
+  goMenuRef.current = goMenu;
+
   useEffect(() => {
     let cancelled = false;
     const audio = new SlingPuckAudio();
@@ -185,6 +198,7 @@ export default function SlingPuckGame() {
 
     return () => {
       cancelled = true;
+      dragFrameRef.current?.clear();
       sceneRef.current?.dispose();
       sceneRef.current = null;
       audio.dispose();
@@ -207,6 +221,7 @@ export default function SlingPuckGame() {
       setTimeLeft(left);
       if (left <= 0 && !busyRef.current) {
         dragRef.current = null;
+        dragFrameRef.current?.clear();
         setDragging(false);
         setPower(0);
         sceneRef.current?.cancelDrag();
@@ -261,6 +276,9 @@ export default function SlingPuckGame() {
       puckId: hit.id,
       start: { x: puck.x, y: puck.y },
       point: { x: puck.x, y: puck.y },
+      // Nothing pullable until a pointer move has been mapped; a release after
+      // an unmappable move must not launch the previous position.
+      pending: null,
       pointerId: event.pointerId,
     };
     scene.beginDrag(hit.id);
@@ -279,17 +297,19 @@ export default function SlingPuckGame() {
     const scene = sceneRef.current;
     if (!drag || !scene) return;
     const board = scene.boardPoint(event.clientX, event.clientY);
-    if (!board) return;
+    if (!board) {
+      drag.pending = null;
+      return;
+    }
     const clamped = clampDragPoint(drag.start, board, "player");
     drag.point = { x: clamped.x, y: clamped.y };
-    scene.updateDrag({
+    drag.pending = { x: clamped.x, y: clamped.y };
+    dragFrameRef.current.push({
       puckId: drag.puckId,
       start: drag.start,
       dragPoint: drag.point,
       power: clamped.power,
-      side: "player",
     });
-    setPower(clamped.power);
     event.preventDefault();
   }, []);
 
@@ -297,6 +317,7 @@ export default function SlingPuckGame() {
     const drag = dragRef.current;
     if (!drag) return;
     dragRef.current = null;
+    dragFrameRef.current?.clear();
     setDragging(false);
     setPower(0);
     try {
@@ -308,8 +329,8 @@ export default function SlingPuckGame() {
       sceneRef.current?.cancelDrag();
       return;
     }
-    const clamped = clampDragPoint(drag.start, drag.point, "player");
-    if (clamped.pull >= PHYSICS.minPull) {
+    const clamped = drag.pending ? clampDragPoint(drag.start, drag.pending, "player") : null;
+    if (clamped && clamped.pull >= PHYSICS.minPull) {
       fire("player", drag.puckId, { x: clamped.x, y: clamped.y });
     } else {
       sceneRef.current?.cancelDrag();
@@ -364,6 +385,7 @@ export default function SlingPuckGame() {
       },
       setPlaybackRate: rate => sceneRef.current?.setPlaybackRate(rate),
       busy: () => busyRef.current,
+      backToMenu: () => goMenuRef.current(),
     };
     window.__slingPuck = hook;
     return () => {
