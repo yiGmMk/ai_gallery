@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useI18n } from "@/app/i18n/client";
-import { PHYSICS, TURN_SECONDS } from "./core/constants";
+import { FREE_AI, PHYSICS, TURN_SECONDS } from "./core/constants";
 import { MatchEngine } from "./core/engine";
 import { LiveMatch } from "./core/live";
 import { loadRapier } from "./core/physics";
@@ -48,6 +48,8 @@ export default function SlingPuckGame() {
   const liveTokenRef = useRef(0);
   const liveFrameRef = useRef(null);
   const liveAccRef = useRef(0);
+  const aiTimerRef = useRef(null);
+  const aiTickRef = useRef(0);
   const lastFrameTimeRef = useRef(0);
 
   const [mode, setMode] = useState("loading");
@@ -300,6 +302,24 @@ export default function SlingPuckGame() {
     return () => clearTimeout(timer);
   }, [mode, busy, winner, turnState.side, turnState.number, beginTurn, fire]);
 
+  const finishLive = useCallback(side => {
+    liveTokenRef.current += 1;
+    if (liveFrameRef.current) cancelAnimationFrame(liveFrameRef.current);
+    liveFrameRef.current = null;
+    if (aiTimerRef.current) clearTimeout(aiTimerRef.current);
+    aiTimerRef.current = null;
+    dragFrameRef.current?.clear();
+    if (dragRef.current?.live) liveRef.current?.setFrozen(dragRef.current.puckId, false);
+    dragRef.current = null;
+    setDragging(false);
+    setPower(0);
+    liveRef.current?.thawAll();
+    sceneRef.current?.cancelDrag();
+    setWinner(side);
+    setMode("result");
+    audioRef.current?.win();
+  }, []);
+
   useEffect(() => {
     if (mode !== "playing" || gameMode !== "free") return undefined;
     const live = liveRef.current;
@@ -325,6 +345,10 @@ export default function SlingPuckGame() {
         result.events.forEach(evt => audioRef.current?.impact(evt.strength, evt.type));
         scene.syncLive(result.pucks, { skipId: dragRef.current?.puckId });
         updateCounts(result.pucks);
+        if (result.winner) {
+          finishLive(result.winner);
+          return;
+        }
       }
       liveFrameRef.current = requestAnimationFrame(frame);
     };
@@ -336,7 +360,54 @@ export default function SlingPuckGame() {
       live.thawAll();
       scene.setLiveMode(false);
     };
-  }, [mode, gameMode, matchId, updateCounts]);
+  }, [mode, gameMode, matchId, updateCounts, finishLive]);
+
+  useEffect(() => {
+    if (mode !== "playing" || gameMode !== "free") return undefined;
+    const token = liveTokenRef.current;
+    let timer = null;
+    const cadence = FREE_AI.cadenceMs[difficulty] ?? FREE_AI.cadenceMs.normal;
+
+    const arm = () => {
+      timer = setTimeout(tick, cadence);
+      aiTimerRef.current = timer;
+    };
+    const tick = () => {
+      aiTimerRef.current = null;
+      if (token !== liveTokenRef.current || modeRef.current !== "playing") return;
+      const live = liveRef.current;
+      if (!live || live.winner) return;
+      aiTickRef.current += 1;
+      const choice = chooseShot({
+        rapier: rapierRef.current,
+        pucks: live.pucks,
+        side: "opponent",
+        difficulty,
+        rng: seededRng(token * 7919 + aiTickRef.current),
+        grabbable: puck => puck.speed < PHYSICS.settleSpeed,
+        config: {
+          candidates: FREE_AI.search.candidates[difficulty] ?? FREE_AI.search.candidates.normal,
+          budgetMs: FREE_AI.search.budgetMs,
+        },
+      });
+      if (token !== liveTokenRef.current) return;
+      if (!choice.skip) {
+        try {
+          const shotResult = live.shoot({ side: "opponent", puckId: choice.puckId, dragPoint: choice.dragPoint });
+          audioRef.current?.launch(shotResult.power);
+        } catch {
+          // The board moved between the snapshot and the shot; retry next tick.
+        }
+      }
+      if (token === liveTokenRef.current && modeRef.current === "playing") arm();
+    };
+    arm();
+
+    return () => {
+      if (timer) clearTimeout(timer);
+      if (aiTimerRef.current === timer) aiTimerRef.current = null;
+    };
+  }, [mode, gameMode, matchId, difficulty]);
 
   const grabLivePuck = useCallback(event => {
     const live = liveRef.current;
@@ -559,6 +630,26 @@ export default function SlingPuckGame() {
       },
       setPlaybackRate: rate => sceneRef.current?.setPlaybackRate(rate),
       setGameMode: next => setGameMode(next),
+      autoShot: side => {
+        const live = liveRef.current;
+        const rapier = rapierRef.current;
+        if (!live || !rapier) return null;
+        const choice = chooseShot({
+          rapier,
+          pucks: live.pucks,
+          side,
+          difficulty: "hard",
+          grabbable: puck => puck.speed < PHYSICS.settleSpeed,
+          config: {
+            candidates: FREE_AI.search.candidates.hard,
+            budgetMs: FREE_AI.search.budgetMs,
+          },
+        });
+        if (choice.skip) return { skip: true };
+        const shotResult = live.shoot({ side, puckId: choice.puckId, dragPoint: choice.dragPoint });
+        audioRef.current?.launch(shotResult.power);
+        return shotResult;
+      },
       gameMode: () => gameModeRef.current,
       startFree: () => startGameRef.current(),
       busy: () => busyRef.current,

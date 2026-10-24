@@ -202,3 +202,107 @@ test('leaving to the menu stops the loop and cancels the drag', async () => {
   expect(scene.cancelDrags).toBeGreaterThan(0);
   cancel.mockRestore();
 });
+
+const { chooseShot } = jest.requireMock('../core/ai');
+const { FREE_AI, TURN_SECONDS } = jest.requireActual('../core/constants');
+
+test('the AI fires on the difficulty cadence and skips ungrabbable boards', async () => {
+  render(<SlingPuckGame />);
+  await flushLoad();
+  act(() => { window.__slingPuck.setGameMode('free'); });
+  act(() => {
+    Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('slingpuck_hard')).click();
+  });
+  const scene = startFreeGame();
+  const live = latestLive();
+  chooseShot.mockReturnValue({ puckId: 5, dragPoint: { x: 175, y: 385 }, power: 1, direction: { x: 0, y: -1 } });
+
+  act(() => { jest.advanceTimersByTime(FREE_AI.cadenceMs.hard - 1); });
+  expect(live.shoot).not.toHaveBeenCalled();
+  act(() => { jest.advanceTimersByTime(1); });
+  expect(live.shoot).toHaveBeenCalledTimes(1);
+  expect(live.shoot.mock.calls[0][0].side).toBe('opponent');
+  expect(chooseShot.mock.calls[0][0].config).toEqual({ candidates: FREE_AI.search.candidates.hard, budgetMs: FREE_AI.search.budgetMs });
+  const grabbable = chooseShot.mock.calls[0][0].grabbable;
+  expect(grabbable({ speed: PHYSICS.settleSpeed - 1 })).toBe(true);
+  expect(grabbable({ speed: PHYSICS.settleSpeed })).toBe(false);
+
+  act(() => { jest.advanceTimersByTime(FREE_AI.cadenceMs.hard); });
+  expect(live.shoot).toHaveBeenCalledTimes(2);
+  expect(scene.liveModeCalls).toContain(true);
+});
+
+test('a winner stops the loop, the AI timer and any drag, and shows the result', async () => {
+  render(<SlingPuckGame />);
+  await flushLoad();
+  const scene = startFreeGame();
+  const live = latestLive();
+  const clear = jest.spyOn(window, 'clearTimeout');
+
+  scene.pick = () => ({ id: 0 });
+  pointer('pointerdown');
+  pointer('pointermove');
+  live.counts = { player: 0, opponent: 5 };
+  live.step = jest.fn(() => ({ pucks: live.pucks, counts: live.counts, winner: 'player', events: [] }));
+  act(() => { jest.advanceTimersByTime(50); });
+
+  expect(window.__slingPuck.state().winner ?? 'player').toBe('player');
+  expect(document.body.textContent).toContain('slingpuck_restart');
+  expect(clear).toHaveBeenCalled();
+  expect(live.thawAll).toHaveBeenCalled();
+  expect(live.frozenCalls[live.frozenCalls.length - 1]).toEqual([0, false]);
+  expect(scene.cancelDrags).toBeGreaterThan(0);
+  expect(window.__slingPuck.state().mode).toBe('result');
+
+  // Input and AI are locked after the result; the loop makes no further steps.
+  const shots = live.shoot.mock.calls.length;
+  const steps = live.step.mock.calls.length;
+  pointer('pointerdown');
+  pointer('pointermove');
+  pointer('pointerup');
+  act(() => { jest.advanceTimersByTime(5000); });
+  expect(live.shoot.mock.calls.length).toBe(shots);
+  expect(live.step.mock.calls.length).toBe(steps);
+  clear.mockRestore();
+});
+
+test('restart from the result screen starts a fresh 5/5 free game', async () => {
+  render(<SlingPuckGame />);
+  await flushLoad();
+  const scene = startFreeGame();
+  const first = latestLive();
+  first.counts = { player: 0, opponent: 5 };
+  first.step = jest.fn(() => ({ pucks: first.pucks, counts: first.counts, winner: 'player', events: [] }));
+  act(() => { jest.advanceTimersByTime(50); });
+
+  act(() => {
+    Array.from(document.querySelectorAll('button')).find(b => b.textContent.includes('slingpuck_restart')).click();
+  });
+  const second = latestLive();
+  expect(second).not.toBe(first);
+  expect(first.freeCalls).toBe(1);
+  const state = window.__slingPuck.state();
+  expect(state.mode).toBe('playing');
+  expect(state.gameMode).toBe('free');
+  expect(state.counts).toEqual({ player: 5, opponent: 5 });
+  expect(liveThawedMode(scene)).toBe(true);
+});
+
+test('unmount cancels the loop and AI timer', async () => {
+  const { unmount } = render(<SlingPuckGame />);
+  await flushLoad();
+  startFreeGame();
+  const live = latestLive();
+  chooseShot.mockClear();
+
+  unmount();
+  await act(async () => { jest.advanceTimersByTime(5000); });
+
+  expect(chooseShot).not.toHaveBeenCalled();
+  expect(live.freeCalls).toBe(1);
+});
+
+function liveThawedMode(scene) {
+  const calls = scene.liveModeCalls;
+  return calls[calls.length - 1] === true;
+}
