@@ -89,3 +89,34 @@ test('AI keeps shooting when its pucks rest against the end rail', () => {
   });
   expect(result.pucks.find(p => p.id === choice.puckId).y).toBeGreaterThan(0);
 }, 20000);
+
+test('non-grabbable pucks are not candidates but scoring uses the full board', () => {
+  const pucks = initialPucks();
+  const choice = chooseShot({
+    rapier: RAPIER, pucks, side: 'player', difficulty: 'hard', rng: seededRng(9), now: noBudget,
+    grabbable: puck => puck.id !== 0,
+    config: { candidates: 14, budgetMs: 80 },
+  });
+  expect(choice.puckId).not.toBe(0);
+  expect(choice.candidatesChecked).toBe(14);
+  expect(choice.score).toBeDefined();
+});
+
+test('a config override keeps the difficulty error model', () => {
+  const choice = chooseShot({
+    rapier: RAPIER, pucks: initialPucks(), side: 'player', difficulty: 'easy', rng: seededRng(2), now: noBudget,
+    config: { candidates: 4, budgetMs: 80 },
+  });
+  expect(Number.isFinite(choice.power)).toBe(true);
+  expect(choice.candidatesChecked).toBeLessThanOrEqual(4);
+});
+
+test('the search budget from the merged config stops the loop', () => {
+  let calls = 0;
+  const choice = chooseShot({
+    rapier: RAPIER, pucks: initialPucks(), side: 'player', difficulty: 'hard', rng: seededRng(2),
+    now: () => (calls++ >= 3 ? 100 : 0),
+    config: { candidates: 14, budgetMs: 80 },
+  });
+  expect(choice.candidatesChecked).toBeLessThanOrEqual(4);
+});

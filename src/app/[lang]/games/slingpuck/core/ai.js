@@ -98,14 +98,16 @@ export function chooseShot({
   rng = seededRng(1),
   simulate = simulateShot,
   now = () => Date.now(),
-  budgetMs = AI_SEARCH.budgetMs,
+  grabbable = () => true,
+  config: configOverride = null,
 }) {
   const own = pucks.filter(puck => sideOfPuck(puck) === side);
   if (own.length === 0) {
     return { skip: true, reason: 'empty-half', candidatesChecked: 0 };
   }
 
-  const config = DIFFICULTIES[difficulty] ?? DIFFICULTIES.normal;
+  const config = { ...(DIFFICULTIES[difficulty] ?? DIFFICULTIES.normal), ...(configOverride ?? {}) };
+  const budgetMs = config.budgetMs ?? AI_SEARCH.budgetMs;
   const targets = targetPoints(side);
   const started = now();
   const checked = [];
@@ -113,6 +115,7 @@ export function chooseShot({
 
   outer:
   for (const puck of own) {
+    if (!grabbable(puck)) continue;
     // Evaluate the lines that actually run through the opening first, so a
     // tight candidate budget does not spend itself on blocked angles.
     const orderedTargets = [...targets].sort(

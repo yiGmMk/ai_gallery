@@ -82,6 +82,9 @@ export function createWorld(RAPIER, pucks) {
         .setActiveEvents(RAPIER.ActiveEvents.COLLISION_EVENTS),
       body
     );
+    if (puck.vx || puck.vy) {
+      body.setLinvel({ x: (puck.vx ?? 0) * scale, y: (puck.vy ?? 0) * scale }, false);
+    }
     colliderMeta.set(collider.handle, { kind: 'puck', puckId: puck.id });
     bodies.push(body);
   });
@@ -100,6 +103,8 @@ export function snapshotPucks(bodies, pucks) {
       y: position.y / scale,
       angle: body.rotation(),
       color: pucks[index].color,
+      vx: velocity.x / scale,
+      vy: velocity.y / scale,
       speed: Math.hypot(velocity.x, velocity.y) / scale,
     };
   });

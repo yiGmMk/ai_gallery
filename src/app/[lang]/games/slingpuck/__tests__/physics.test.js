@@ -79,3 +79,12 @@ test('snapshots carry each puck\'s live speed in board units', () => {
   expect(result.frames[0].pucks[0].speed).toBeGreaterThan(0);
   expect(result.pucks[0].speed).toBeLessThan(PHYSICS.settleSpeed + 1);
 });
+
+test('a world built from moving pucks starts them at that velocity', () => {
+  const pucks = [
+    { id: 0, x: 0, y: -260, angle: 0, color: 'black' },
+    { id: 1, x: -200, y: -400, angle: 0, color: 'black', vx: 0, vy: 900 },
+  ];
+  const result = simulateShot(RAPIER, pucks, { puckId: 0, velocity: { x: 0, y: 0 } }, { maxTime: 0.2 });
+  expect(result.pucks.find(puck => puck.id === 1).y).toBeGreaterThan(-400 + 100);
+});
