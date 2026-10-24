@@ -15,6 +15,7 @@ function CountPill({ label, count, accent }) {
 
 export function GameHud({
   side,
+  freeMode = false,
   counts,
   timeLeft,
   power,
@@ -37,9 +38,11 @@ export function GameHud({
                 : "border-amber-200/30 bg-black/45 text-amber-50"
             }`}
           >
-            {formatClock(timeLeft)}
+            {freeMode ? t("slingpuck_free_mode") : formatClock(timeLeft)}
           </div>
-          <p className="mt-1.5 max-w-[15rem] text-center text-[11px] leading-4 text-amber-100/65 sm:text-xs">{message}</p>
+          {!freeMode && (
+            <p className="mt-1.5 max-w-[15rem] text-center text-[11px] leading-4 text-amber-100/65 sm:text-xs">{message}</p>
+          )}
         </div>
         <div className="flex flex-col items-end gap-2">
           <CountPill label={t("slingpuck_player")} count={counts.player} accent="bg-amber-300" />
@@ -56,9 +59,11 @@ export function GameHud({
       </div>
 
       <div className="mt-3 flex items-center justify-center gap-3">
-        <span className="text-[10px] uppercase tracking-[0.2em] text-amber-100/45">
-          {side === "player" ? t("slingpuck_your_turn") : t("slingpuck_ai_turn")}
-        </span>
+        {!freeMode && (
+          <span className="text-[10px] uppercase tracking-[0.2em] text-amber-100/45">
+            {side === "player" ? t("slingpuck_your_turn") : t("slingpuck_ai_turn")}
+          </span>
+        )}
         <div className={`h-1.5 w-32 overflow-hidden rounded-full bg-white/10 transition-opacity ${dragging ? "opacity-100" : "opacity-0"}`}>
           <div
             className="h-full rounded-full bg-gradient-to-r from-amber-200 to-orange-400 transition-[width] duration-75"

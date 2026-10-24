@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useI18n } from "@/app/i18n/client";
 import { PHYSICS, TURN_SECONDS } from "./core/constants";
 import { MatchEngine } from "./core/engine";
+import { LiveMatch } from "./core/live";
 import { loadRapier } from "./core/physics";
 import { clampDragPoint, countPucks, initialPucks, sideOfPuck } from "./core/rules";
 import { chooseShot, seededRng } from "./core/ai";
@@ -43,7 +44,15 @@ export default function SlingPuckGame() {
     });
   }
 
+  const liveRef = useRef(null);
+  const liveTokenRef = useRef(0);
+  const liveFrameRef = useRef(null);
+  const liveAccRef = useRef(0);
+  const lastFrameTimeRef = useRef(0);
+
   const [mode, setMode] = useState("loading");
+  const [gameMode, setGameMode] = useState("turns");
+  const [matchId, setMatchId] = useState(0);
   const [difficulty, setDifficulty] = useState("normal");
   const [counts, setCounts] = useState(INITIAL_COUNTS);
   const [timeLeft, setTimeLeft] = useState(TURN_SECONDS);
@@ -62,6 +71,8 @@ export default function SlingPuckGame() {
   winnerRef.current = winner;
   const difficultyRef = useRef(difficulty);
   difficultyRef.current = difficulty;
+  const gameModeRef = useRef(gameMode);
+  gameModeRef.current = gameMode;
 
   const updateCounts = useCallback(pucks => {
     setCounts({
@@ -138,20 +149,45 @@ export default function SlingPuckGame() {
     scene.cancelPlayback();
     scene.setInteractiveSide(null);
     scene.cancelDrag();
-    const engine = new MatchEngine(rapier, { side: "player" });
-    engineRef.current = engine;
-    scene.syncPucks(engine.pucks);
-    updateCounts(engine.pucks);
+    dragFrameRef.current?.clear();
+    dragRef.current = null;
+    liveTokenRef.current += 1;
+    if (liveRef.current) {
+      liveRef.current.thawAll();
+      liveRef.current.free();
+      liveRef.current = null;
+    }
     setWinner(null);
     setMode("playing");
     busyRef.current = false;
     setBusy(false);
     setDragging(false);
     setPower(0);
+    if (gameMode === "free") {
+      const live = new LiveMatch(rapier);
+      liveRef.current = live;
+      liveAccRef.current = 0;
+      liveTokenRef.current += 1;
+      engineRef.current = null;
+      scene.setLiveMode(true);
+      scene.syncLive(live.pucks);
+      updateCounts(live.pucks);
+      setMatchId(id => id + 1);
+      return;
+    }
+    scene.setLiveMode(false);
+    const engine = new MatchEngine(rapier, { side: "player" });
+    engineRef.current = engine;
+    scene.syncPucks(engine.pucks);
+    updateCounts(engine.pucks);
     beginTurn("player");
-  }, [beginTurn, updateCounts]);
+  }, [beginTurn, gameMode, updateCounts]);
 
   const goMenu = useCallback(() => {
+    liveTokenRef.current += 1;
+    liveRef.current?.thawAll();
+    liveRef.current?.free();
+    liveRef.current = null;
     engineRef.current = null;
     busyRef.current = false;
     setBusy(false);
@@ -164,6 +200,7 @@ export default function SlingPuckGame() {
     sceneRef.current?.cancelPlayback();
     sceneRef.current?.setInteractiveSide(null);
     sceneRef.current?.cancelDrag();
+    sceneRef.current?.setLiveMode(false);
     sceneRef.current?.syncPucks(initialPucks());
     setMode("menu");
   }, []);
@@ -205,6 +242,9 @@ export default function SlingPuckGame() {
       audioRef.current = null;
       rapierRef.current = null;
       engineRef.current = null;
+      liveTokenRef.current += 1;
+      liveRef.current?.free();
+      liveRef.current = null;
     };
   }, []);
 
@@ -260,7 +300,110 @@ export default function SlingPuckGame() {
     return () => clearTimeout(timer);
   }, [mode, busy, winner, turnState.side, turnState.number, beginTurn, fire]);
 
+  useEffect(() => {
+    if (mode !== "playing" || gameMode !== "free") return undefined;
+    const live = liveRef.current;
+    const scene = sceneRef.current;
+    if (!live || !scene) return undefined;
+    const token = liveTokenRef.current;
+    lastFrameTimeRef.current = 0;
+    const stepMs = PHYSICS.fixedDt * 1000;
+    scene.setLiveMode(true);
+
+    const frame = now => {
+      liveFrameRef.current = null;
+      if (token !== liveTokenRef.current || modeRef.current !== "playing") return;
+      if (lastFrameTimeRef.current) {
+        const delta = Math.min(100, now - lastFrameTimeRef.current);
+        liveAccRef.current += delta;
+      }
+      lastFrameTimeRef.current = now;
+      const steps = Math.floor(liveAccRef.current / stepMs);
+      if (steps > 0) {
+        liveAccRef.current -= steps * stepMs;
+        const result = live.step(steps);
+        result.events.forEach(evt => audioRef.current?.impact(evt.strength, evt.type));
+        scene.syncLive(result.pucks, { skipId: dragRef.current?.puckId });
+        updateCounts(result.pucks);
+      }
+      liveFrameRef.current = requestAnimationFrame(frame);
+    };
+    liveFrameRef.current = requestAnimationFrame(frame);
+
+    return () => {
+      if (liveFrameRef.current) cancelAnimationFrame(liveFrameRef.current);
+      liveFrameRef.current = null;
+      live.thawAll();
+      scene.setLiveMode(false);
+    };
+  }, [mode, gameMode, matchId, updateCounts]);
+
+  const grabLivePuck = useCallback(event => {
+    const live = liveRef.current;
+    const scene = sceneRef.current;
+    if (!live || !scene) return;
+    audioRef.current?.unlock();
+    const hit = scene.pickPuck(event.clientX, event.clientY);
+    if (!hit) return;
+    const puck = live.pucks.find(item => item.id === hit.id);
+    if (!puck || sideOfPuck(puck) !== "player") return;
+    if (live.puckSpeed(hit.id) >= PHYSICS.settleSpeed) return;
+
+    live.setFrozen(hit.id, true);
+    dragRef.current = {
+      puckId: hit.id,
+      start: { x: puck.x, y: puck.y },
+      point: { x: puck.x, y: puck.y },
+      pending: null,
+      pointerId: event.pointerId,
+      live: true,
+    };
+    scene.beginDrag(hit.id);
+    setDragging(true);
+    setPower(0);
+    try {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    } catch {
+      // Pointer capture is best-effort; touch input still works without it.
+    }
+    event.preventDefault();
+  }, []);
+
+  const fireLive = useCallback(drag => {
+    const live = liveRef.current;
+    const scene = sceneRef.current;
+    if (!live || !scene) return;
+    const puck = live.pucks.find(item => item.id === drag.puckId);
+    if (!puck || puck.y >= 0) {
+      // Knocked across the divider mid-drag: the shot would come from the
+      // opponent's half, so cancel instead.
+      live.setFrozen(drag.puckId, false);
+      scene.cancelDrag();
+      return;
+    }
+    const clamped = drag.pending ? clampDragPoint(drag.start, drag.pending, "player") : null;
+    if (!clamped || clamped.pull < PHYSICS.minPull) {
+      live.setFrozen(drag.puckId, false);
+      scene.cancelDrag();
+      return;
+    }
+    live.setFrozen(drag.puckId, false);
+    scene.cancelDrag();
+    let shotResult;
+    try {
+      shotResult = live.shoot({ side: "player", puckId: drag.puckId, dragPoint: { x: clamped.x, y: clamped.y } });
+    } catch (shootError) {
+      return;
+    }
+    audioRef.current?.launch(shotResult.power);
+  }, []);
+
   const handlePointerDown = useCallback(event => {
+    if (gameModeRef.current === "free") {
+      if (modeRef.current !== "playing" || !liveRef.current) return;
+      grabLivePuck(event);
+      return;
+    }
     const engine = engineRef.current;
     const scene = sceneRef.current;
     if (modeRef.current !== "playing" || busyRef.current || !engine || !scene) return;
@@ -290,7 +433,7 @@ export default function SlingPuckGame() {
       // Pointer capture is best-effort; touch input still works without it.
     }
     event.preventDefault();
-  }, []);
+  }, [grabLivePuck]);
 
   const handlePointerMove = useCallback(event => {
     const drag = dragRef.current;
@@ -316,6 +459,24 @@ export default function SlingPuckGame() {
   const finishDrag = useCallback((event, cancelled = false) => {
     const drag = dragRef.current;
     if (!drag) return;
+    if (drag.live) {
+      dragRef.current = null;
+      dragFrameRef.current?.clear();
+      setDragging(false);
+      setPower(0);
+      try {
+        event.currentTarget.releasePointerCapture?.(drag.pointerId);
+      } catch {
+        // Capture may already be released; nothing to do.
+      }
+      if (cancelled) {
+        liveRef.current?.setFrozen(drag.puckId, false);
+        sceneRef.current?.cancelDrag();
+        return;
+      }
+      fireLive(drag);
+      return;
+    }
     dragRef.current = null;
     dragFrameRef.current?.clear();
     setDragging(false);
@@ -335,7 +496,7 @@ export default function SlingPuckGame() {
     } else {
       sceneRef.current?.cancelDrag();
     }
-  }, [fire]);
+  }, [fire, fireLive]);
 
   useEffect(() => {
     if (process.env.NODE_ENV === "production" || typeof window === "undefined") return undefined;
@@ -371,6 +532,19 @@ export default function SlingPuckGame() {
         };
       },
       state: () => {
+        if (liveRef.current) {
+          const pucks = liveRef.current.pucks;
+          return {
+            mode: modeRef.current,
+            gameMode: "free",
+            side: null,
+            winner: liveRef.current.winner ?? null,
+            turn: 0,
+            busy: false,
+            counts: { player: countPucks(pucks, "player"), opponent: countPucks(pucks, "opponent") },
+            pucks,
+          };
+        }
         const engine = engineRef.current;
         const pucks = engine?.pucks ?? [];
         return {
@@ -384,6 +558,9 @@ export default function SlingPuckGame() {
         };
       },
       setPlaybackRate: rate => sceneRef.current?.setPlaybackRate(rate),
+      setGameMode: next => setGameMode(next),
+      gameMode: () => gameModeRef.current,
+      startFree: () => startGameRef.current(),
       busy: () => busyRef.current,
       backToMenu: () => goMenuRef.current(),
     };
@@ -392,6 +569,9 @@ export default function SlingPuckGame() {
       if (window.__slingPuck === hook) delete window.__slingPuck;
     };
   }, []);
+
+  const startGameRef = useRef(startGame);
+  startGameRef.current = startGame;
 
   const toggleSound = useCallback(() => {
     audioRef.current?.unlock();
@@ -416,6 +596,7 @@ export default function SlingPuckGame() {
 
         {mode === "playing" && (
           <GameHud
+            freeMode={gameMode === "free"}
             side={turnState.side}
             counts={counts}
             timeLeft={timeLeft}
@@ -430,6 +611,8 @@ export default function SlingPuckGame() {
 
         {(mode === "menu" || mode === "loading") && !error && (
           <StartPanel
+            gameMode={gameMode}
+            onGameMode={setGameMode}
             difficulty={difficulty}
             onDifficulty={setDifficulty}
             onStart={startGame}

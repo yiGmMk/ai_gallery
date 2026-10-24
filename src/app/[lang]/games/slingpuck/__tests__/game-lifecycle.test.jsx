@@ -47,6 +47,8 @@ jest.mock('../render/scene', () => {
       this.cancelDrags = 0;
     }
     setInteractiveSide() {}
+    setLiveMode() {}
+    syncLive() {}
     syncPucks(pucks) { this.lastPucks = pucks.map(puck => ({ ...puck })); }
     pickPuck(clientX, clientY) { return this.pick?.(clientX, clientY) ?? null; }
     boardPoint() { return { x: 0, y: 0 }; }
